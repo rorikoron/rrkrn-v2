@@ -1,0 +1,159 @@
+@import "tailwindcss";
+
+:root {
+  --background: #292524;
+  --background-tint: #564240;
+  --foreground: #171717;
+}
+@theme inline {
+  --color-background: var(--background);
+  --color-accent: var(--accent);
+  --color-inactive: var(--inactive);
+  --color-foreground: var(--foreground);
+  --color-foreground-tint: var(--foreground-tint);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #EF8783;
+    --inactive: #A28A87;
+    --foreground: #2b2120;
+    --foreground-tint: #8C6E6A;
+    --accent: #ededed;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+  height: 1lvh;
+}
+body > * {
+  overflow: hidden; 
+}
+.typewriter::after{
+  content: '_';
+  animation: 1.2s typewriter_blink infinite alternate;
+}
+
+.dot, .bar{
+  height: 100%;
+  background-color: var(--accent);
+}
+.dot{
+  aspect-ratio: 1/1;
+  border-radius: 50%;
+}
+.bar{
+  aspect-ratio: 1/6;
+  border-radius: 10%;
+}
+
+@keyframes typewriter_blink{
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.gauge{
+  position: relative;
+  animation-play-state: running;
+  animation: var(--interval) dummy_animation_for_event;
+
+  
+  &.pause-animation{
+    animation-play-state: paused;
+    &::before, &::after{
+      animation-play-state: paused;
+    }
+  }
+  &::before{
+    content: '';
+    display: block;
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    background-color: var(--active-color);
+    animation: var(--interval) gauge_increment forwards linear;
+    animation-play-state: running;
+  }
+
+  &::after{
+    content: '';
+    aspect-ratio: 1/1;
+    height: 100%;
+    padding: 6px;
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+
+    transform: translate(-50%, -50%);
+    background-color: var(--active-color);
+    animation: var(--interval) gauge_knob_move infinite forwards linear;
+    animation-play-state: running;
+  }
+
+}
+
+.command-foreground > img{
+  filter: brightness(0) saturate(100%) invert(6%) sepia(11%) saturate(2094%) hue-rotate(322deg) brightness(89%) contrast(81%);
+}
+
+.command-accent > img{
+  filter: brightness(0) saturate(100%) invert(100%) sepia(0%) saturate(5486%) hue-rotate(316deg) brightness(129%) contrast(86%);
+}
+
+@keyframes gauge_increment{
+  0%{
+    width: 0;
+  }
+  100%{
+    width: 100%;
+  }
+}
+
+@keyframes gauge_knob_move{
+  0%{
+    left: 0;
+  }
+  100%{
+    left: 100%;
+  }
+}
+
+::view-transition-new(player){
+  animation: player_show 1s ease-in-out;
+}
+
+::view-transition-old(player){
+  animation: player_hide 1s ease-in-out;
+}
+
+@keyframes player_show{
+  0%{
+    right: 0;
+    transform: translateX(100%);
+  }
+  100%{
+    right: 24px;
+    transform: translateX(0);
+  }
+}
+
+@keyframes player_hide{
+  0%{
+    right: 24px;
+    transform: translateX(0);
+  }
+  100%{
+    right: 0;
+    transform: translateX(100%);
+  }
+}
