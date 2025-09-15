@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { M_PLUS_1 } from "next/font/google";
 import "./globals.scss";
 import Header from "../components/Header";
+import clsx from "clsx";
 
 const mplusone = M_PLUS_1({ subsets: ["latin"] });
 
@@ -22,7 +23,10 @@ export default function RootLayout({
             >
                 <Header />
                 <div
-                    className={`${mplusone.className} py-12 px-8 bg-background-main text-accent`}
+                    className={clsx(
+                        `${mplusone.className} py-12 px-8 text-accent`,
+                        "bg-gradient-to-br from-bg-background to-background-gradient"
+                    )}
                 >
                     {/* morse */}
                     <div className="absolute flex flex-col w-[4px] gap-3 -translate-x-2/4 -ml-4 opacity-60 [&>*:nth-child(3n)]:mb-6">

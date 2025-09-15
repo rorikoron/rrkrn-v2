@@ -28,7 +28,7 @@ export default function HeaderExplain() {
                 .split("\n")
                 .filter((notEmpty) => notEmpty)
                 .map((phrase) => (
-                    <article>&gt; {phrase}</article>
+                    <article key={phrase}>&gt; {phrase}</article>
                 ))}
         </article>
     );

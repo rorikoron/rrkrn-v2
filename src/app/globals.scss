@@ -7,21 +7,23 @@
 }
 @theme inline {
   --color-background: var(--background);
+  --color-background-gradient: var(--background-gradient);
   --color-accent: var(--accent);
   --color-inactive: var(--inactive);
   --color-foreground: var(--foreground);
   --color-foreground-tint: var(--foreground-tint);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-link: var(--link);
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #EF8783;
+    --background-gradient: #e96964;
     --inactive: #A28A87;
     --foreground: #2b2120;
     --foreground-tint: #8C6E6A;
     --accent: #ededed;
+    --link: #ffca44;
   }
 }
 
@@ -34,6 +36,16 @@ body {
 body > * {
   overflow: hidden; 
 }
+
+.bg-background::selection{
+    color: var(--background);
+    background-color: var(--foreground);
+}
+.bg-foreground::selection{
+    color: var(--accent);
+    background-color: var(--background);
+}
+
 .typewriter::after{
   content: '_';
   animation: 1.2s typewriter_blink infinite alternate;
@@ -102,12 +114,14 @@ body > * {
 
 }
 
-.command-foreground > img{
+.command-foreground > img, .command-foreground{
   filter: brightness(0) saturate(100%) invert(6%) sepia(11%) saturate(2094%) hue-rotate(322deg) brightness(89%) contrast(81%);
 }
-
-.command-accent > img{
+.command-accent > img, .command-accent{
   filter: brightness(0) saturate(100%) invert(100%) sepia(0%) saturate(5486%) hue-rotate(316deg) brightness(129%) contrast(86%);
+}
+.command-link > img, .command-link{
+  filter: brightness(0) saturate(100%) invert(73%) sepia(84%) saturate(405%) hue-rotate(342deg) brightness(103%) contrast(101%);;
 }
 
 @keyframes gauge_increment{

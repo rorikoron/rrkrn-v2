@@ -1,13 +1,8 @@
-import { Red_Hat_Display } from "next/font/google";
 import HeaderListitem from "./HeaderListItem";
 import HeaderTitle from "./HeaderTitle";
 import BashWindow from "./BashWindow";
 import { ExistLink } from "@/store/atoms";
 import HeaderExplain from "./HeaderExplain";
-
-const redHatDisplay = Red_Hat_Display({
-    subsets: ["latin"],
-});
 
 interface LinksInterface {
     name: ExistLink;
@@ -24,7 +19,7 @@ export default function Header() {
 
     return (
         <header
-            className={`h-lvh px-6 py-12 bg-foreground text-accent tracking-widest flex flex-col gap-20 ${redHatDisplay.className} `}
+            className={`h-lvh px-6 py-12 bg-foreground text-accent tracking-widest flex flex-col gap-20`}
         >
             <BashWindow
                 className={"mx-12"}
