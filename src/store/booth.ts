@@ -16,11 +16,8 @@ interface ItemInterface {
 const boothAtom = atomWithSuspenseQuery<ItemInterface[]>(() => ({
   queryKey: ['booth'],
   queryFn: async () => {
-    const res = await fetchBoothVRChatItem()
-    .then((item) => {
-      console.log(item)
-      return(item)
-    })
+    const res = await fetch("/api/items")
+            .then((data) => data.json())
             .then(({ records }) =>
                 records?.map((record: { fields: any }) => record?.fields)
             )
