@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { M_PLUS_1 } from "next/font/google";
-import "./globals.scss";
+import "@/app/styles/globals.css";
 import Header from "../components/Header";
 import clsx from "clsx";
 
@@ -24,12 +24,12 @@ export default function RootLayout({
                 <Header />
                 <div
                     className={clsx(
-                        `${mplusone.className} py-12 px-8 text-accent`,
+                        `${mplusone.className} py-12 px-8 text-accent h-full`,
                         "bg-gradient-to-br from-bg-background to-background-gradient"
                     )}
                 >
                     {/* morse */}
-                    <div className="absolute flex flex-col w-[4px] gap-3 -translate-x-2/4 -ml-4 opacity-60 [&>*:nth-child(3n)]:mb-6">
+                    <div className="absolute flex flex-col w-[4px] gap-3 -translate-x-2/4 -ml-4 opacity-40 [&>*:nth-child(3n)]:mb-6">
                         <span className="dot" />
                         <span className="bar" />
                         <span className="dot" />
@@ -49,7 +49,9 @@ export default function RootLayout({
                         <span className="bar" />
                         <span className="dot" />
                     </div>
-
+                    <span className="absolute bottom-6 pl-2 text-xl tracking-[8px] text-foreground-tint/70">
+                        &copy;rrkrn.vercel.app
+                    </span>
                     {children}
                 </div>
             </body>

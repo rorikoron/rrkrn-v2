@@ -1,7 +1,9 @@
-import HoverFlipButton from "@/components/HoverFlipButton";
+import HoverFlipButton from "@/components/HoverFlipBox";
 import { unstable_ViewTransition as ViewTransition } from "react";
 import { fetchPics } from "@/util";
-import PictureItem from "@/components/PictureItem";
+import PictureItem from "@/components/client/PictureItem";
+import Link from "next/link";
+import "@/app/styles/title.scss";
 
 export default async function Home() {
     const pngs = await fetchPics("player");
@@ -9,23 +11,23 @@ export default async function Home() {
     return (
         <div className="h-full">
             <main className="h-full grid grid-rows-[4fr_6fr] relative">
-                <div className="flex flex-col justify-center">
-                    <h1 className="text-[128px] leading-none">Rorikoron</h1>
-
-                    <h4 className="leading-none pl-2">創作が好きです。</h4>
-                    <span className="absolute bottom-0 pl-2 text-xl tracking-[8px] text-foreground/60">
-                        &copy;rrkrn.vercel.app
-                    </span>
+                <div className="flex flex-col justify-center overflow-hidden">
+                    <h1 className=" text-[128px] leading-none">Rorikoron</h1>
+                    <h4 className="w-fit overlay leading-none pl-2">
+                        創作が好きです。
+                    </h4>
                 </div>
                 <div className="pl-2">
                     <div className="inline-block relative">
-                        <HoverFlipButton
-                            className="ml-2"
-                            frontLabel="もっと詳しく"
-                            rearLabel="$ cd /about"
-                            frontIcon="read-more"
-                            rearIcon="extend"
-                        />
+                        <Link href="/about">
+                            <HoverFlipButton
+                                className="ml-2"
+                                frontLabel="もっと詳しく"
+                                rearLabel="$ cd /about"
+                                frontIcon="read-more"
+                                rearIcon="extend"
+                            />
+                        </Link>
 
                         {/* Dummy for 自画像window */}
                         <ViewTransition name="SelfieWindow">

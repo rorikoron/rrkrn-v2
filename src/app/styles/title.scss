@@ -1,0 +1,53 @@
+
+.overlay{
+  position: relative;
+  animation: overlay-text 1s 0.2s forwards ease-in-out;
+  color: transparent;
+
+  &::after{
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 100%;
+    width: 0;
+    background-color: var(--accent);
+
+    animation: overlay-animation 0.8s 0.2s forwards ease-in-out;
+  }
+
+  @keyframes overlay-text {
+    0%{
+      color: transparent;
+    }
+    50%{
+      color: transparent;
+    }
+    
+    51%{
+      color: var(--accent);
+    }
+
+    100%{
+
+      color: var(--accent);
+    }
+  }
+  @keyframes overlay-animation {
+    0%{
+      width: 0;
+    }
+    40%{
+      width: 100%;
+      left: 0;
+    }
+    60%{
+      width: 100%;
+      left: 0;
+    }
+    100%{
+      width: 0%;
+      left: 100%;
+    }
+  }
+}

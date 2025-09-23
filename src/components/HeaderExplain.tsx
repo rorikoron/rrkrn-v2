@@ -10,11 +10,9 @@ const SelectExplanation = (link: ExistLink | "") => {
         case "about":
             return "自分語りゾーンです。";
         case "archive":
-            return "フレンドとの写真。\nまたはフレンドとの写真。";
+            return "フレンドとの写真。\nまたはフレンドの写真。";
         case "booth":
             return "Boothの商品一覧です。\nよかったら見てってね。";
-        case "contact":
-            return "各外部リンク置き場です。\nなんと干し芋もあります。\n🍠";
         default:
             return "";
     }

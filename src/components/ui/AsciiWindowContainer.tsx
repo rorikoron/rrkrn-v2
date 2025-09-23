@@ -1,8 +1,8 @@
 "use client";
-import BashWindow from "@/components/BashWindow";
-import AsciiArt from "@/components/AsciiArt";
+import BashWindow from "@/components/ui/BashWindow";
+import AsciiArt from "@/components/ui/AsciiArt";
 import { useState, useEffect, useRef, useLayoutEffect } from "react";
-import HoverFlipButton from "./HoverFlipButton";
+import HoverFlipButton from "../HoverFlipBox";
 
 type WindowState = {
     id: number;
@@ -81,8 +81,8 @@ export default function AsciiWindowContainer({
             ...prev,
             {
                 id: prev.length,
-                x: 100,
-                y: 100,
+                x: 0,
+                y: 0,
                 vx: Math.random() + 1,
                 vy: Math.random() + 1,
                 w: 200, // 仮サイズ（後で計測で更新）
@@ -96,7 +96,7 @@ export default function AsciiWindowContainer({
             <button className="cursor-pointer" onClick={addWindow}>
                 <HoverFlipButton
                     frontLabel="開発中ボタン"
-                    rearLabel="さわっちゃだめ"
+                    rearLabel="押しちゃだめ"
                     frontIcon="warning"
                     rearIcon="do-not-touch"
                 />
@@ -107,7 +107,7 @@ export default function AsciiWindowContainer({
                     ref={(el) => {
                         if (el) refs.current.set(w.id, el);
                     }}
-                    className="absolute z-11"
+                    className="fixed z-100"
                     style={{
                         left: w.x,
                         top: w.y,

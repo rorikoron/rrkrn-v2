@@ -13,7 +13,7 @@ export default function HeaderListitem() {
         let mode: "clear" | "append" = "clear";
         const test = setInterval(() => {
             setLocalPrevPathname((prev) => {
-                if (prev.length === 1) {
+                if (prev.length === 1 || pathname.startsWith(prev)) {
                     mode = "append";
                 }
                 if (mode === "append" && prev === pathname) {
@@ -33,8 +33,8 @@ export default function HeaderListitem() {
         };
     }, [pathname]);
     return (
-        <span className="typewriter">
-            &gt; /{localPrevPathname.substring(1)}
+        <span className="tracking-wider typewriter -ml-2">
+            &gt;/{localPrevPathname.substring(1)}
         </span>
     );
 }

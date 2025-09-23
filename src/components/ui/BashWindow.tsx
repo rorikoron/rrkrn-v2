@@ -25,7 +25,7 @@ export default function BashWindow({
 }: BashWindowInterface) {
     return (
         <div
-            className={`border-accent border-2 py-6 px-6 flex flex-col relative ${className} ${redHatMono.className}  bg-foreground`}
+            className={`border-accent border-2 p-6 flex flex-col relative ${className} ${redHatMono.className}  bg-foreground`}
         >
             {hasClose && (
                 <button
@@ -35,7 +35,7 @@ export default function BashWindow({
                     <div className="aspect-square relative command-accent h-full hover:bg-foreground-tint transition-all p-4 rounded">
                         <Image
                             className="p-1"
-                            src="close.svg"
+                            src="svg/close.svg"
                             alt="閉じるボタン"
                             fill
                             objectFit="cover"
@@ -60,7 +60,9 @@ export default function BashWindow({
                     </span>
                 </ViewTransition>
             )}
-            {title && <div className="text-2xl pl-12 ">{title}</div>}
+            {title && (
+                <div className="text-2xl pl-12 inline-block">{title}</div>
+            )}
             {output && <div>{output}</div>}
         </div>
     );

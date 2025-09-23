@@ -1,6 +1,5 @@
 import Image from "next/image";
 import clsx from "clsx";
-import Link from "next/link";
 
 interface HoverFlipButtonInterface {
     className?: string;
@@ -17,10 +16,10 @@ export default function HoverFlipButton({
     rearIcon,
 }: HoverFlipButtonInterface) {
     return (
-        <Link className="group inline-block" href="/about">
+        <div className="group inline-block">
             <div
                 className={clsx(
-                    `${className} border-foreground w-[220px] px-8 py-3.5 border-2 flex justify-between cursor-pointer overflow-hidden transition-all`,
+                    `${className} bg-accent border-foreground w-[220px] px-8 py-3.5 border-2 flex justify-between cursor-pointer overflow-hidden transition-all`,
                     `group-hover:bg-foreground group-hover:border-accent`
                 )}
             >
@@ -45,7 +44,7 @@ export default function HoverFlipButton({
 
                 <div className={clsx("h-lh aspect-square relative")}>
                     <Image
-                        src={frontIcon + ".svg"}
+                        src={"svg/" + frontIcon + ".svg"}
                         alt="詳細"
                         className={clsx(
                             "transition-all command-foreground",
@@ -55,7 +54,7 @@ export default function HoverFlipButton({
                     />
 
                     <Image
-                        src={rearIcon + ".svg"}
+                        src={"svg/" + rearIcon + ".svg"}
                         alt="展開"
                         className={clsx(
                             "transition-all opacity-0 command-accent",
@@ -65,6 +64,6 @@ export default function HoverFlipButton({
                     />
                 </div>
             </div>
-        </Link>
+        </div>
     );
 }

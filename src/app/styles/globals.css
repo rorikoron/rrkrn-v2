@@ -1,27 +1,46 @@
 @import "tailwindcss";
 
 :root {
-  --background: #292524;
-  --background-tint: #564240;
-  --foreground: #171717;
+  --background: #EF8783;
+    --inactive: #bf9994;
+    --foreground-tint: #8C6E6A;
+    --foreground: #171717;
+    --accent: #ededed;
+    --link: #ffca44;
+
+
+    --category-accesaory: #ff7a7f;
+    --category-shader: #7a9dff;
+    --category-tool: #95ff91;
+    --category-cloth: #ffff4e;
+    --category-goods: rgb(255, 196, 87);
 }
 @theme inline {
   --color-background: var(--background);
   --color-background-gradient: var(--background-gradient);
+  --color-background-tint: var(--background-tint);
   --color-accent: var(--accent);
   --color-inactive: var(--inactive);
   --color-foreground: var(--foreground);
   --color-foreground-tint: var(--foreground-tint);
   --color-link: var(--link);
+
+
+  --color-category-accesaory: var(--category-accesaory);
+  --color-category-shader: var(--category-shader);
+  --color-category-goods: var(--category-goods);
+  --color-category-tool: var(--category-tool);
+  --color-category-cloth: var(--category-cloth);
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #EF8783;
-    --background-gradient: #e96964;
-    --inactive: #A28A87;
+    --background: #4a2e32;
+    --background-tint: #ffa49a;
+    --background-gradient: #78332e;
+    --inactive: #ecccc7;
     --foreground: #2b2120;
-    --foreground-tint: #8C6E6A;
+    --foreground-tint:  #86635f;
     --accent: #ededed;
     --link: #ffca44;
   }
@@ -37,6 +56,14 @@ body > * {
   overflow: hidden; 
 }
 
+*::-webkit-scrollbar{
+  width: 12px;
+  background-color: var(--foreground);
+}
+*::-webkit-scrollbar-thumb{
+  background-color: var(--accent);
+}
+
 .bg-background::selection{
     color: var(--background);
     background-color: var(--foreground);
@@ -48,6 +75,7 @@ body > * {
 
 .typewriter::after{
   content: '_';
+  position: absolute;
   animation: 1.2s typewriter_blink infinite alternate;
 }
 
@@ -73,46 +101,6 @@ body > * {
   }
 }
 
-.gauge{
-  position: relative;
-  animation-play-state: running;
-  animation: var(--interval) dummy_animation_for_event;
-
-  
-  &.pause-animation{
-    animation-play-state: paused;
-    &::before, &::after{
-      animation-play-state: paused;
-    }
-  }
-  &::before{
-    content: '';
-    display: block;
-    position: absolute;
-    left: 0;
-    top: 0;
-    height: 100%;
-    background-color: var(--active-color);
-    animation: var(--interval) gauge_increment forwards linear;
-    animation-play-state: running;
-  }
-
-  &::after{
-    content: '';
-    aspect-ratio: 1/1;
-    height: 100%;
-    padding: 6px;
-    border-radius: 50%;
-    position: absolute;
-    top: 50%;
-
-    transform: translate(-50%, -50%);
-    background-color: var(--active-color);
-    animation: var(--interval) gauge_knob_move infinite forwards linear;
-    animation-play-state: running;
-  }
-
-}
 
 .command-foreground > img, .command-foreground{
   filter: brightness(0) saturate(100%) invert(6%) sepia(11%) saturate(2094%) hue-rotate(322deg) brightness(89%) contrast(81%);
@@ -170,4 +158,22 @@ body > * {
     right: 0;
     transform: translateX(100%);
   }
+}
+
+
+
+.bg-category-accessaory{
+  background: var(--category-accesaory);
+}
+.bg-category-cloth{
+  background: var(--category-cloth);
+}
+.bg-category-shader{
+  background: var(--category-shader);
+}
+.bg-category-goods{
+  background: var(--category-goods);
+}
+.bg-category-tool{
+  background: var(--category-tool);
 }

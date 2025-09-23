@@ -1,16 +1,59 @@
-import AsciiWindowContainer from "@/components/AsciiWindowContainer";
-import BashWindow from "@/components/BashWindow";
+import AsciiWindowContainer from "@/components/ui/AsciiWindowContainer";
+import BashWindow from "@/components/ui/BashWindow";
 import { fetchPics } from "@/util";
+import clsx from "clsx";
 import Image from "next/image";
 import Link from "next/link";
 import { unstable_ViewTransition as ViewTransition } from "react";
+
+const linkGroups = [
+    {
+        title: "Social",
+        sites: [
+            {
+                link: "https://vrchat.com/home/user/usr_21abbcba-ea81-4fb3-991c-52a2dc4b3260",
+                logo: "VRChat",
+            },
+            {
+                link: "https://x.com/rorikoron__game",
+                logo: "Twitter",
+            },
+        ],
+    },
+    {
+        title: "Create",
+        sites: [
+            {
+                link: "https://rorikoron.booth.pm/",
+                logo: "Booth",
+            },
+            {
+                link: "https://www.pixiv.net/users/57156713",
+                logo: "Pixiv",
+            },
+        ],
+    },
+    {
+        title: "Wishlist",
+        sites: [
+            {
+                link: "https://booth.pm/wish_list_names/poPToaBg",
+                logo: "Booth",
+            },
+            {
+                link: "https://www.amazon.jp/hz/wishlist/ls/1TD36KPYLJ4GH?ref_=wl_share",
+                logo: "Amazon",
+            },
+        ],
+    },
+];
 
 export default async function Home() {
     const pics = await fetchPics("selfie");
     const index = Math.floor(Math.random() * pics.length);
 
     return (
-        <div className="h-full px-4">
+        <div className="h-full px-4 overflow-y-auto">
             <main className="h-full gap-4 grid grid-cols-[4fr_8fr] ">
                 {/* left side */}
                 <div className="flex flex-col justify-around">
@@ -78,12 +121,12 @@ export default async function Home() {
                                         &gt; 本サイトの前身は
                                         <Link
                                             href="https://krn-portfolio.vercel.app"
-                                            className="text-link font-bold inline-flex px-2"
+                                            className="text-link font-bold inline-flex px-1.5 mx-2 rounded-xl hover:bg-foreground-tint transition-all"
                                         >
                                             <span>ここ</span>
                                             <span className="h-lh aspect-square relative command-link inline-block">
                                                 <Image
-                                                    src="link.svg"
+                                                    src="svg/link.svg"
                                                     fill
                                                     alt="共有アイコン"
                                                 />
@@ -100,15 +143,57 @@ export default async function Home() {
                                         &gt;
                                         日中はネイティブなので翻訳のお仕事もあったらください。
                                     </p>
+                                    <p>&gt;</p>
+                                    <ul className="gap-4">
+                                        {/* カテゴリ */}
+                                        {linkGroups.map((group) => (
+                                            <div key={group.title}>
+                                                <p>&gt; {group.title}:</p>
+                                                <div className="flex gap-4 my-1">
+                                                    {/* 各リンク */}
+                                                    {group.sites.map((site) => (
+                                                        <li key={site.link}>
+                                                            <Link
+                                                                href={site.link}
+                                                                className={clsx(
+                                                                    "grid grid-cols-[1lh_1fr] bg-accent px-2 py-1.5 text-foreground rounded transition-all",
+                                                                    "hover:bg-inactive"
+                                                                )}
+                                                            >
+                                                                <div className="aspect-square h-full relative">
+                                                                    <Image
+                                                                        alt={
+                                                                            site.logo +
+                                                                            "のロゴ"
+                                                                        }
+                                                                        src={
+                                                                            "svg/" +
+                                                                            site.logo.toLowerCase() +
+                                                                            ".svg"
+                                                                        }
+                                                                        className="p-1"
+                                                                        fill
+                                                                    />
+                                                                </div>
+                                                                <span>
+                                                                    {site.logo}
+                                                                </span>
+                                                            </Link>
+                                                        </li>
+                                                    ))}
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </ul>
                                 </div>
                             }
                         />
                     </ViewTransition>
-
-                    <ViewTransition name="AsciiContainer">
-                        <AsciiWindowContainer className="text-center" />
-                    </ViewTransition>
                 </div>
+
+                <ViewTransition name="AsciiContainer">
+                    <AsciiWindowContainer className="absolute right-24 bottom-12 z-1" />
+                </ViewTransition>
             </main>
         </div>
     );

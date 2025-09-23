@@ -1,6 +1,6 @@
 import HeaderListitem from "./HeaderListItem";
 import HeaderTitle from "./HeaderTitle";
-import BashWindow from "./BashWindow";
+import BashWindow from "./ui/BashWindow";
 import { ExistLink } from "@/store/atoms";
 import HeaderExplain from "./HeaderExplain";
 
@@ -14,7 +14,6 @@ export default function Header() {
         { name: "about", href: "/about" },
         { name: "archive", href: "/archive" },
         { name: "booth", href: "/booth" },
-        { name: "contact", href: "/contact" },
     ];
 
     return (
@@ -22,7 +21,7 @@ export default function Header() {
             className={`h-lvh px-6 py-12 bg-foreground text-accent tracking-widest flex flex-col gap-20`}
         >
             <BashWindow
-                className={"mx-12"}
+                className={"mx-4"}
                 command="pwd"
                 title={<HeaderTitle />}
                 isUserActive
