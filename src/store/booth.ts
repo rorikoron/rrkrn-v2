@@ -1,4 +1,5 @@
 
+import fetchBoothVRChatItem from '@/lib/fetchBoothVRChatItem';
 import { atom } from 'jotai';
 import { atomWithQuery, atomWithSuspenseQuery } from 'jotai-tanstack-query';
 type BoothItemType = "all" | "cloth" | "accessaory" | "tool" | "shader" | "goods";
@@ -15,8 +16,7 @@ interface ItemInterface {
 const boothAtom = atomWithSuspenseQuery<ItemInterface[]>(() => ({
   queryKey: ['booth'],
   queryFn: async () => {
-    const res = await fetch("/api/items")
-            .then((res) => res.json())
+    const res = await fetchBoothVRChatItem()
             .then(({ records }) =>
                 records?.map((record: { fields: any }) => record?.fields)
             )
