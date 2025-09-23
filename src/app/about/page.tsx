@@ -54,7 +54,7 @@ export default async function Home() {
 
     return (
         <div className="h-full px-4 overflow-y-auto">
-            <main className="h-full gap-4 grid grid-cols-[4fr_8fr] ">
+            <main className="h-full gap-4 grid grid-cols-[300px_1fr] ">
                 {/* left side */}
                 <div className="flex flex-col justify-around">
                     {/* 自画像 */}

@@ -74,7 +74,7 @@ export default function BoothItem() {
                                         <button
                                             className="h-[32px] aspect-square relative cursor-pointer "
                                             onClick={() => {
-                                                let l = item.pics.length;
+                                                const l = item.pics.length;
                                                 setThumbnailIndex(
                                                     (p) => (p + l - 1) % l
                                                 );
@@ -92,7 +92,7 @@ export default function BoothItem() {
                                         <button
                                             className="h-[32px] aspect-square relative cursor-pointer"
                                             onClick={() => {
-                                                let l = item.pics.length;
+                                                const l = item.pics.length;
                                                 setThumbnailIndex(
                                                     (p) => (p + 1) % l
                                                 );

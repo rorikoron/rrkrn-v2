@@ -47,8 +47,8 @@ export default function AsciiWindowContainer({
         const update = () => {
             setWindows((prev) =>
                 prev.map((win) => {
-                    let { x, y, vx, vy, w, h } = win;
-
+                    let { x, y, vx, vy } = win;
+                    const { w, h } = win;
                     const maxW = window.innerWidth;
                     const maxH = window.innerHeight;
 
