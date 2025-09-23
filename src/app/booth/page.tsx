@@ -20,12 +20,7 @@ function LoadingFallback() {
                 <div className="absolute top-25 -left-50">
                     ちょっとまってね… &gt;
                 </div>
-                <Image
-                    src="/loading.png"
-                    alt="ロードアイコン"
-                    className=""
-                    fill
-                />
+                <Image src="/loading.png" alt="ロードアイコン" fill priority />
             </div>
         </div>
     );
