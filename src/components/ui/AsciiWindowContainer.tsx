@@ -2,7 +2,7 @@
 import BashWindow from "@/components/ui/BashWindow";
 import AsciiArt from "@/components/ui/AsciiArt";
 import { useState, useEffect, useRef, useLayoutEffect } from "react";
-import HoverFlipButton from "../HoverFlipBox";
+import HoverFlipButton from "./HoverFlipBox";
 
 type WindowState = {
     id: number;

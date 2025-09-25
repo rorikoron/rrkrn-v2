@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { M_PLUS_1 } from "next/font/google";
 import "@/app/styles/globals.css";
-import Header from "../components/Header";
+import Header from "../components/client/Header";
 import clsx from "clsx";
 
 const mplusone = M_PLUS_1({ subsets: ["latin"] });

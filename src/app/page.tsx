@@ -1,4 +1,4 @@
-import HoverFlipButton from "@/components/HoverFlipBox";
+import HoverFlipButton from "@/components/ui/HoverFlipBox";
 import { unstable_ViewTransition as ViewTransition } from "react";
 import { fetchPics } from "@/util";
 import PictureItem from "@/components/client/PictureItem";

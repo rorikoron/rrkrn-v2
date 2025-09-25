@@ -6,6 +6,7 @@ import { unstable_ViewTransition as ViewTransition } from "react";
 const redHatMono = Red_Hat_Mono({ subsets: ["latin"] });
 
 interface BashWindowInterface {
+    children?: React.ReactNode;
     className?: string;
     command?: string;
     title?: ReactElement | string;
@@ -15,6 +16,7 @@ interface BashWindowInterface {
     closeHandler?: () => void;
 }
 export default function BashWindow({
+    children,
     className,
     command,
     title,
@@ -63,7 +65,7 @@ export default function BashWindow({
             {title && (
                 <div className="text-2xl pl-12 inline-block">{title}</div>
             )}
-            {output && <div>{output}</div>}
+            {children}
         </div>
     );
 }
