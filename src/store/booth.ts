@@ -18,8 +18,7 @@ interface ItemInterface {
 const boothAtom = atomWithSuspenseQuery<ItemInterface[]>(() => ({
   queryKey: ['booth'],
   queryFn: async () => {
-    const baseURL = `${window.location.protocol}//${window.location.host}`;
-    const res = fetch(`${baseURL}/api/items`)
+    const res = fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/items`)
             .then((data) => data.json())
             .then((result) => {
                 if (result.success && result.data) {
