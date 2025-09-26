@@ -1,5 +1,7 @@
 
-import fetchBoothVRChatItem from '@/lib/fetchBoothVRChatItem';
+import { HonoAppType } from '@/app/api/[...route]/route';
+import fetchBoothVRChatItem from '@/data/fetchBoothVRChatItem';
+import { hc } from 'hono/client';
 import { atom } from 'jotai';
 import { atomWithQuery, atomWithSuspenseQuery } from 'jotai-tanstack-query';
 type BoothItemType = "all" | "cloth" | "accessaory" | "tool" | "shader" | "goods";
@@ -16,8 +18,15 @@ interface ItemInterface {
 const boothAtom = atomWithSuspenseQuery<ItemInterface[]>(() => ({
   queryKey: ['booth'],
   queryFn: async () => {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/items`)
+    const client = hc<HonoAppType>("/");
+    const res = client.api.items.$get()
             .then((data) => data.json())
+            .then((result) => {
+                if (result.success && result.data) {
+                    return result.data;
+                }
+                throw new Error('Failed to fetch booth items');
+            })
             .then(({ records }) =>
                 records?.map((record: { fields: any }) => record?.fields)
             )
