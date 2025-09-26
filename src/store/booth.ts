@@ -18,8 +18,8 @@ interface ItemInterface {
 const boothAtom = atomWithSuspenseQuery<ItemInterface[]>(() => ({
   queryKey: ['booth'],
   queryFn: async () => {
-    const client = hc<HonoAppType>("/");
-    const res = client.api.items.$get()
+    const baseURL = `${window.location.protocol}//${window.location.host}`;
+    const res = fetch(`${baseURL}/api/items`)
             .then((data) => data.json())
             .then((result) => {
                 if (result.success && result.data) {
@@ -33,10 +33,8 @@ const boothAtom = atomWithSuspenseQuery<ItemInterface[]>(() => ({
             .then((items: any[]) =>
                 items?.sort((a, b) => b?.sequence - a?.sequence)
             )
-    // const sleep = (msec: number) => new Promise(resolve => setTimeout(resolve, msec));
-    // await sleep(100000);
-    // const res = [{ category: "cloth", name: "dummy", notes: "test!", pics: [{ thumbnails: {large: {url:"/found.png"}} }], price: 120, sequence: 1, id: "3333" }] as ItemInterface[]
-    return res;
+
+            return res;
   },
   staleTime: Infinity,       // 永久に古くならないようにする
   cacheTime: 1000 * 60 * 30, // 30分保持
