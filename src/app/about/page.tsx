@@ -54,12 +54,12 @@ export default async function Home() {
 
     return (
         <div className="h-full">
-            <main className="h-full grid grid-cols-[min(40%,360px)_1fr]">
+            <main className="h-full grid gap-4 md:gap-0 grid-rows-[auto_1fr] md:grid-rows-none md:grid-cols-[min(40%,360px)_1fr]">
                 {/* left side */}
-                <div className="h-full pl-6 grid grid-rows-[auto_minmax(0,1fr)] gap-10 overflow-y-hidden">
+                <div className="h-full grid grid-cols-[24%_1fr] md:grid-cols-none md:grid-rows-[auto_minmax(0,1fr)] gap-2 md:gap-10 overflow-y-hidden">
                     {/* 自画像 */}
                     <ViewTransition name="SelfieWindow">
-                        <BashWindow className="aspect-square relative">
+                        <BashWindow className="aspect-square relative mt-20 origin-top-left scale-[1.4] md:scale-1 z-10">
                             <Image
                                 src={pics[index]}
                                 alt="自画像"
@@ -89,7 +89,7 @@ export default async function Home() {
                 </div>
 
                 {/* right side */}
-                <div className="pl-10 overflow-y-hidden">
+                <div className="pl-6 md:pl-10 overflow-y-hidden">
                     <ViewTransition name="IntroductionWindow">
                         <BashWindow
                             className="h-full"
@@ -186,7 +186,7 @@ export default async function Home() {
                 </div>
 
                 <ViewTransition name="AsciiContainer">
-                    <AsciiWindowContainer className="absolute right-24 bottom-12 z-1" />
+                    <AsciiWindowContainer className="absolute right-2 md:right-24 bottom-2 md:bottom-12 z-1" />
                 </ViewTransition>
             </main>
         </div>

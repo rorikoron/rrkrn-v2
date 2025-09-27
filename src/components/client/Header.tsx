@@ -28,12 +28,12 @@ export default function Header() {
         <>
             <header
                 className={clsx(
-                    `h-lvh px-2 py-12 z-12 bg-foreground text-accent tracking-widest flex flex-col gap-20 fixed w-[400px] lg:!w-auto lg:relative  transition-all ease-in`,
-                    isOpen ? "left-0" : "-left-[400px] lg:left-0"
+                    `h-lvh px-2 py-12 z-12 bg-foreground text-accent tracking-widest flex flex-col gap-20 fixed w-[340px] lg:!w-auto lg:relative  transition-all ease-in`,
+                    isOpen ? "left-0" : "-left-[340px] lg:left-0"
                 )}
             >
                 <BashWindow
-                    className={"mx-4"}
+                    className={"ml-4 md:mx-4"}
                     command="pwd"
                     title={<HeaderTitle />}
                     isUserActive
