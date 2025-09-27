@@ -36,16 +36,15 @@ function BoothItem({ id, name, pics }: ItemInterface) {
     );
 }
 
-export default function BoothItemList() {
-    const [{ data }] = useAtom(boothAtom);
-    const [selectedCaterogry] = useAtom(itemCategoryAtom);
+export default function BoothItemList({ data }: { data: ItemInterface[] }) {
+    const [selectedCategory] = useAtom(itemCategoryAtom);
     return (
         <div className="grid grid-cols-5 overflow-y-scroll">
             {data
                 ?.filter(({ category }) =>
-                    selectedCaterogry === "all"
+                    selectedCategory === "all"
                         ? true
-                        : category === selectedCaterogry
+                        : category === selectedCategory
                 )
                 ?.map((item) => (
                     <BoothItem {...item} key={"item-" + item.id} />
