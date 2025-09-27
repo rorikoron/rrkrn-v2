@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { Zen_Kaku_Gothic_Antique } from "next/font/google";
 import "@/app/styles/component/player.scss";
+import "@/app/styles/component/minikoron.scss";
 import Link from "next/link";
 
 // variable used to update. unit: msec
@@ -218,7 +219,17 @@ export default function PictureItem({ pngs }: PictureItemInterface) {
                         "minikoron",
                         hasShownMini && "minikoron-hide"
                     )}
-                    src="/found.png"
+                    src="/minikoron/shocked.png"
+                    alt="みにころん"
+                    fill
+                />
+
+                <Image
+                    className={clsx(
+                        "minikoron-second",
+                        hasShownMini && "minikoron-hide"
+                    )}
+                    src="/minikoron/embalassed.png"
                     alt="みにころん"
                     fill
                 />

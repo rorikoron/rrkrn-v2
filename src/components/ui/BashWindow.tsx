@@ -63,7 +63,7 @@ export default function BashWindow({
                 </ViewTransition>
             )}
             {title && (
-                <div className="text-2xl pl-12 inline-block">{title}</div>
+                <div className="text-2xl pl-11 inline-block">{title}</div>
             )}
             {children}
         </div>

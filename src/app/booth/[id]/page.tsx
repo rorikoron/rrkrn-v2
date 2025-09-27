@@ -52,7 +52,7 @@ export default function BoothItem() {
             {/* カード */}
             <div className="size-full px-4 py-2">
                 <ViewTransition name={"item-card-" + id}>
-                    <figure className="h-full grid md:grid-cols-[auto_1fr] grid-rows-[auto_1fr] justify-between">
+                    <figure className="h-full grid lg:grid-cols-[auto_1fr] grid-rows-[auto_1fr] justify-between">
                         {/* 画像 */}
                         <div className="bg-foreground-tint grid grid-rows-[auto_46px] gap-4 px-10 pt-6 pb-3">
                             <ViewTransition name={"item-picture-" + item.id}>
@@ -133,9 +133,9 @@ export default function BoothItem() {
                             </div>
                         </div>
                         {/* 右の紹介欄文字 */}
-                        <div className="w-full flex flex-col bg-foreground py-3 md:py-14 px-8 relative overflow-hidden">
+                        <div className="w-full flex flex-col bg-foreground py-3 lg:py-14 px-8 relative overflow-hidden">
                             <ViewTransition name={"item-name-" + item.id}>
-                                <figcaption className="text-[40px] md:text-[46px]">
+                                <figcaption className="text-[40px] lg:text-[46px]">
                                     {item.name}
                                 </figcaption>
                             </ViewTransition>
