@@ -54,7 +54,7 @@ export default async function Home() {
 
     return (
         <div className="h-full px-4">
-            <main className="h-full gap-4 grid grid-cols-[300px_1fr] overflow-y-scroll">
+            <main className="h-full gap-4 grid grid-cols-[300px_1fr] overflow-y-scroll overflow-x-visible">
                 {/* left side */}
                 <div className="h-full grid grid-rows-[300px_minmax(0,1fr)] gap-4">
                     {/* 自画像 */}

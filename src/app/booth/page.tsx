@@ -6,6 +6,7 @@ import Image from "next/image";
 import fetchBoothVRChatItem from "@/data/fetchBoothVRChatItem";
 
 // 一日毎に再生成
+export const revalidate = 24 * 60 * 60;
 const availlableCategory: (BoothItemType | "all")[] = [
     "all",
     "cloth",
@@ -38,7 +39,7 @@ export default async function Booth() {
         );
 
     return (
-        <div className="h-full grid grid-rows-[auto_1fr] overflow-hidden">
+        <div className="h-full grid grid-rows-[auto_1fr] overflow-y-hidden">
             <div className="px-4 grid grid-cols-[6fr_4fr] items-center ">
                 <h1 className="inline-block text-[64px] before:content-['#'] before:mr-[4px]">
                     KoronStore

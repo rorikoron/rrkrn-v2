@@ -120,14 +120,11 @@ export default function AsciiWindowContainer({
                                 <p>----v---------------</p>
                             </div>
                         }
-                        output={
-                            <div>
-                                <AsciiArt />
-                            </div>
-                        }
                         hasClose
                         closeHandler={addWindow}
-                    />
+                    >
+                        <AsciiArt />
+                    </BashWindow>
                 </div>
             ))}
         </div>

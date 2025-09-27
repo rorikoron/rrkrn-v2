@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { Zen_Kaku_Gothic_Antique } from "next/font/google";
 import "@/app/styles/component/player.scss";
+import Link from "next/link";
 
 const zenkaku = Zen_Kaku_Gothic_Antique({
     subsets: ["latin"],
@@ -96,12 +97,20 @@ export default function PictureItem({ pngs }: PictureItemInterface) {
                                         "hover:bg-accent/20"
                                     )}
                                 >
-                                    <Image
-                                        src="svg/share.svg"
-                                        alt="共有"
-                                        fill
-                                        className="p-2.5 command-accent"
-                                    />
+                                    <Link
+                                        rel="noopener noreferrer"
+                                        target="_blank"
+                                        href={
+                                            "http://twitter.com/share?url=https://rorikoron.net/&text=ろりころんさんのサイトです！！！&via=rorikoron"
+                                        }
+                                    >
+                                        <Image
+                                            src="svg/share.svg"
+                                            alt="共有"
+                                            fill
+                                            className="p-2.5 command-accent"
+                                        />
+                                    </Link>
                                 </button>
                             </div>
 
