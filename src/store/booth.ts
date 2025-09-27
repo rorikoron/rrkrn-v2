@@ -1,5 +1,4 @@
 
-import { HonoAppType } from '@/app/api/[...route]/route';
 import fetchBoothVRChatItem from '@/data/fetchBoothVRChatItem';
 import { hc } from 'hono/client';
 import { atom } from 'jotai';
