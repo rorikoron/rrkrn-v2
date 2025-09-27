@@ -6,8 +6,7 @@ import { useEffect, useState } from "react";
 
 export default function HeaderListitem() {
     const pathname = usePathname();
-    const prevPathname = useAtomValue(pathnameAtom);
-    const [localPrevPathname, setLocalPrevPathname] = useState(prevPathname);
+    const [localPrevPathname, setLocalPrevPathname] = useState(pathname);
 
     useEffect(() => {
         let mode: "clear" | "append" = "clear";

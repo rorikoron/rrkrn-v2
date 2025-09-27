@@ -12,7 +12,9 @@ export default async function Home() {
         <div className="h-full">
             <main className="h-full grid grid-rows-[4fr_6fr] relative">
                 <div className="flex flex-col justify-center overflow-hidden">
-                    <h1 className=" text-[128px] leading-none">Rorikoron</h1>
+                    <h1 className="text-[80px] md:text-[128px] leading-none">
+                        Rorikoron
+                    </h1>
                     <h4 className="w-fit overlay leading-none pl-2">
                         創作が好きです。
                     </h4>
@@ -21,7 +23,6 @@ export default async function Home() {
                     <div className="inline-block relative">
                         <Link href="/about">
                             <HoverFlipButton
-                                className="ml-2"
                                 frontLabel="もっと詳しく"
                                 rearLabel="$ cd /about"
                                 frontIcon="read-more"

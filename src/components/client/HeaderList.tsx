@@ -1,11 +1,10 @@
-"use client";
 import clsx from "clsx";
 import BashWindow from "../ui/BashWindow";
 import Link from "next/link";
 import { useState } from "react";
-import { useSetAtom } from "jotai";
-import { ExistLink, hoveredLinkAtom, pathnameAtom } from "@/store/atoms";
+import { ExistLink, isHeaderOpenAtom } from "@/store/atoms";
 import { usePathname } from "next/navigation";
+import { useSetAtom } from "jotai";
 
 const SelectExplanation = (link: ExistLink | "") => {
     switch (link) {
@@ -28,7 +27,6 @@ export interface LinksInterface {
 }
 export default function HeaderList({ links }: { links: LinksInterface[] }) {
     const [hoveredLink, setHoveredLink] = useState("");
-    const pathname = usePathname();
 
     return (
         <div className="flex flex-col">

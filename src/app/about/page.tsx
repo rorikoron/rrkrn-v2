@@ -54,7 +54,7 @@ export default async function Home() {
 
     return (
         <div className="h-full">
-            <main className="h-full grid grid-cols-[min(30%,360px)_1fr]">
+            <main className="h-full grid grid-cols-[min(40%,360px)_1fr]">
                 {/* left side */}
                 <div className="h-full pl-6 grid grid-rows-[auto_minmax(0,1fr)] gap-10 overflow-y-hidden">
                     {/* 自画像 */}

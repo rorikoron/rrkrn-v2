@@ -6,6 +6,8 @@ import { Zen_Kaku_Gothic_Antique } from "next/font/google";
 import "@/app/styles/component/player.scss";
 import Link from "next/link";
 
+// variable used to update. unit: msec
+const updateInterval = 2000;
 const zenkaku = Zen_Kaku_Gothic_Antique({
     subsets: ["latin"],
     weight: "500",
@@ -24,26 +26,24 @@ export default function PictureItem({ pngs }: PictureItemInterface) {
     useEffect(() => {
         setHasShownMini((prev) => prev || isMinify);
     }, [isMinify]);
-    // variable used to update. unit: msec
-    const updateInterval = 2000;
 
     return (
         <>
             <div
                 className={clsx(
-                    "border-foreground fixed bottom-[10px] right-[36px] transition-all z-11",
+                    "border-foreground fixed bottom-[10px] right-[8px] md:right-[36px] transition-all z-11",
                     isMinify && "translate-y-[85%]"
                 )}
             >
                 {/* spotify ui zone */}
                 <div
                     className={clsx(
-                        `text-accent h-[68lvh] aspect-9/16 flex flex-col gap-6 rounded-xl ${zenkaku.className}`,
+                        `text-accent h-[60lvh] md:h-[68lvh] aspect-9/16 flex flex-col gap-6 rounded-xl ${zenkaku.className}`,
                         "bg-gradient-to-b from-foreground-tint to-foreground",
                         "bg-background/30 bg-blend-multiply"
                     )}
                 >
-                    <div className="h-full flex flex-col justify-between py-6">
+                    <div className="h-full flex flex-col justify-between py-4">
                         <div className="px-6 my-2 flex justify-between">
                             <button
                                 className={clsx(
@@ -65,7 +65,7 @@ export default function PictureItem({ pngs }: PictureItemInterface) {
                             </button>
                             <span>フレンド写真集</span>
                         </div>
-                        <figure className="flex flex-col gap-6 px-6 ">
+                        <figure className="flex flex-col gap-2 md:gap-6 px-4 md:px-6 ">
                             <div className="w-full aspect-square relative rounded-sm overflow-hidden ">
                                 <Image
                                     src={pngs[index]}
@@ -91,27 +91,28 @@ export default function PictureItem({ pngs }: PictureItemInterface) {
                                     </figcaption>
                                 </div>
 
-                                <button
-                                    className={clsx(
-                                        "transition-all h-full aspect-square relative p-4 rounded-full",
-                                        "hover:bg-accent/20"
-                                    )}
+                                <Link
+                                    rel="noopener noreferrer"
+                                    target="_blank"
+                                    href={
+                                        "http://twitter.com/share?url=https://rorikoron.net/&text=ろりころんのホームページです！！！&via=rorikoron"
+                                    }
                                 >
-                                    <Link
-                                        rel="noopener noreferrer"
-                                        target="_blank"
-                                        href={
-                                            "http://twitter.com/share?url=https://rorikoron.net/&text=ろりころんさんのサイトです！！！&via=rorikoron"
-                                        }
+                                    <button
+                                        className={clsx(
+                                            "transition-all h-full aspect-square relative -mr-2 p-2 rounded-full flex justify-center",
+                                            "hover:bg-accent/20"
+                                        )}
                                     >
                                         <Image
                                             src="svg/share.svg"
                                             alt="共有"
-                                            fill
-                                            className="p-2.5 command-accent"
+                                            width="20"
+                                            height="20"
+                                            className=" command-accent"
                                         />
-                                    </Link>
-                                </button>
+                                    </button>
+                                </Link>
                             </div>
 
                             <div>
@@ -207,7 +208,9 @@ export default function PictureItem({ pngs }: PictureItemInterface) {
 
             <div
                 className={clsx(
-                    "fixed right-[calc(36px+68lvh*9/16*0.5)] bottom-[calc(10px+68lvh*0.15)] translate-x-[50%] w-[calc(68lvh*9/16*0.7)] aspect-square z-1 transition-all"
+                    "fixed translate-x-[50%] w-[calc(68lvh*9/16*0.7)] aspect-square z-1 transition-all",
+                    "right-[calc(36px+60lvh*9/16*0.5)] bottom-[calc(10px+60lvh*0.15-40px)]",
+                    "md:right-[calc(36px+68lvh*9/16*0.5)] md:bottom-[calc(10px+68lvh*0.15-40px)]"
                 )}
             >
                 <Image

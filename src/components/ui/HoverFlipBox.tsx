@@ -19,7 +19,7 @@ export default function HoverFlipButton({
         <div className="group inline-block">
             <div
                 className={clsx(
-                    `${className} bg-accent border-foreground w-[220px] px-8 py-3.5 border-2 flex justify-between cursor-pointer overflow-hidden transition-all`,
+                    `${className} bg-accent border-foreground w-[180px] lg:w-[220px] px-6 lg:px-8 py-3.5 border-2 flex justify-between cursor-pointer overflow-hidden transition-all`,
                     `group-hover:bg-foreground group-hover:border-accent`
                 )}
             >
@@ -48,7 +48,7 @@ export default function HoverFlipButton({
                         alt="詳細"
                         className={clsx(
                             "transition-all command-foreground",
-                            "group-hover:ml-4 group-hover:opacity-0"
+                            "group-hover:ml-3 group-hover:opacity-0"
                         )}
                         fill
                     />
@@ -58,7 +58,7 @@ export default function HoverFlipButton({
                         alt="展開"
                         className={clsx(
                             "transition-all opacity-0 command-accent",
-                            "group-hover:ml-4 group-hover:opacity-100"
+                            "group-hover:ml-3 group-hover:opacity-100"
                         )}
                         fill
                     />

@@ -7,6 +7,9 @@ import clsx from "clsx";
 const mplusone = M_PLUS_1({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
+    metadataBase: new URL(
+        process.env.NEXT_PUBLIC_BASE_URL || "https://rorikoron.net"
+    ),
     title: "ろりころんほーむぺーじ",
     description: "ろりころんのサイト第二版です！",
     openGraph: {
@@ -47,12 +50,12 @@ export default function RootLayout({
                 content="width=device-width, initial-scale=1.0"
             />
             <body
-                className={`h-lvh w-lvw antialiased grid grid-cols-[max(30%,380px)_1fr] overflow-hidden`}
+                className={`!h-lvh !w-lvw antialiased relative lg:grid lg:grid-cols-[max(30%,380px)_1fr] overflow-hidden`}
             >
                 <Header />
                 <div
                     className={clsx(
-                        `${mplusone.className} py-12 px-8 text-accent h-full`,
+                        `${mplusone.className} py-6 md:py-12 px-6 md:px-8 text-accent h-full`,
                         "bg-gradient-to-br from-bg-background to-background-gradient"
                     )}
                 >
