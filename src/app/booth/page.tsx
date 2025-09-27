@@ -6,7 +6,6 @@ import Image from "next/image";
 import fetchBoothVRChatItem from "@/data/fetchBoothVRChatItem";
 
 // 一日毎に再生成
-export const revalidate = 24 * 60 * 60;
 const availlableCategory: (BoothItemType | "all")[] = [
     "all",
     "cloth",
