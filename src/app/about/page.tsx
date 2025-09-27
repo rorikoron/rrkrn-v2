@@ -53,10 +53,10 @@ export default async function Home() {
     const index = Math.floor(Math.random() * pics.length);
 
     return (
-        <div className="h-full px-4">
-            <main className="h-full gap-4 grid grid-cols-[300px_1fr] overflow-y-scroll overflow-x-visible">
+        <div className="h-full">
+            <main className="h-full grid grid-cols-[min(30%,360px)_1fr]">
                 {/* left side */}
-                <div className="h-full grid grid-rows-[300px_minmax(0,1fr)] gap-4">
+                <div className="h-full pl-6 grid grid-rows-[auto_minmax(0,1fr)] gap-10 overflow-y-hidden">
                     {/* 自画像 */}
                     <ViewTransition name="SelfieWindow">
                         <BashWindow className="aspect-square relative">
@@ -72,30 +72,33 @@ export default async function Home() {
                         {/* 説明文 */}
                         <BashWindow
                             command="man"
-                            title={<h5>&gt; トリセツ？</h5>}
+                            title={<h5>&gt; トリセツ?</h5>}
                         >
-                            <p>&gt;</p>
-                            <p>&gt; 08/01 生まれ</p>
-                            <p>&gt;</p>
-                            <p>&gt; 好きなたべもの：全て</p>
-                            <p>&gt; 好きなのみもの：調整豆乳、솔의눈</p>
-                            <p>&gt; 好きなこと：何か作ること！</p>
-                            <p>&gt;</p>
-                            <p>&gt; かしこくなりたいです。</p>
+                            <div className="overflow-y-auto">
+                                <p>&gt;</p>
+                                <p>&gt; 08/01 生まれ</p>
+                                <p>&gt;</p>
+                                <p>&gt; 好きなたべもの：全て</p>
+                                <p>&gt; 好きなのみもの：調整豆乳、솔의눈</p>
+                                <p>&gt; 好きなこと：何か作ること！</p>
+                                <p>&gt;</p>
+                                <p>&gt; かしこくなりたいです。</p>
+                            </div>
                         </BashWindow>
                     </ViewTransition>
                 </div>
 
                 {/* right side */}
-                <div className="pl-2 flex flex-col justify-around">
+                <div className="pl-10 overflow-y-hidden">
                     <ViewTransition name="IntroductionWindow">
                         <BashWindow
+                            className="h-full"
                             command="whoami"
                             title={
                                 <span className="pl-4">&gt; こんにちは！</span>
                             }
                         >
-                            <div>
+                            <div className="overflow-y-auto">
                                 <p>&gt;</p>
                                 <p>&gt; ろりころんです。</p>
                                 <p>

@@ -27,7 +27,7 @@ export default function BashWindow({
 }: BashWindowInterface) {
     return (
         <div
-            className={`border-accent border-2 p-6 flex flex-col relative ${className} ${redHatMono.className}  bg-foreground`}
+            className={`border-accent border-2 p-6 flex flex-col relative ${className} ${redHatMono.className}  bg-foreground max-h-fit`}
         >
             {hasClose && (
                 <button

@@ -12,7 +12,7 @@ export default function Header() {
 
     return (
         <header
-            className={`h-lvh px-6 py-12 bg-foreground text-accent tracking-widest flex flex-col gap-20`}
+            className={`h-lvh px-2 py-12 bg-foreground text-accent tracking-widest flex flex-col gap-20`}
         >
             <BashWindow
                 className={"mx-4"}

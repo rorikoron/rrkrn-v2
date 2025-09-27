@@ -32,7 +32,7 @@ export default function HeaderList({ links }: { links: LinksInterface[] }) {
 
     return (
         <div className="flex flex-col">
-            <BashWindow command="cd" className="ml-8 ">
+            <BashWindow command="cd" className="ml-8 mr-6 ">
                 <ul className="flex flex-col text-xl text-inactive py-4 overflow-hidden">
                     {links.map(({ name, href }) => (
                         <li
@@ -59,9 +59,9 @@ export default function HeaderList({ links }: { links: LinksInterface[] }) {
                 </ul>
             </BashWindow>
             <BashWindow
-                className="ml-16 -mt-4 -mr-4 "
+                className="ml-16 -mt-4 pr-2"
                 command="cat"
-                title={<span>&gt; Explain:</span>}
+                title={<span className="-ml-2">&gt; Explain:</span>}
             >
                 <article className="text-sm pl-8">
                     {SelectExplanation(hoveredLink as ExistLink)

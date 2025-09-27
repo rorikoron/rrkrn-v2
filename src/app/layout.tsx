@@ -18,7 +18,7 @@ export const metadata: Metadata = {
         locale: "ja_JP",
         images: [
             {
-                url: "./OGP.png",
+                url: "/OGP.png",
                 width: 1200,
                 height: 630,
                 alt: "png for OGP",
@@ -30,7 +30,7 @@ export const metadata: Metadata = {
         card: "summary_large_image",
         title: "ろりころんほーむぺーじ",
         description: "ろりころんのサイトです！",
-        images: ["./OGP.png"],
+        images: ["/OGP.png"],
         site: "website",
     },
 };
@@ -42,8 +42,12 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="en">
+            <meta
+                name="viewport"
+                content="width=device-width, initial-scale=1.0"
+            />
             <body
-                className={`h-lvh w-lvw antialiased grid grid-cols-[420px_1fr] overflow-hidden`}
+                className={`h-lvh w-lvw antialiased grid grid-cols-[max(30%,380px)_1fr] overflow-hidden`}
             >
                 <Header />
                 <div
