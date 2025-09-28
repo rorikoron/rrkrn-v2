@@ -7,16 +7,19 @@ import {
     unstable_ViewTransition as ViewTransition,
 } from "react";
 import Image from "next/image";
-import { useAtom } from "jotai";
-import { boothAtom, ItemInterface } from "@/store/booth";
+import { useAtom, useAtomValue } from "jotai";
+import { boothAtom, itemCategoryAtom, ItemInterface } from "@/store/booth";
 import { useParams } from "next/navigation";
 import Link from "next/link";
+import { createGunzip } from "zlib";
+import BoothItem from "@/components/ui/BoothItem";
 
 // export const revalidate = false;
 
-export default function BoothItem() {
+export default function BoothItemCard() {
     const { id } = useParams();
     const [{ data }] = useAtom(boothAtom);
+    const category = useAtomValue(itemCategoryAtom);
     const item = data.find((item) => item.id === id) as ItemInterface;
     const linkRef = useRef<HTMLAnchorElement>(null);
     const [thumbnailndex, setThumbnailIndex] = useState(0);
@@ -49,10 +52,10 @@ export default function BoothItem() {
                 </Link>
             </div>
 
-            {/* カード */}
-            <div className="size-full px-4 py-2">
+            <div className="size-full px-4 py-2 flex flex-col overflow-y-auto">
+                {/* カード */}
                 <ViewTransition name={"item-card-" + id}>
-                    <figure className="h-full grid lg:grid-cols-[auto_1fr] grid-rows-[auto_1fr] justify-between">
+                    <figure className="grid sm:grid-cols-[300px_1fr] lg:grid-cols-[auto_1fr] grid-rows-[auto_1fr] justify-between">
                         {/* 画像 */}
                         <div className="bg-foreground-tint grid grid-rows-[auto_46px] gap-4 px-10 pt-6 pb-3">
                             <ViewTransition name={"item-picture-" + item.id}>
@@ -175,6 +178,20 @@ export default function BoothItem() {
                         </div>
                     </figure>
                 </ViewTransition>
+
+                {/* 下のエリア */}
+                <div className="py-4 [&>*]:w-[20%] [&>*]:h-fit  flex  overflow-hidden">
+                    {data
+                        .filter((item) =>
+                            category === "all"
+                                ? true
+                                : item.category === category
+                        )
+                        .filter((item) => item.id !== id)
+                        .map((item) => (
+                            <BoothItem key={item.id} {...item} />
+                        ))}
+                </div>
             </div>
         </div>
     );

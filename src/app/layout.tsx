@@ -55,7 +55,7 @@ export default function RootLayout({
                 <Header />
                 <div
                     className={clsx(
-                        `${mplusone.className} py-6 md:py-12 px-6 md:px-8 text-accent h-full`,
+                        `${mplusone.className} py-6 md:py-12 px-6 md:px-8 text-accent h-lvh`,
                         "bg-gradient-to-br from-bg-background to-background-gradient"
                     )}
                 >

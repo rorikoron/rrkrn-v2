@@ -33,7 +33,7 @@ export default function Header() {
                 )}
             >
                 <BashWindow
-                    className={"ml-4 md:mx-4"}
+                    className={"ml-4 lg:ml-6 lg:mr-6 xl:mr-10 2xl:mr-20"}
                     command="pwd"
                     title={<HeaderTitle />}
                     isUserActive

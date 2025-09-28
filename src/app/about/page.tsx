@@ -59,7 +59,7 @@ export default async function Home() {
                 <div className="h-full grid grid-cols-[24%_1fr] md:grid-cols-none md:grid-rows-[auto_minmax(0,1fr)] gap-2 md:gap-10 overflow-y-hidden">
                     {/* 自画像 */}
                     <ViewTransition name="SelfieWindow">
-                        <BashWindow className="aspect-square relative mt-20 origin-top-left scale-[1.4] md:mt-0 md:scale-100 z-10">
+                        <BashWindow className="aspect-square relative mt-20 origin-bottom-left scale-[1.4] md:mt-0 md:scale-100 z-10">
                             <Image
                                 src={pics[index]}
                                 alt="自画像"
