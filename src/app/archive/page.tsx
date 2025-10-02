@@ -14,7 +14,7 @@ export default async function Home() {
     const archivesByYear: Record<string, string[]> = {};
     await Promise.all(
         years.map(async (year) => {
-            archivesByYear[year] = await await fetchVRChatArchiveByYear({
+            archivesByYear[year] = await fetchVRChatArchiveByYear({
                 year: Number(year),
             });
         })
