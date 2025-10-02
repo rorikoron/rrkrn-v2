@@ -1,15 +1,17 @@
 import { M_PLUS_1 } from "next/font/google";
-import { client } from "../api/[...route]/route";
 import fetchVRChatArchiveByYear, {
     VRChatArchiveInterface,
 } from "@/data/fetchVRChatArchiveByYear";
 import Link from "next/link";
 import AnimatedMagnifiableImage from "@/components/ui/AnimatedMagnifiableImage";
 import Image from "next/image";
+import { hc } from "hono/client";
+import { AppType } from "../api/[...route]/route";
 const plusone = M_PLUS_1({ subsets: ["latin"] });
 export const revalidate = 86400;
 
 export default async function Home() {
+    const client = hc<AppType>(process.env.NEXT_PUBLIC_BASE_URL ?? "");
     const res = await client.api.archive.$get();
     const years: string[] = await res.json();
 
