@@ -1,0 +1,49 @@
+.minikoron-second {
+  visibility: hidden;
+  opacity: 0;
+}
+.minikoron-second.minikoron-hide {
+  animation: minikoron-fadeout 1.4s 1.2s forwards ease-in-out;
+}
+.minikoron.minikoron-hide {
+  animation: minikoron-bounce 1s 0.24s forwards ease-in-out;
+}
+@keyframes minikoron-bounce {
+  0% {
+    transform: translateY(0);
+  }
+  20% {
+    transform: translateY(-30px);
+  }
+  40% {
+    transform: translateY(0);
+  }
+  99% {
+    visibility: visible;
+    opacity: 1;
+  }
+  100% {
+    visibility: hidden;
+    opacity: 0;
+  }
+}
+@keyframes minikoron-fadeout {
+  0% {
+    visibility: visible;
+    opacity: 1;
+  }
+  50% {
+    visibility: visible;
+    opacity: 1;
+    transform: translateX(0);
+  }
+  99% {
+    visibility: visible;
+    opacity: 1;
+    transform: translateY(100%);
+  }
+  100% {
+    visibility: hidden;
+    opacity: 0;
+  }
+}/*# sourceMappingURL=minikoron.css.map */

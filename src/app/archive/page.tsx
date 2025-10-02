@@ -1,31 +1,22 @@
 import { M_PLUS_1 } from "next/font/google";
-import fetchVRChatArchiveByYear, {
-    VRChatArchiveInterface,
-} from "@/data/fetchVRChatArchiveByYear";
 import Link from "next/link";
 import AnimatedMagnifiableImage from "@/components/ui/AnimatedMagnifiableImage";
 import Image from "next/image";
-import { hc } from "hono/client";
-import { AppType } from "../api/[...route]/route";
+import { apiClient } from "@/lib/apiClient";
+import { fetchVRChatArchiveAvailableYears } from "@/data/fetchVRChatArchiveAvailableYears";
+import fetchVRChatArchiveByYear from "@/data/fetchVRChatArchiveByYear";
 const plusone = M_PLUS_1({ subsets: ["latin"] });
 export const revalidate = 86400;
 
 export default async function Home() {
-    const baseURL = process.env.NEXT_PUBLIC_BASE_URL;
-    if (!baseURL) throw new Error("API URL Was Not Set");
-    const client = hc<AppType>(baseURL);
-    const res = await client.api.archive.$get();
-    const years: string[] = await res.json();
+    const years: string[] = await fetchVRChatArchiveAvailableYears();
 
-    const archivesByYear: Record<
-        string,
-        Awaited<ReturnType<typeof fetchVRChatArchiveByYear>>
-    > = {};
+    const archivesByYear: Record<string, string[]> = {};
     await Promise.all(
         years.map(async (year) => {
-            archivesByYear[year] = await fetchVRChatArchiveByYear({
+            archivesByYear[year] = await await fetchVRChatArchiveByYear({
                 year: Number(year),
-            } as VRChatArchiveInterface);
+            });
         })
     );
 
