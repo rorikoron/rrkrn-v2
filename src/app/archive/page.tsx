@@ -11,7 +11,9 @@ const plusone = M_PLUS_1({ subsets: ["latin"] });
 export const revalidate = 86400;
 
 export default async function Home() {
-    const client = hc<AppType>(process.env.NEXT_PUBLIC_BASE_URL ?? "");
+    const baseURL = process.env.NEXT_PUBLIC_BASE_URL;
+    if (!baseURL) throw new Error("API URL Was Not Set");
+    const client = hc<AppType>(baseURL);
     const res = await client.api.archive.$get();
     const years: string[] = await res.json();
 
