@@ -10,8 +10,8 @@ export default function BoothItem({ id, name, pics }: ItemInterface) {
             <Link
                 href={"/booth/" + id}
                 className={clsx(
-                    "p-2 w-full text-accent z-5 rounded-xl transition-all cursor-pointer",
-                    "hover:bg-accent/40"
+                    "p-2 w-full text-foreground z-5 rounded-xl transition-all cursor-pointer",
+                    "hover:bg-white/40"
                 )}
             >
                 <ViewTransition name={"item-picture-" + id}>

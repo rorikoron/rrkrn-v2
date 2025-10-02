@@ -11,7 +11,7 @@
     bottom: 0;
     height: 100%;
     width: 0;
-    background-color: var(--accent);
+    background-color: var(--foreground);
 
     animation: overlay-animation 0.8s 0.2s forwards ease-in-out;
   }
@@ -25,12 +25,12 @@
     }
     
     51%{
-      color: var(--accent);
+      color: var(--foreground);
     }
 
     100%{
 
-      color: var(--accent);
+      color: var(--foreground);
     }
   }
   @keyframes overlay-animation {

@@ -13,6 +13,7 @@ import { useParams } from "next/navigation";
 import Link from "next/link";
 import { createGunzip } from "zlib";
 import BoothItem from "@/components/ui/BoothItem";
+import BoothItemList from "@/components/client/BoothItemList";
 
 // export const revalidate = false;
 
@@ -35,29 +36,29 @@ export default function BoothItemCard() {
         return () => window.removeEventListener("keydown", handleKeyDown);
     }, []);
     return (
-        <div className="h-full grid grid-rows-[auto_1fr] overflow-y-auto">
+        <div className="h-full grid grid-rows-[auto_1fr] overflow-y-auto text-foreground">
             {/* Back button */}
             <div>
                 <Link
                     ref={linkRef}
                     href={"/booth"}
-                    className="group inline-block h-[40px] aspect-square relative p-5 rounded-full hover:bg-foreground-tint transition-all"
+                    className="group inline-block h-[40px] aspect-square relative p-5 rounded-full hover:bg-background-sub-tint transition-all"
                 >
                     <Image
-                        src="/svg/arrow-left.svg"
+                        src="/svg/arrow-back.svg"
                         alt="back"
                         fill
-                        className="p-2 command-accent -translate-x-[5%]"
+                        className="p-2 command-foreground -translate-x-[5%]"
                     />
                 </Link>
             </div>
 
-            <div className="size-full px-4 py-2 flex flex-col overflow-y-auto">
+            <div className="size-full px-4 py-2 flex flex-col gap-2 overflow-y-hidden">
                 {/* カード */}
                 <ViewTransition name={"item-card-" + id}>
                     <figure className="grid sm:grid-cols-[300px_1fr] lg:grid-cols-[auto_1fr] grid-rows-[auto_1fr] justify-between">
                         {/* 画像 */}
-                        <div className="bg-foreground-tint grid grid-rows-[auto_46px] gap-4 px-10 pt-6 pb-3">
+                        <div className="bg-background-sub-tint grid grid-rows-[auto_46px] gap-4 px-10 pt-6 pb-3">
                             <ViewTransition name={"item-picture-" + item.id}>
                                 <div
                                     className={clsx(
@@ -89,7 +90,7 @@ export default function BoothItemCard() {
                                                 src="/svg/arrow-left.svg"
                                                 alt="Left Button"
                                                 fill
-                                                className="command-accent"
+                                                className="command-foreground hover:scale-[1.1]"
                                             />
                                         </button>
                                     </div>
@@ -107,7 +108,7 @@ export default function BoothItemCard() {
                                                 src="/svg/arrow-left.svg"
                                                 alt="Left Button"
                                                 fill
-                                                className="command-accent"
+                                                className="command-foreground hover:scale-[1.1]"
                                             />
                                         </button>
                                     </div>
@@ -136,7 +137,7 @@ export default function BoothItemCard() {
                             </div>
                         </div>
                         {/* 右の紹介欄文字 */}
-                        <div className="w-full flex flex-col bg-foreground py-3 lg:py-14 px-8 relative overflow-hidden">
+                        <div className="w-full flex flex-col bg-background-sub py-3 lg:py-14 px-8 relative overflow-hidden">
                             <ViewTransition name={"item-name-" + item.id}>
                                 <figcaption className="text-[40px] lg:text-[46px]">
                                     {item.name}
@@ -157,7 +158,7 @@ export default function BoothItemCard() {
                             <Link
                                 href={"https://booth.pm/ja/items/" + id}
                                 target="blank"
-                                className="self-end border-accnet border-2 w-fit py-2 hover:bg-foreground-tint transition-all"
+                                className="self-end border-foreground border-2 w-fit py-2 hover:bg-background-sub-tint transition-all"
                             >
                                 <div className="flex h-full px-5 gap-4">
                                     <div className="h-full aspect-square relative">
@@ -180,18 +181,8 @@ export default function BoothItemCard() {
                 </ViewTransition>
 
                 {/* 下のエリア */}
-                <div className="py-4 [&>*]:w-[20%] [&>*]:h-fit  flex  overflow-hidden">
-                    {data
-                        .filter((item) =>
-                            category === "all"
-                                ? true
-                                : item.category === category
-                        )
-                        .filter((item) => item.id !== id)
-                        .map((item) => (
-                            <BoothItem key={item.id} {...item} />
-                        ))}
-                </div>
+
+                <BoothItemList data={data.filter((item) => item.id !== id)} />
             </div>
         </div>
     );

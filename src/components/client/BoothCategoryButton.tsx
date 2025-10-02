@@ -16,9 +16,9 @@ export default function BoothCategoryButton({
             className={clsx(
                 "px-5 py-1 rounded-xl transition-all ",
                 selectedCaterogry !== category &&
-                    "bg-accent/20   cursor-pointer hover:bg-accent/60",
+                    "bg-foreground/20   cursor-pointer hover:bg-foreground/60",
                 selectedCaterogry === category &&
-                    "bg-foreground pointer-events-none"
+                    "bg-background-sub text-foreground pointer-events-none"
             )}
             onClick={() => startTransition(() => setSelectedCategory(category))}
         >

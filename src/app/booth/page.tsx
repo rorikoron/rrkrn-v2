@@ -47,7 +47,7 @@ export default async function Booth() {
                 </h1>
                 <h2
                     className={clsx(
-                        "inline-block text-sm tracking-wider mt-4 py-4 pr-[42px] border-t-3  border-accent/60",
+                        "inline-block text-sm tracking-wider mt-4 py-4 pr-[42px] border-t-3  border-foreground/60",
                         "md:border-t-0 md:border-l-3 md:pl-[30px] md:pr-0"
                     )}
                 >
@@ -57,7 +57,7 @@ export default async function Booth() {
             </div>
 
             {/* bottom fields */}
-            <div className="h-full overflow-hidden">
+            <div className="overflow-hidden h-full flex flex-col">
                 {/* buttons */}
                 <fieldset className="md:px-8 py-2 flex gap-1.5 flex-wrap">
                     {availlableCategory.map((category) => (
@@ -68,7 +68,7 @@ export default async function Booth() {
                     ))}
                 </fieldset>
                 {/* items */}
-                <div className="py-2 md:px-4 h-full overflow-y-auto">
+                <div className="h-full py-2 md:px-4 overflow-y-auto">
                     <Suspense fallback={<LoadingFallback />}>
                         <BoothItemList data={items} />
                     </Suspense>

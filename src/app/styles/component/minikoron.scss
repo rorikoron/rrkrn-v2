@@ -1,13 +1,18 @@
 .minikoron{
+    $bounce-delay: 0.24s;
+    $bounce-duration: 1s;
+    $hide-delay: $bounce-delay + $bounce-duration - 0.04s;
+    $hide-duration: 1.4s;
+
     &-second{
         visibility: hidden;
         opacity: 0;
         &.minikoron-hide{
-            animation: minikoron-fadeout 2s 1.2s forwards ease-in-out;
+            animation: minikoron-fadeout $hide-duration $hide-delay forwards ease-in-out;
         }
     }
     &.minikoron-hide{
-        animation: minikoron-bounce 1s 0.24s forwards ease-in-out;
+        animation: minikoron-bounce $bounce-duration $bounce-delay forwards ease-in-out;
     }
 
 
@@ -16,7 +21,7 @@
             transform: translateY(0);
         }
         20%{
-            transform: translateY(-40px);
+            transform: translateY(-30px);
         }
 
         40%{

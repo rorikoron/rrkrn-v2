@@ -1,29 +1,28 @@
 @import "tailwindcss";
 
 :root {
-  --background: #EF8783;
-    --inactive: #bf9994;
-    --foreground-tint: #8C6E6A;
-    --foreground: #171717;
-    --accent: #ededed;
-    --link: #ffca44;
+  --background: #ff9696;
+  --background-sub-tint: rgb(255, 167, 99);
+  --background-sub: #ffebeb;
+  --inactive: #554846;
+  --foreground: #392727;
+  --accent: #ffca44;
 
-
-    --category-accesaory: #ff7a7f;
-    --category-shader: #7a9dff;
-    --category-tool: #95ff91;
-    --category-cloth: #ffff4e;
-    --category-goods: rgb(255, 196, 87);
+  --category-accesaory: #ff7a7f;
+  --category-shader: #7a9dff;
+  --category-tool: #95ff91;
+  --category-cloth: #ffff4e;
+  --category-goods: rgb(255, 196, 87);
 }
 @theme inline {
   --color-background: var(--background);
   --color-background-gradient: var(--background-gradient);
   --color-background-tint: var(--background-tint);
-  --color-accent: var(--accent);
-  --color-inactive: var(--inactive);
+  --color-background-sub: var(--background-sub);
+  --color-background-sub-tint: var(--background-sub-tint);
   --color-foreground: var(--foreground);
-  --color-foreground-tint: var(--foreground-tint);
-  --color-link: var(--link);
+  --color-inactive: var(--inactive);
+  --color-accent: var(--accent);
 
 
   --color-category-accesaory: var(--category-accesaory);
@@ -33,17 +32,15 @@
   --color-category-cloth: var(--category-cloth);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
+  :root.dark {
     --background: #4a2e32;
     --background-tint: #ffa49a;
     --background-gradient: #78332e;
     --inactive: #ecccc7;
-    --foreground: #2b2120;
-    --foreground-tint:  #86635f;
-    --accent: #ededed;
-    --link: #ffca44;
-  }
+    --background-sub: #2b2120;
+    --background-sub-tint:  #86635f;
+    --foreground: #ededed;
+    --accent: #ffca44;
 }
 
 body {
@@ -55,10 +52,10 @@ body {
 
 *::-webkit-scrollbar{
   width: 12px;
-  background-color: var(--foreground-tint);
+  background-color: var(--background-sub-tint);
 }
 *::-webkit-scrollbar-thumb{
-  background-color: var(--accent);
+  background-color: var(--foreground);
 }
 
 .bg-background::selection{
@@ -78,7 +75,7 @@ body {
 
 .dot, .bar{
   height: 100%;
-  background-color: var(--accent);
+  background-color: white;
 }
 .dot{
   aspect-ratio: 1/1;
@@ -98,17 +95,28 @@ body {
   }
 }
 
+html.dark{
+  .command-background-sub > img, .command-background-sub{
+    filter: brightness(0) saturate(100%) invert(6%) sepia(11%) saturate(2094%) hue-rotate(322deg) brightness(89%) contrast(81%);
+  }
+  .command-foreground > img, .command-foreground{
+    filter: brightness(0) saturate(100%) invert(100%) sepia(0%) saturate(5486%) hue-rotate(316deg) brightness(129%) contrast(86%);
+  }
+  .command-dif > img, .command-dif{
+    filter: brightness(0) saturate(100%) invert(0%) sepia(1%) saturate(7490%) hue-rotate(170deg) brightness(99%) contrast(100%);}
+}
 
+.command-background-sub > img, .command-background-sub{
+  filter: brightness(0) saturate(100%) invert(96%) sepia(10%) saturate(1497%) hue-rotate(297deg) brightness(106%) contrast(106%);
+}
 .command-foreground > img, .command-foreground{
-  filter: brightness(0) saturate(100%) invert(6%) sepia(11%) saturate(2094%) hue-rotate(322deg) brightness(89%) contrast(81%);
-}
+  filter: brightness(0) saturate(100%) invert(0%) sepia(1%) saturate(7490%) hue-rotate(170deg) brightness(99%) contrast(100%);}
 .command-accent > img, .command-accent{
-  filter: brightness(0) saturate(100%) invert(100%) sepia(0%) saturate(5486%) hue-rotate(316deg) brightness(129%) contrast(86%);
-}
-.command-link > img, .command-link{
   filter: brightness(0) saturate(100%) invert(73%) sepia(84%) saturate(405%) hue-rotate(342deg) brightness(103%) contrast(101%);;
 }
-
+.command-dif > img, .command-dif{
+    filter: brightness(0) saturate(100%) invert(100%) sepia(0%) saturate(5486%) hue-rotate(316deg) brightness(129%) contrast(86%) ; 
+}
 @keyframes gauge_increment{
   0%{
     width: 0;

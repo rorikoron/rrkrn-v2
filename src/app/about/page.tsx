@@ -75,7 +75,7 @@ export default async function Home() {
                             command="man"
                             title={<h5>&gt; トリセツ?</h5>}
                         >
-                            <div className="overflow-y-auto">
+                            <div className="overflow-y-auto pr-4">
                                 <p>&gt;</p>
                                 <p>&gt; 08/01 生まれ</p>
                                 <p>&gt;</p>
@@ -99,7 +99,7 @@ export default async function Home() {
                                 <span className="pl-4">&gt; こんにちは！</span>
                             }
                         >
-                            <div className="overflow-y-auto">
+                            <div className="overflow-y-auto pr-4">
                                 <p>&gt;</p>
                                 <p>&gt; ろりころんです。</p>
                                 <p>
@@ -117,10 +117,10 @@ export default async function Home() {
                                     &gt; 本サイトの前身は
                                     <Link
                                         href="https://krn-portfolio.vercel.app"
-                                        className="text-link font-bold inline-flex px-1.5 mx-2 rounded-xl hover:bg-foreground-tint transition-all"
+                                        className="text-accent font-bold inline-flex px-1.5 mx-2 rounded-xl hover:bg-background-sub-tint transition-all"
                                     >
                                         <span>ここ</span>
-                                        <span className="h-lh aspect-square relative command-link inline-block">
+                                        <span className="h-lh aspect-square relative command-accent inline-block">
                                             <Image
                                                 src="svg/link.svg"
                                                 fill
@@ -152,7 +152,7 @@ export default async function Home() {
                                                         <Link
                                                             href={site.link}
                                                             className={clsx(
-                                                                "grid grid-cols-[1lh_1fr] bg-accent px-2 py-1.5 text-foreground rounded transition-all",
+                                                                "grid grid-cols-[1lh_1fr] bg-white px-2 py-1.5 text-background rounded transition-all",
                                                                 "hover:bg-inactive"
                                                             )}
                                                         >
@@ -187,7 +187,7 @@ export default async function Home() {
                 </div>
 
                 <ViewTransition name="AsciiContainer">
-                    <AsciiWindowContainer className="absolute right-2 md:right-24 bottom-2 md:bottom-12 z-1" />
+                    <AsciiWindowContainer className="absolute right-2 md:right-24 bottom-2 md:bottom-4 z-100" />
                 </ViewTransition>
             </main>
         </div>

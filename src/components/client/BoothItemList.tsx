@@ -6,7 +6,7 @@ import BoothItem from "../ui/BoothItem";
 export default function BoothItemList({ data }: { data: ItemInterface[] }) {
     const [selectedCategory] = useAtom(itemCategoryAtom);
     return (
-        <div className="grid grid-cols-2 md:grid-cols-4 xl:grid-cols-5">
+        <div className="grid grid-cols-2 md:grid-cols-4 xl:grid-cols-5 overflow-y-auto">
             {data
                 ?.filter(({ category }) =>
                     selectedCategory === "all"

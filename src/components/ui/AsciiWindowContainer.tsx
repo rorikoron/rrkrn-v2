@@ -107,7 +107,7 @@ export default function AsciiWindowContainer({
                     ref={(el) => {
                         if (el) refs.current.set(w.id, el);
                     }}
-                    className="fixed z-100"
+                    className="fixed"
                     style={{
                         left: w.x,
                         top: w.y,

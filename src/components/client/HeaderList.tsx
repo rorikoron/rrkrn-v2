@@ -38,7 +38,7 @@ export default function HeaderList({ links }: { links: LinksInterface[] }) {
                             className={clsx(
                                 "cursor-pointer transition-colors transition-all",
 
-                                "hover:text-accent hover:bg-gradient-to-r from-foreground-tint"
+                                "hover:text-foregorund hover:bg-gradient-to-r from-background-sub-tint"
                             )}
                             onMouseEnter={() => setHoveredLink(name)}
                             onMouseLeave={() => setHoveredLink("")}
@@ -59,6 +59,7 @@ export default function HeaderList({ links }: { links: LinksInterface[] }) {
             <BashWindow
                 className="ml-16 -mt-4 pr-2"
                 command="cat"
+                isCustomCommand
                 title={<span className="-ml-2">&gt; Explain:</span>}
             >
                 <article className="text-sm pl-8">

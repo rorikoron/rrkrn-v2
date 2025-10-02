@@ -9,6 +9,7 @@ import Image from "next/image";
 import clsx from "clsx";
 import { useEffect } from "react";
 import { usePathname } from "next/navigation";
+import ThemeToggleButton from "./ThemeToggleButton";
 
 export default function Header() {
     const links: LinksInterface[] = [
@@ -28,7 +29,7 @@ export default function Header() {
         <>
             <header
                 className={clsx(
-                    `h-lvh px-2 py-12 z-12 bg-foreground text-accent tracking-widest flex flex-col gap-20 fixed w-[330px] lg:!w-auto lg:relative  transition-all ease-in`,
+                    `h-lvh px-2 py-12 z-12 bg-background-sub text-foreground tracking-widest flex flex-col gap-20 fixed w-[330px] lg:!w-auto lg:relative transition-all ease-in`,
                     isOpen ? "left-0" : "-left-[330px] lg:left-0"
                 )}
             >
@@ -40,19 +41,21 @@ export default function Header() {
                 />
 
                 <HeaderList links={links} />
-                <div className="flex flex-col "></div>
 
+                <div className="fixed bottom-4 left-4">
+                    <ThemeToggleButton />
+                </div>
                 {/* 開閉ボタン */}
                 <div
                     className={clsx(
-                        "absolute cursor-pointer bottom-4 -right-1 translate-x-full px-2 py-3 bg-foreground  border-accent z-9 rounded-xl transition-all",
+                        "absolute cursor-pointer bottom-4 -right-1 translate-x-full px-2 py-3 bg-background-sub border-foreground z-9 rounded-xl transition-all",
                         !isOpen && "rotate-180",
                         "lg:hidden"
                     )}
                     onClick={() => setIsOpen((prev) => !prev)}
                 >
                     <Image
-                        className="command-accent hover:scale-110 transition-transform"
+                        className="command-foreground hover:scale-110 transition-transform"
                         src="/svg/arrow-left.svg"
                         alt="Toggle Button"
                         height="24"

@@ -7,7 +7,8 @@ const nextConfig: NextConfig = {
   },
   images:{
     remotePatterns:[
-      new URL('https://v5.airtableusercontent.com/**')
+      new URL('https://v5.airtableusercontent.com/**'),
+      new URL(`https://archive.rorikoron.net/**`)
     ]
   }
 };

@@ -55,7 +55,7 @@ export default function RootLayout({
                 <Header />
                 <div
                     className={clsx(
-                        `${mplusone.className} py-6 md:py-12 px-6 md:px-8 text-accent h-lvh`,
+                        `${mplusone.className} py-6 md:py-12 px-6 md:px-8 text-white h-lvh`,
                         "bg-gradient-to-br from-bg-background to-background-gradient"
                     )}
                 >
@@ -80,7 +80,7 @@ export default function RootLayout({
                         <span className="bar" />
                         <span className="dot" />
                     </div>
-                    <span className="absolute bottom-6 pl-2 text-xl tracking-[8px] text-foreground-tint/70">
+                    <span className="absolute bottom-6 pl-2 text-xl tracking-[8px] text-white/30">
                         &copy;rorikoron.net
                     </span>
                     {children}

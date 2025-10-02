@@ -3,6 +3,7 @@ import { Red_Hat_Mono } from "next/font/google";
 import Image from "next/image";
 import { ReactElement } from "react";
 import { unstable_ViewTransition as ViewTransition } from "react";
+import CatSoundPlayer from "../client/CatSoundPlayer";
 const redHatMono = Red_Hat_Mono({ subsets: ["latin"] });
 
 interface BashWindowInterface {
@@ -10,8 +11,8 @@ interface BashWindowInterface {
     className?: string;
     command?: string;
     title?: ReactElement | string;
-    output?: ReactElement | string;
     isUserActive?: boolean;
+    isCustomCommand?: boolean;
     hasClose?: boolean;
     closeHandler?: () => void;
 }
@@ -20,21 +21,22 @@ export default function BashWindow({
     className,
     command,
     title,
-    output,
+
+    isCustomCommand,
     isUserActive,
     hasClose,
     closeHandler,
 }: BashWindowInterface) {
     return (
         <div
-            className={`border-accent border-2 p-6 flex flex-col relative ${className} ${redHatMono.className}  bg-foreground max-h-fit`}
+            className={`border-foreground border-2 p-6 flex flex-col relative ${className} ${redHatMono.className} text-foreground bg-background-sub max-h-fit`}
         >
             {hasClose && (
                 <button
                     className="flex justify-end h-lh mb-2"
                     onClick={closeHandler}
                 >
-                    <div className="aspect-square relative command-accent h-full hover:bg-foreground-tint transition-all p-4 rounded">
+                    <div className="aspect-square relative command-foreground h-full hover:bg-background-sub-tint/60 transition-all p-4 rounded">
                         <Image
                             className="p-1"
                             src="svg/close.svg"
@@ -48,7 +50,7 @@ export default function BashWindow({
             {isUserActive && (
                 <span
                     className={clsx(
-                        "absolute -top-3 -left-6 bg-foreground px-2 text-sm border-white border-2 z-10",
+                        "absolute -top-3 -left-6 bg-background-sub px-2 text-sm border-foreground border-2 z-10",
                         !isUserActive && "hidden"
                     )}
                 >
@@ -57,9 +59,13 @@ export default function BashWindow({
             )}
             {command && (
                 <ViewTransition name={`BashWindow-${command}`}>
-                    <span className="absolute top-6 -left-6 bg-foreground px-2 text-md border-white border-2 z-10">
-                        $ {command}
-                    </span>
+                    {isCustomCommand ? (
+                        <CatSoundPlayer command={command} />
+                    ) : (
+                        <span className="absolute top-6 -left-6 bg-background-sub px-2 text-md border-foreground border-2 z-10">
+                            $ {command}
+                        </span>
+                    )}
                 </ViewTransition>
             )}
             {title && (

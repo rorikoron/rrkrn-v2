@@ -8,6 +8,9 @@ importers:
 
   .:
     dependencies:
+      '@aws-sdk/client-s3':
+        specifier: ^3.896.0
+        version: 3.896.0
       '@opennextjs/cloudflare':
         specifier: ^1.9.0
         version: 1.9.0(wrangler@4.40.2)
@@ -5079,7 +5082,7 @@ snapshots:
 
   '@aws-crypto/util@3.0.0':
     dependencies:
-      '@aws-sdk/types': 3.398.0
+      '@aws-sdk/types': 3.893.0
       '@aws-sdk/util-utf8-browser': 3.259.0
       tslib: 1.14.1
 
