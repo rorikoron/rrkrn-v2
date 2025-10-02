@@ -42,4 +42,3 @@ next-env.d.ts
 
 # cloudflare
 .open-next
-wragler.jsonc
