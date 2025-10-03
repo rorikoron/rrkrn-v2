@@ -99,7 +99,7 @@ export default async function Home() {
                                 <span className="pl-4">&gt; こんにちは！</span>
                             }
                         >
-                            <div className="overflow-y-auto pr-4">
+                            <div className="overflow-y-auto pr-4 pb-12">
                                 <p>&gt;</p>
                                 <p>&gt; ろりころんです。</p>
                                 <p>

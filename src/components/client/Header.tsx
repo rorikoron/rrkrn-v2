@@ -45,7 +45,7 @@ export default function Header() {
                 {/* 開閉ボタン */}
                 <div
                     className={clsx(
-                        "absolute cursor-pointer bottom-4 -right-1 translate-x-full px-2 py-3 bg-background-sub border-foreground z-9 rounded-xl transition-all",
+                        "absolute cursor-pointer bottom-4 -right-1 translate-x-full px-2 py-3 bg-background-sub border-foreground z-12 rounded-xl transition-all",
                         !isOpen && "rotate-180",
                         "lg:hidden"
                     )}
