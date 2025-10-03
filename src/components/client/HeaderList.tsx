@@ -57,7 +57,7 @@ export default function HeaderList({ links }: { links: LinksInterface[] }) {
                 </ul>
             </BashWindow>
             <BashWindow
-                className="ml-16 -mt-4 pr-2"
+                className="ml-16 -top-4 pr-2"
                 command="cat"
                 isCustomCommand
                 title={<span className="-ml-2">&gt; Explain:</span>}

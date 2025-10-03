@@ -29,12 +29,12 @@ export default function Header() {
         <>
             <header
                 className={clsx(
-                    `h-lvh px-2 py-12 z-12 bg-background-sub text-foreground tracking-widest flex flex-col gap-20 fixed w-[330px] lg:!w-auto lg:relative transition-all ease-in`,
+                    `h-lvh px-2 py-12 z-12 bg-background-sub text-foreground tracking-widest flex flex-col fixed w-[330px] lg:!w-auto lg:relative transition-all ease-in`,
                     isOpen ? "left-0" : "-left-[330px] lg:left-0"
                 )}
             >
                 <BashWindow
-                    className={"ml-4 lg:ml-6 lg:mr-6 xl:mr-10 2xl:mr-20"}
+                    className={"ml-4 lg:ml-6 lg:mr-6 xl:mr-10 2xl:mr-20 mb-20"}
                     command="pwd"
                     title={<HeaderTitle />}
                     isUserActive
@@ -42,9 +42,6 @@ export default function Header() {
 
                 <HeaderList links={links} />
 
-                <div className="fixed bottom-4 left-4">
-                    <ThemeToggleButton />
-                </div>
                 {/* 開閉ボタン */}
                 <div
                     className={clsx(
@@ -61,6 +58,10 @@ export default function Header() {
                         height="24"
                         width="24"
                     />
+                </div>
+
+                <div className="mt-auto ml-4">
+                    <ThemeToggleButton />
                 </div>
             </header>
 

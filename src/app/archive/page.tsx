@@ -22,7 +22,7 @@ export default async function Home() {
 
     return (
         <div className={plusone.className}>
-            <ul className="flex flex-col gap-4">
+            <ul className="hidden md:flex flex-col gap-4">
                 {years.map((year) => (
                     <li
                         key={year}
@@ -48,17 +48,17 @@ export default async function Home() {
                 ))}
             </ul>
 
-            <div className="fixed left-[40%] bottom-0 origin-bottom-left rotate-10 h-[calc(100lvh/0.98480+200px)] w-[54lvw] bg-background-sub/60 py-[200px] overflow-y-scroll px-4">
+            <div className="fixed left-[0] md:left-[40%] bottom-0 origin-bottom-left rotate-10 h-[calc(100lvh/0.98480+200px)] w-[82lvw] md:w-[54lvw] bg-background-sub/60 py-[200px] overflow-y-scroll px-4">
                 {years.map((year) => [
                     <>
                         <h4
                             id={year}
                             key={`year-${year}`}
-                            className="text-5xl tracking-widest font-light pb-2"
+                            className="text-2xl md:text-5xl tracking-widest font-light pb-2"
                         >
                             {year}
                         </h4>
-                        <div className="columns-3 space-y-4">
+                        <div className="columns-2 md:columns-3 space-y-4">
                             {...(archivesByYear[year] ?? []).map((value) => (
                                 <AnimatedMagnifiableImage
                                     src={value}
