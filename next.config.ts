@@ -9,7 +9,8 @@ const nextConfig: NextConfig = {
     remotePatterns:[
       new URL('https://v5.airtableusercontent.com/**'),
       new URL(`https://archive.rorikoron.net/**`)
-    ]
+    ],
+    unoptimized: true,
   }
 };
 
