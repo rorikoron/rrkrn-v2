@@ -2,9 +2,11 @@ import { ItemInterface } from "@/store/booth";
 import clsx from "clsx";
 import Image from "next/image";
 import Link from "next/link";
-import { unstable_ViewTransition as ViewTransition } from "react";
+import { useEffect, unstable_ViewTransition as ViewTransition } from "react";
 
 export default function BoothItem({ id, name, pics }: ItemInterface) {
+    useEffect(() => console.log(pics), []);
+
     return (
         <ViewTransition name={"item-card-" + id}>
             <Link

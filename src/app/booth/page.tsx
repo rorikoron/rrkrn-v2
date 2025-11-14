@@ -7,7 +7,7 @@ import fetchBoothVRChatItem from "@/data/fetchBoothVRChatItem";
 import clsx from "clsx";
 
 // 一日毎にISR
-export const revalidate = 86400;
+// export const revalidate = 86400;
 const availlableCategory: (BoothItemType | "all")[] = [
     "all",
     "cloth",
@@ -30,6 +30,9 @@ function LoadingFallback() {
     );
 }
 
+interface AirtableRecord {
+    records: { fields: ItemInterface }[];
+}
 export default async function Booth() {
     const items = await fetchBoothVRChatItem()
         .then(({ records }) =>
