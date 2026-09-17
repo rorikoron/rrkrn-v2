@@ -9,6 +9,7 @@ export async function fetchVRChatArchiveAvailableYears(): Promise<string[]> {
     return listed.delimitedPrefixes
       .filter((prefix) => prefix.length > 0)
       .map((prefix) => (prefix.endsWith("/") ? prefix.slice(0, -1) : prefix))
+      .sort((a, b) => Number(b) - Number(a))
   } catch (err) {
     console.error("Failed to fetch VRChat archive available years:", err);
     return []

@@ -23,7 +23,18 @@ describe("fetchVRChatArchiveAvailableYears", () => {
         const result = await fetchVRChatArchiveAvailableYears();
 
         expect(list).toHaveBeenCalledWith({ delimiter: "/" });
-        expect(result).toEqual(["2022", "2023"]);
+        expect(result).toEqual(["2023", "2022"]);
+    });
+
+    it("sorts years newest first regardless of the order R2 returns them in", async () => {
+        const list = jest.fn().mockResolvedValue({
+            delimitedPrefixes: ["2022/", "2024/", "2021/", "2023/"],
+        });
+        mockedGetArchiveBucket.mockResolvedValue({ list } as never);
+
+        const result = await fetchVRChatArchiveAvailableYears();
+
+        expect(result).toEqual(["2024", "2023", "2022", "2021"]);
     });
 
     it("filters out empty prefixes", async () => {
