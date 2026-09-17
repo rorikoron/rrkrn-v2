@@ -2,9 +2,7 @@ import clsx from "clsx";
 import BashWindow from "../ui/BashWindow";
 import Link from "next/link";
 import { useState } from "react";
-import { ExistLink, isHeaderOpenAtom } from "@/store/atoms";
-import { usePathname } from "next/navigation";
-import { useSetAtom } from "jotai";
+import { ExistLink } from "@/store/atoms";
 
 const SelectExplanation = (link: ExistLink | "") => {
     switch (link) {

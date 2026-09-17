@@ -1,17 +1,17 @@
 import BoothCategoryButton from "@/components/client/BoothCategoryButton";
 import BoothItemList from "@/components/client/BoothItemList";
-import { BoothItemType, ItemInterface } from "@/store/booth";
-import { Suspense, unstable_ViewTransition as ViewTransition } from "react";
+import { BoothItemType } from "@/store/booth";
+import { Suspense } from "react";
 import Image from "next/image";
-import fetchBoothVRChatItem from "@/data/fetchBoothVRChatItem";
+import fetchBoothItems from "@/data/fetchBoothItems";
 import clsx from "clsx";
 
 // 一日毎にISR
-// export const revalidate = 86400;
+export const revalidate = 86400;
 const availlableCategory: (BoothItemType | "all")[] = [
     "all",
     "cloth",
-    "accessaory",
+    "accessory",
     "tool",
     "shader",
     "goods",
@@ -30,17 +30,8 @@ function LoadingFallback() {
     );
 }
 
-interface AirtableRecord {
-    records: { fields: ItemInterface }[];
-}
 export default async function Booth() {
-    const items = await fetchBoothVRChatItem()
-        .then(({ records }) =>
-            records?.map((record: { fields: any }) => record?.fields)
-        )
-        .then((items: ItemInterface[]) =>
-            items?.sort((a, b) => b?.sequence - a?.sequence)
-        );
+    const items = await fetchBoothItems();
 
     return (
         <div className="h-full grid grid-rows-[auto_1fr] overflow-y-hidden">

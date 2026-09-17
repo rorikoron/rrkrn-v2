@@ -1,22 +1,16 @@
-import { r2 } from "@/lib/r2-client"
-import { ListObjectsV2Command } from "@aws-sdk/client-s3"
+import { getArchiveBucket } from "@/lib/r2-client"
 
 export async function fetchVRChatArchiveAvailableYears(): Promise<string[]> {
-  const res = await r2.send(
-    // find root directory
-    new ListObjectsV2Command({
-      Bucket: process.env.R2_ARCHIVE_BUCKET,
-      Delimiter: "/",
-      Prefix: "",
-    })
-  )
+  try {
+    const bucket = await getArchiveBucket()
+    const listed = await bucket.list({ delimiter: "/" })
 
-  return (
-    res.CommonPrefixes?.map((prefixObj) => {
-      const prefix = prefixObj.Prefix ?? ""
-
-       // "2023/" → "2023"
-      return prefix.endsWith("/") ? prefix.slice(0, -1) : prefix
-    }) ?? []
-  )
+    // "2023/" → "2023"
+    return listed.delimitedPrefixes
+      .filter((prefix) => prefix.length > 0)
+      .map((prefix) => (prefix.endsWith("/") ? prefix.slice(0, -1) : prefix))
+  } catch (err) {
+    console.error("Failed to fetch VRChat archive available years:", err);
+    return []
+  }
 }

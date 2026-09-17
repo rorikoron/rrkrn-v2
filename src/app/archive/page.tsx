@@ -2,7 +2,6 @@ import { M_PLUS_1 } from "next/font/google";
 import Link from "next/link";
 import AnimatedMagnifiableImage from "@/components/ui/AnimatedMagnifiableImage";
 import Image from "next/image";
-import { apiClient } from "@/lib/apiClient";
 import { fetchVRChatArchiveAvailableYears } from "@/data/fetchVRChatArchiveAvailableYears";
 import fetchVRChatArchiveByYear from "@/data/fetchVRChatArchiveByYear";
 const plusone = M_PLUS_1({ subsets: ["latin"] });

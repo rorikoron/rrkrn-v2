@@ -1,11 +1,12 @@
 import { ItemInterface } from "@/store/booth";
+import { boothImageUrl } from "@/util";
 import clsx from "clsx";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, unstable_ViewTransition as ViewTransition } from "react";
+import { unstable_ViewTransition as ViewTransition } from "react";
 
 export default function BoothItem({ id, name, pics }: ItemInterface) {
-    useEffect(() => console.log(pics), []);
+    const thumbnail = pics?.[0];
 
     return (
         <ViewTransition name={"item-card-" + id}>
@@ -18,14 +19,14 @@ export default function BoothItem({ id, name, pics }: ItemInterface) {
             >
                 <ViewTransition name={"item-picture-" + id}>
                     <div className={clsx("aspect-square relative m-2")}>
-                        <Image
-                            src={pics[0].thumbnails.large.url}
-                            alt={name + "のサムネイル"}
-                            fill
-                            objectFit="cover"
-                            placeholder="blur"
-                            blurDataURL={pics[0].thumbnails.small.url}
-                        />
+                        {thumbnail && (
+                            <Image
+                                src={boothImageUrl(thumbnail)}
+                                alt={name + "のサムネイル"}
+                                fill
+                                objectFit="cover"
+                            />
+                        )}
                     </div>
                 </ViewTransition>
                 <ViewTransition name={"item-name-" + id}>

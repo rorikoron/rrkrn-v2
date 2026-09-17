@@ -23,7 +23,7 @@ export default function Header() {
     const [isOpen, setIsOpen] = useAtom(isHeaderOpenAtom);
     useEffect(() => {
         setIsOpen(false);
-    }, [pathname]);
+    }, [pathname, setIsOpen]);
 
     return (
         <>

@@ -47,7 +47,7 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
-  height: 1lvh;
+  height: 100lvh;
 }
 
 *::-webkit-scrollbar{
@@ -167,18 +167,3 @@ html.dark{
 
 
 
-.bg-category-accessaory{
-  background: var(--category-accesaory);
-}
-.bg-category-cloth{
-  background: var(--category-cloth);
-}
-.bg-category-shader{
-  background: var(--category-shader);
-}
-.bg-category-goods{
-  background: var(--category-goods);
-}
-.bg-category-tool{
-  background: var(--category-tool);
-}

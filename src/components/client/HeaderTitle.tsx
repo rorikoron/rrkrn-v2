@@ -1,6 +1,4 @@
 "use client";
-import { pathnameAtom } from "@/store/atoms";
-import { useAtomValue } from "jotai";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 

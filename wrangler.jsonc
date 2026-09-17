@@ -15,6 +15,16 @@
     "directory": ".open-next/assets",
     "binding": "ASSETS",
   },
+  "observability": {
+    "enabled": true,
+  },
+  "vars": {
+    // Workaround for https://github.com/opennextjs/opennextjs-cloudflare/issues/1232
+    // Next's getMiddlewareManifest() does `require()` with a dynamic path when
+    // minimalMode is false, which Workers can't support. This project has no
+    // middleware.ts, so forcing minimal mode is safe.
+    "NEXT_PRIVATE_MINIMAL_MODE": "1",
+  },
   "services": [
     {
       "binding": "WORKER_SELF_REFERENCE",
@@ -27,6 +37,24 @@
     {
       "binding": "NEXT_INC_CACHE_R2_BUCKET",
       "bucket_name": "rrkrn-cache-bucket",
+      "remote": true
+    },
+    {
+      "binding": "BOOTH_BUCKET",
+      "bucket_name": "rrkrn-booth-bucket",
+      "remote": true
+    },
+    {
+      "binding": "ARCHIVE_BUCKET",
+      "bucket_name": "rrkrn-archive-bucket",
+      "remote": true
+    },
+  ],
+  "d1_databases": [
+    {
+      "binding": "BOOTH_ITEM_LIST",
+      "database_name": "booth-item-list",
+      "database_id": "dc80000a-a609-473b-964c-ab2c736a4899",
       "remote": true
     },
   ],

@@ -1,0 +1,30 @@
+diff --git a/dist/cli/build/bundle-server.js b/dist/cli/build/bundle-server.js
+index 11b73aff62158c54ee654dd87ebad29ba0e06aa5..b63aee77034129ed3cb24ec18581a94d4d09c7f8 100644
+--- a/dist/cli/build/bundle-server.js
++++ b/dist/cli/build/bundle-server.js
+@@ -109,6 +109,10 @@ export async function bundleServer(buildOpts, projectOpts) {
+             // `@next/env` is used by Next to load environment variables from files.
+             // OpenNext inlines the values at build time so this is not needed.
+             "@next/env": path.join(buildOpts.outputDir, "cloudflare-templates/shims/env.js"),
++            // `sharp` needs native `.node` bindings that cannot run in workerd.
++            // Next's built-in image optimizer requires it, but this app sets
++            // `images.unoptimized: true`, so that code path is never invoked at runtime.
++            "sharp": path.join(buildOpts.outputDir, "cloudflare-templates/shims/throw.js"),
+         },
+         define: {
+             // config file used by Next.js, see: https://github.com/vercel/next.js/blob/68a7128/packages/next/src/build/utils.ts#L2137-L2139
+diff --git a/dist/cli/commands/utils.js b/dist/cli/commands/utils.js
+index 08dad800e24a9d8a7f22fc44ac19b1a2ad21204b..38b9bdd72e0133c74301c6b5d87d7b6a98a334d8 100644
+--- a/dist/cli/commands/utils.js
++++ b/dist/cli/commands/utils.js
+@@ -50,7 +50,9 @@ export async function retrieveCompiledConfig() {
+         logger.error("Could not find compiled Open Next config, did you run the build command?");
+         process.exit(1);
+     }
+-    const config = await import(configPath).then((mod) => mod.default);
++    // On Windows, we need to use file:// protocol to load the config file using import()
++    const configUrl = process.platform === "win32" ? `file://${configPath}` : configPath;
++    const config = await import(configUrl).then((mod) => mod.default);
+     ensureCloudflareConfig(config);
+     return { config };
+ }

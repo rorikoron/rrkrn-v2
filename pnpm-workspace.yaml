@@ -1,0 +1,11 @@
+nodeLinker: hoisted
+allowBuilds:
+  '@parcel/watcher': true
+  '@tailwindcss/oxide': true
+  esbuild: true
+  sharp: true
+  unrs-resolver: true
+  workerd: true
+patchedDependencies:
+  '@opennextjs/aws@3.7.7': patches/@opennextjs__aws@3.7.7.patch
+  '@opennextjs/cloudflare@1.9.0': patches/@opennextjs__cloudflare@1.9.0.patch
