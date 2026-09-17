@@ -48,3 +48,6 @@ cloudflare-env.d.ts
 
 # generated
 /src/generated
+
+# claude code worktrees
+/.claude/worktrees
