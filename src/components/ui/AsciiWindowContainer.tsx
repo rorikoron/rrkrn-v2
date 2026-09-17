@@ -76,7 +76,6 @@ export default function AsciiWindowContainer({
 
     // 新しいウィンドウ追加
     const addWindow = () => {
-        console.log("test");
         setWindows((prev) => [
             ...prev,
             {

@@ -12,7 +12,7 @@ export default async function Home() {
         <div className="h-full">
             <main className="h-full grid grid-rows-[4fr_6fr] relative">
                 <div className="flex flex-col justify-center overflow-hidden">
-                    <h1 className="text-[60px] sm:text-[80px] md:text-[128px] leading-none text-foreground">
+                    <h1 className="text-[clamp(2.5rem,4vw_+_3rem,8rem)] leading-none text-foreground">
                         Rorikoron
                     </h1>
                     <h4 className="w-fit overlay leading-none pl-2">

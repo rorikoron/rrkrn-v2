@@ -1,10 +1,8 @@
 "use client";
-import { pathnameAtom } from "@/store/atoms";
-import { useAtomValue } from "jotai";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
-export default function HeaderListitem() {
+export default function HeaderTitle() {
     const pathname = usePathname();
     const [localPrevPathname, setLocalPrevPathname] = useState(pathname);
 

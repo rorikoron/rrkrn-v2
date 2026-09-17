@@ -23,11 +23,12 @@ export default function Header() {
     const [isOpen, setIsOpen] = useAtom(isHeaderOpenAtom);
     useEffect(() => {
         setIsOpen(false);
-    }, [pathname]);
+    }, [pathname, setIsOpen]);
 
     return (
         <>
             <header
+                id="site-header-nav"
                 className={clsx(
                     `h-lvh px-2 py-12 z-12 bg-background-sub text-foreground tracking-widest flex flex-col fixed w-[330px] lg:!w-auto lg:relative transition-all ease-in`,
                     isOpen ? "left-0" : "-left-[330px] lg:left-0"
@@ -43,7 +44,11 @@ export default function Header() {
                 <HeaderList links={links} />
 
                 {/* 開閉ボタン */}
-                <div
+                <button
+                    type="button"
+                    aria-expanded={isOpen}
+                    aria-controls="site-header-nav"
+                    aria-label={isOpen ? "メニューを閉じる" : "メニューを開く"}
                     className={clsx(
                         "absolute cursor-pointer bottom-4 -right-1 translate-x-full px-2 py-3 bg-background-sub border-foreground z-12 rounded-xl transition-all",
                         !isOpen && "rotate-180",
@@ -54,11 +59,11 @@ export default function Header() {
                     <Image
                         className="command-foreground hover:scale-110 transition-transform"
                         src="/svg/arrow-left.svg"
-                        alt="Toggle Button"
+                        alt=""
                         height="24"
                         width="24"
                     />
-                </div>
+                </button>
 
                 <div className="mt-auto ml-4">
                     <ThemeToggleButton />

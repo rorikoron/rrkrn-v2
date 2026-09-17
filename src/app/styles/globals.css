@@ -2,17 +2,13 @@
 
 :root {
   --background: #ff9696;
+  --background-tint: #ffc4c4;
+  --background-gradient: #ff7d7d;
   --background-sub-tint: rgb(255, 167, 99);
   --background-sub: #ffebeb;
   --inactive: #554846;
   --foreground: #392727;
   --accent: #ffca44;
-
-  --category-accesaory: #ff7a7f;
-  --category-shader: #7a9dff;
-  --category-tool: #95ff91;
-  --category-cloth: #ffff4e;
-  --category-goods: rgb(255, 196, 87);
 }
 @theme inline {
   --color-background: var(--background);
@@ -23,13 +19,6 @@
   --color-foreground: var(--foreground);
   --color-inactive: var(--inactive);
   --color-accent: var(--accent);
-
-
-  --color-category-accesaory: var(--category-accesaory);
-  --color-category-shader: var(--category-shader);
-  --color-category-goods: var(--category-goods);
-  --color-category-tool: var(--category-tool);
-  --color-category-cloth: var(--category-cloth);
 }
 
   :root.dark {
@@ -47,7 +36,7 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
-  height: 1lvh;
+  height: 100lvh;
 }
 
 *::-webkit-scrollbar{
@@ -165,20 +154,33 @@ html.dark{
   }
 }
 
+@keyframes magnify_fade_in{
+  0%{
+    opacity: 0;
+  }
+  100%{
+    opacity: 1;
+  }
+}
+
+@keyframes magnify_in{
+  0%{
+    opacity: 0;
+    transform: scale(0.85);
+  }
+  100%{
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.animate-magnify-fade-in{
+  animation: magnify_fade_in 0.2s ease-out;
+}
+
+.animate-magnify-in{
+  animation: magnify_in 0.25s ease-out;
+}
 
 
-.bg-category-accessaory{
-  background: var(--category-accesaory);
-}
-.bg-category-cloth{
-  background: var(--category-cloth);
-}
-.bg-category-shader{
-  background: var(--category-shader);
-}
-.bg-category-goods{
-  background: var(--category-goods);
-}
-.bg-category-tool{
-  background: var(--category-tool);
-}
+

@@ -2,7 +2,6 @@ import { M_PLUS_1 } from "next/font/google";
 import Link from "next/link";
 import AnimatedMagnifiableImage from "@/components/ui/AnimatedMagnifiableImage";
 import Image from "next/image";
-import { apiClient } from "@/lib/apiClient";
 import { fetchVRChatArchiveAvailableYears } from "@/data/fetchVRChatArchiveAvailableYears";
 import fetchVRChatArchiveByYear from "@/data/fetchVRChatArchiveByYear";
 const plusone = M_PLUS_1({ subsets: ["latin"] });
@@ -47,6 +46,22 @@ export default async function Home() {
                     </li>
                 ))}
             </ul>
+
+            {/* モバイル用の年ジャンプナビ（横スクロール） */}
+            <nav
+                aria-label="年を選択"
+                className="md:hidden flex gap-2 overflow-x-auto pb-2 pr-4"
+            >
+                {years.map((year) => (
+                    <Link
+                        key={year}
+                        href={"/archive/#" + year}
+                        className="shrink-0 rounded-full border border-foreground/40 px-4 py-1.5 text-sm tracking-wide"
+                    >
+                        {year}
+                    </Link>
+                ))}
+            </nav>
 
             <div className="fixed left-[0] md:left-[40%] bottom-0 origin-bottom-left rotate-10 h-[calc(100lvh/0.98480+200px)] w-[82lvw] md:w-[54lvw] bg-background-sub/60 py-[200px] overflow-y-scroll px-4">
                 {years.map((year) => [

@@ -2,9 +2,7 @@ import clsx from "clsx";
 import BashWindow from "../ui/BashWindow";
 import Link from "next/link";
 import { useState } from "react";
-import { ExistLink, isHeaderOpenAtom } from "@/store/atoms";
-import { usePathname } from "next/navigation";
-import { useSetAtom } from "jotai";
+import { ExistLink } from "@/store/atoms";
 
 const SelectExplanation = (link: ExistLink | "") => {
     switch (link) {
@@ -38,7 +36,7 @@ export default function HeaderList({ links }: { links: LinksInterface[] }) {
                             className={clsx(
                                 "cursor-pointer transition-colors transition-all",
 
-                                "hover:text-foregorund hover:bg-gradient-to-r from-background-sub-tint"
+                                "hover:text-foreground hover:bg-gradient-to-r from-background-sub-tint"
                             )}
                             onMouseEnter={() => setHoveredLink(name)}
                             onMouseLeave={() => setHoveredLink("")}

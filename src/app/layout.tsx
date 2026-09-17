@@ -34,7 +34,7 @@ export const metadata: Metadata = {
         title: "ろりころんほーむぺーじ",
         description: "ろりころんのサイトです！",
         images: ["/OGP.png"],
-        site: "website",
+        site: "@rorikoron__game",
     },
 };
 
@@ -44,7 +44,7 @@ export default function RootLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <html lang="en">
+        <html lang="ja">
             <meta
                 name="viewport"
                 content="width=device-width, initial-scale=1.0"
@@ -56,7 +56,7 @@ export default function RootLayout({
                 <div
                     className={clsx(
                         `${mplusone.className} py-6 md:py-12 px-6 md:px-8 text-white h-lvh`,
-                        "bg-gradient-to-br from-bg-background to-background-gradient"
+                        "bg-gradient-to-br from-background to-background-gradient"
                     )}
                 >
                     {/* morse */}

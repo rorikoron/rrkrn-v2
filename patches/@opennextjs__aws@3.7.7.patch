@@ -1,0 +1,44 @@
+diff --git a/dist/build/copyTracedFiles.js b/dist/build/copyTracedFiles.js
+index 95d08b4534c4bfcbafc0364782bcecd502e5d177..cb911b821dfabee26d43dc05cc793c1d609d1e30 100644
+--- a/dist/build/copyTracedFiles.js
++++ b/dist/build/copyTracedFiles.js
+@@ -188,7 +188,22 @@ File ${serverPath} does not exist
+         }
+         if (symlink) {
+             try {
+-                symlinkSync(symlink, to);
++                // On Windows, omitting `type` makes symlinkSync default to a
++                // file-type reparse point even when the target is a directory
++                // (e.g. pnpm's node_modules layout), which esbuild then fails
++                // to read as a directory ("Access is denied"). Detect the
++                // target type from the still-existing source symlink so the
++                // copy gets the correct reparse point type.
++                let type;
++                if (process.platform === "win32") {
++                    try {
++                        type = statSync(from).isDirectory() ? "dir" : "file";
++                    }
++                    catch (e) {
++                        type = "file";
++                    }
++                }
++                symlinkSync(symlink, to, type);
+             }
+             catch (e) {
+                 if (e.code !== "EEXIST") {
+diff --git a/dist/build/helper.js b/dist/build/helper.js
+index a2d81f3990491d15caef4af1d5075254b081a49b..61fe549567345005b90e2a81fffa1a0d76f0d584 100644
+--- a/dist/build/helper.js
++++ b/dist/build/helper.js
+@@ -307,7 +307,10 @@ export function initOutputDir(options) {
+     fs.rmSync(options.outputDir, { recursive: true, force: true });
+     const { buildDir } = options;
+     fs.mkdirSync(buildDir, { recursive: true });
+-    fs.cpSync(options.tempBuildDir, buildDir, { recursive: true });
++    // On Windows, fs.cpSync copies directory symlinks (e.g. pnpm's node_modules
++    // layout) as file-type reparse points, which esbuild then fails to read
++    // with "Access is denied". Dereferencing avoids emitting symlinks at all.
++    fs.cpSync(options.tempBuildDir, buildDir, { recursive: true, dereference: process.platform === "win32" });
+ }
+ /**
+  * @returns Whether the edge runtime is used

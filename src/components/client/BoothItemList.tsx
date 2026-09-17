@@ -1,5 +1,5 @@
 "use client";
-import { boothAtom, itemCategoryAtom, ItemInterface } from "@/store/booth";
+import { itemCategoryAtom, ItemInterface } from "@/store/booth";
 import { useAtom } from "jotai";
 import BoothItem from "../ui/BoothItem";
 
