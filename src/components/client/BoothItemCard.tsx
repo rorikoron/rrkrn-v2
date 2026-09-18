@@ -1,25 +1,24 @@
 "use client";
 import clsx from "clsx";
 import {
-    Suspense,
     useEffect,
     useRef,
     useState,
-    unstable_ViewTransition as ViewTransition,
+    ViewTransition,
 } from "react";
 import Image from "next/image";
-import { useAtom } from "jotai";
-import { boothAtom, ItemInterface } from "@/store/booth";
+import { ItemInterface } from "@/store/booth";
 import Link from "next/link";
 import BoothItemList from "@/components/client/BoothItemList";
 import { boothImageUrl, formatPriceRange } from "@/util";
 
-function OtherItems({ excludeId }: { excludeId: string }) {
-    const [{ data }] = useAtom(boothAtom);
-    return <BoothItemList data={data.filter((item) => item.id !== excludeId)} />;
-}
-
-export default function BoothItemCard({ item }: { item: ItemInterface }) {
+export default function BoothItemCard({
+    item,
+    otherItems,
+}: {
+    item: ItemInterface;
+    otherItems: ItemInterface[];
+}) {
     const linkRef = useRef<HTMLAnchorElement>(null);
     const [thumbnailndex, setThumbnailIndex] = useState(0);
     useEffect(() => {
@@ -182,9 +181,9 @@ export default function BoothItemCard({ item }: { item: ItemInterface }) {
                 </ViewTransition>
 
                 {/* 下のエリア */}
-                <Suspense fallback={null}>
-                    <OtherItems excludeId={item.id} />
-                </Suspense>
+                <BoothItemList
+                    data={otherItems.filter((other) => other.id !== item.id)}
+                />
             </div>
         </div>
     );

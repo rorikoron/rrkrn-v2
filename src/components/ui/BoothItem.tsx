@@ -3,7 +3,7 @@ import { boothImageUrl } from "@/util";
 import clsx from "clsx";
 import Image from "next/image";
 import Link from "next/link";
-import { unstable_ViewTransition as ViewTransition } from "react";
+import { ViewTransition } from "react";
 
 export default function BoothItem({ id, name, pics }: ItemInterface) {
     const thumbnail = pics?.[0];
