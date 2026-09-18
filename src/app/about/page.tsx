@@ -50,6 +50,10 @@ const linkGroups = [
 
 export default async function Home() {
     const pics = await fetchPics("selfie");
+    // This route has no `revalidate`/`use cache`, so it re-renders (and re-rolls)
+    // on every request; picking the index client-side would cause a hydration
+    // mismatch since the server and client would each roll a different value.
+    // eslint-disable-next-line react-hooks/purity -- see comment above
     const index = Math.floor(Math.random() * pics.length);
 
     return (

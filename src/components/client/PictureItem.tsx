@@ -1,7 +1,7 @@
 "use client";
 import clsx from "clsx";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Zen_Kaku_Gothic_Antique } from "next/font/google";
 import "@/app/styles/component/player.scss";
 import "@/app/styles/component/minikoron.scss";
@@ -24,9 +24,11 @@ export default function PictureItem({ pngs }: PictureItemInterface) {
     const [isMinify, setIsMinify] = useState(false);
     const [hasShownMini, setHasShownMini] = useState(false);
 
-    useEffect(() => {
-        setHasShownMini((prev) => prev || isMinify);
-    }, [isMinify]);
+    const toggleMinify = () => {
+        const next = !isMinify;
+        setIsMinify(next);
+        if (next) setHasShownMini(true);
+    };
 
     return (
         <>
@@ -52,7 +54,7 @@ export default function PictureItem({ pngs }: PictureItemInterface) {
                                     "transition-all -translate-x-[50%] h-[16px] aspect-square relative p-4 rounded-full",
                                     "hover:bg-foreground/20"
                                 )}
-                                onClick={() => setIsMinify((prev) => !prev)}
+                                onClick={toggleMinify}
                             >
                                 <Image
                                     src="svg/arrow-left.svg"
