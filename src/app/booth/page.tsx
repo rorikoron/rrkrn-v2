@@ -1,8 +1,6 @@
 import BoothCategoryButton from "@/components/client/BoothCategoryButton";
 import BoothItemList from "@/components/client/BoothItemList";
 import { BoothItemType } from "@/store/booth";
-import { Suspense } from "react";
-import Image from "next/image";
 import fetchBoothItems from "@/data/fetchBoothItems";
 import clsx from "clsx";
 
@@ -16,19 +14,6 @@ const availlableCategory: (BoothItemType | "all")[] = [
     "shader",
     "goods",
 ];
-
-function LoadingFallback() {
-    return (
-        <div className="size-full relative">
-            <div className="h-[200px] aspect-square absolute left-50 top-50 translate-x-[100%] -translate-y-[50%] animate-bounce">
-                <div className="absolute top-25 -left-50">
-                    ちょっとまってね… &gt;
-                </div>
-                <Image src="/loading.png" alt="ロードアイコン" fill priority />
-            </div>
-        </div>
-    );
-}
 
 export default async function Booth() {
     const items = await fetchBoothItems();
@@ -62,10 +47,13 @@ export default async function Booth() {
                     ))}
                 </fieldset>
                 {/* items */}
-                <div className="h-full py-2 md:px-4 overflow-y-auto">
-                    <Suspense fallback={<LoadingFallback />}>
-                        <BoothItemList data={items} />
-                    </Suspense>
+                <div
+                    data-booth-scroll
+                    className="h-full py-2 md:px-4 overflow-y-auto"
+                >
+                    {/* Suspenseで包むとReactのViewTransitionが共有要素として
+                        ペアリングしてくれなくなるので、ここでは包まない */}
+                    <BoothItemList data={items} />
                 </div>
             </div>
         </div>

@@ -20,7 +20,15 @@ export default function BoothCategoryButton({
                 selectedCaterogry === category &&
                     "bg-background-sub text-foreground pointer-events-none"
             )}
-            onClick={() => startTransition(() => setSelectedCategory(category))}
+            onClick={() => {
+                // View Transitionのオーバーレイはスクロール領域のクリップを無視するので、
+                // スクロールしたままだと画面外のカードがh1やヘッダーの上に描かれてしまう。
+                // 絞り込み後は先頭から見せたいので、遷移の前にスクロールを戻しておく
+                document
+                    .querySelectorAll("[data-booth-scroll]")
+                    .forEach((el) => el.scrollTo({ top: 0 }));
+                startTransition(() => setSelectedCategory(category));
+            }}
         >
             {category[0].toUpperCase() + category.slice(1)}
         </button>

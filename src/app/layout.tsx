@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { M_PLUS_1 } from "next/font/google";
 import "@/app/styles/globals.css";
 import Header from "../components/client/Header";
+import ViewTransitionCleanup from "../components/client/ViewTransitionCleanup";
 import clsx from "clsx";
 
 const mplusone = M_PLUS_1({ subsets: ["latin"] });
@@ -52,6 +53,7 @@ export default function RootLayout({
             <body
                 className={`!h-lvh !w-lvw antialiased relative lg:grid lg:grid-cols-[max(30%,380px)_1fr] overflow-hidden`}
             >
+                <ViewTransitionCleanup />
                 <Header />
                 <div
                     className={clsx(

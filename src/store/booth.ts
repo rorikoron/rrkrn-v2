@@ -28,3 +28,14 @@ const itemCategoryAtom = atom<BoothItemType>("all")
 
 
 export {type ItemInterface, type BoothItemType, boothAtom, itemCategoryAtom};
+
+/**
+ * 直近のクリックで「遷移元 / 遷移先」になったアイテムのid。
+ * これらはサイズも変わる共有要素なので、View Transitionで専用のクラスを当てる。
+ */
+const boothNavAtom = atom<{ from: string | null; to: string | null }>({
+  from: null,
+  to: null,
+});
+
+export { boothNavAtom };

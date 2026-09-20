@@ -1,25 +1,26 @@
 "use client";
 import clsx from "clsx";
 import {
-    Suspense,
     useEffect,
     useRef,
     useState,
     unstable_ViewTransition as ViewTransition,
 } from "react";
 import Image from "next/image";
-import { useAtom } from "jotai";
-import { boothAtom, ItemInterface } from "@/store/booth";
+import { useSetAtom } from "jotai";
+import { boothNavAtom, ItemInterface } from "@/store/booth";
 import Link from "next/link";
 import BoothItemList from "@/components/client/BoothItemList";
 import { boothImageUrl, formatPriceRange } from "@/util";
 
-function OtherItems({ excludeId }: { excludeId: string }) {
-    const [{ data }] = useAtom(boothAtom);
-    return <BoothItemList data={data.filter((item) => item.id !== excludeId)} />;
-}
-
-export default function BoothItemCard({ item }: { item: ItemInterface }) {
+export default function BoothItemCard({
+    item,
+    others,
+}: {
+    item: ItemInterface;
+    others: ItemInterface[];
+}) {
+    const setNav = useSetAtom(boothNavAtom);
     const linkRef = useRef<HTMLAnchorElement>(null);
     const [thumbnailndex, setThumbnailIndex] = useState(0);
     useEffect(() => {
@@ -39,6 +40,7 @@ export default function BoothItemCard({ item }: { item: ItemInterface }) {
                 <Link
                     ref={linkRef}
                     href={"/booth"}
+                    onClick={() => setNav({ from: item.id, to: null })}
                     className="group inline-block h-[40px] aspect-square relative p-5 rounded-full hover:bg-background-sub-tint transition-all"
                 >
                     <Image
@@ -52,7 +54,10 @@ export default function BoothItemCard({ item }: { item: ItemInterface }) {
 
             <div className="size-full px-4 py-2 flex flex-col gap-2 overflow-y-hidden">
                 {/* カード */}
-                <ViewTransition name={"item-card-" + item.id}>
+                <ViewTransition
+                    name={"item-card-" + item.id}
+                    share="booth-card"
+                >
                     <figure className="grid sm:grid-cols-[300px_1fr] lg:grid-cols-[auto_1fr] grid-rows-[auto_1fr] justify-between">
                         {/* 画像 */}
                         <div className="bg-background-sub-tint grid grid-rows-[auto_46px] gap-4 px-10 pt-6 pb-3">
@@ -182,9 +187,8 @@ export default function BoothItemCard({ item }: { item: ItemInterface }) {
                 </ViewTransition>
 
                 {/* 下のエリア */}
-                <Suspense fallback={null}>
-                    <OtherItems excludeId={item.id} />
-                </Suspense>
+                {/* Suspenseで包むとViewTransitionが共有要素としてペアリングしないので包まない */}
+                <BoothItemList data={others} filterByCategory={false} />
             </div>
         </div>
     );

@@ -167,3 +167,37 @@ html.dark{
 
 
 
+/* ---- booth: 一覧 <-> 詳細のView Transition ---- */
+/* 選んだカード(共有要素) */
+::view-transition-group(.booth-card) {
+  animation-duration: 0.45s;
+  animation-timing-function: cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+/* カード自身の背景(hover時の白いbg等)がそのまま拡大されて白い塊に見えるのを避けるため、
+   旧側は素早く消し、新側は少し遅れて現れる。中身の画像/名前は別の共有要素として動く */
+::view-transition-old(.booth-card) {
+  animation: booth-card-out 0.12s ease-out both;
+}
+
+::view-transition-new(.booth-card) {
+  animation: booth-card-in 0.2s ease-in 0.15s both;
+}
+
+@keyframes booth-card-out {
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes booth-card-in {
+  from {
+    opacity: 0;
+  }
+}
+
+/* 一覧/詳細の両方に居るその他のカードは、消えずにそのまま位置を変える */
+::view-transition-group(.booth-item) {
+  animation-duration: 0.45s;
+  animation-timing-function: cubic-bezier(0.2, 0.8, 0.2, 1);
+}
