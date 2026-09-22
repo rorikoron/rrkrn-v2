@@ -4,7 +4,7 @@ import {
     useEffect,
     useRef,
     useState,
-    unstable_ViewTransition as ViewTransition,
+    ViewTransition,
 } from "react";
 import Image from "next/image";
 import { useSetAtom } from "jotai";
@@ -75,6 +75,7 @@ export default function BoothItemCard({
                                             alt={item.name + "のサムネイル"}
                                             fill
                                             objectFit="cover"
+                                            unoptimized
                                         />
                                     )}
 
@@ -134,6 +135,7 @@ export default function BoothItemCard({
                                             alt={"サムネイル" + pic}
                                             fill
                                             objectFit="cover"
+                                            unoptimized
                                         />
                                     </div>
                                 ))}

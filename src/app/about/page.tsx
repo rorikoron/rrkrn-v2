@@ -4,7 +4,7 @@ import { fetchPics } from "@/util";
 import clsx from "clsx";
 import Image from "next/image";
 import Link from "next/link";
-import { unstable_ViewTransition as ViewTransition } from "react";
+import { ViewTransition } from "react";
 
 const linkGroups = [
     {
@@ -50,6 +50,10 @@ const linkGroups = [
 
 export default async function Home() {
     const pics = await fetchPics("selfie");
+    // This route has no `revalidate`/`use cache`, so it re-renders (and re-rolls)
+    // on every request; picking the index client-side would cause a hydration
+    // mismatch since the server and client would each roll a different value.
+    // eslint-disable-next-line react-hooks/purity -- see comment above
     const index = Math.floor(Math.random() * pics.length);
 
     return (

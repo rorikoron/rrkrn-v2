@@ -6,7 +6,7 @@ import { useAtom } from "jotai";
 import Image from "next/image";
 import Link from "next/link";
 import { useParams } from "next/navigation";
-import { unstable_ViewTransition as ViewTransition } from "react";
+import { ViewTransition } from "react";
 
 export default function BoothItem({ id, name, pics }: ItemInterface) {
     const thumbnail = pics?.[0];
@@ -40,6 +40,7 @@ export default function BoothItem({ id, name, pics }: ItemInterface) {
                                 alt={name + "のサムネイル"}
                                 fill
                                 objectFit="cover"
+                                unoptimized
                             />
                         )}
                     </div>

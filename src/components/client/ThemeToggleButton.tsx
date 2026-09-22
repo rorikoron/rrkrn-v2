@@ -1,36 +1,36 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useEffect, useSyncExternalStore } from "react";
 
 const STORAGE_KEY = "rorikoron-toggle";
 
+function subscribe(callback: () => void) {
+    window.addEventListener("storage", callback);
+    return () => window.removeEventListener("storage", callback);
+}
+
+function getSnapshot() {
+    return localStorage.getItem(STORAGE_KEY) === "true";
+}
+
+function getServerSnapshot() {
+    return false;
+}
+
 export default function ThemeToggleButton() {
-    const [isToggled, setIsToggled] = useState(false);
-
-    // マウント時にローカルストレージを読み込む
-    useEffect(() => {
-        const stored = localStorage.getItem(STORAGE_KEY);
-        if (stored !== null) {
-            setIsToggled(stored === "true");
-        }
-    }, []);
+    // ローカルストレージ(外部の可変ストア)を安全に読むため useSyncExternalStore を使用
+    const isToggled = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
 
     useEffect(() => {
-        if (isToggled) {
-            document.documentElement.classList.add("dark");
-        } else {
-            document.documentElement.classList.remove("dark");
-        }
+        document.documentElement.classList.toggle("dark", isToggled);
     }, [isToggled]);
 
     // トグル処理
     const handleToggle = () => {
-        setIsToggled((prev) => {
-            const newValue = !prev;
-            localStorage.setItem(STORAGE_KEY, String(newValue));
-            return newValue;
-        });
+        localStorage.setItem(STORAGE_KEY, String(!isToggled));
+        // "storage" イベントは変更元のタブでは発火しないため手動で通知する
+        window.dispatchEvent(new Event("storage"));
     };
 
     return (
