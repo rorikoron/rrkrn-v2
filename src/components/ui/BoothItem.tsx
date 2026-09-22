@@ -25,6 +25,7 @@ export default function BoothItem({ id, name, pics }: ItemInterface) {
                                 alt={name + "のサムネイル"}
                                 fill
                                 objectFit="cover"
+                                unoptimized
                             />
                         )}
                     </div>

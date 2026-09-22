@@ -8,7 +8,6 @@ const nextConfig: NextConfig = {
     remotePatterns:[
       new URL(`https://archive.rorikoron.net/**`)
     ],
-    unoptimized: true,
   }
 };
 

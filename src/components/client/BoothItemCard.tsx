@@ -69,6 +69,7 @@ export default function BoothItemCard({
                                             alt={item.name + "のサムネイル"}
                                             fill
                                             objectFit="cover"
+                                            unoptimized
                                         />
                                     )}
 
@@ -128,6 +129,7 @@ export default function BoothItemCard({
                                             alt={"サムネイル" + pic}
                                             fill
                                             objectFit="cover"
+                                            unoptimized
                                         />
                                     </div>
                                 ))}
