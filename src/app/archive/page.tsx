@@ -1,5 +1,6 @@
 import { M_PLUS_1 } from "next/font/google";
 import Link from "next/link";
+import { Suspense } from "react";
 import AnimatedMagnifiableImage from "@/components/ui/AnimatedMagnifiableImage";
 import Image from "next/image";
 import { fetchVRChatArchiveAvailableYears } from "@/data/fetchVRChatArchiveAvailableYears";
@@ -7,17 +8,19 @@ import fetchVRChatArchiveByYear from "@/data/fetchVRChatArchiveByYear";
 const plusone = M_PLUS_1({ subsets: ["latin"] });
 export const revalidate = 86400;
 
+async function YearArchive({ year }: { year: string }) {
+    const archives = await fetchVRChatArchiveByYear({ year: Number(year) });
+    return (
+        <div className="columns-2 md:columns-3 space-y-4">
+            {archives.map((value) => (
+                <AnimatedMagnifiableImage src={value} key={value} />
+            ))}
+        </div>
+    );
+}
+
 export default async function Home() {
     const years: string[] = await fetchVRChatArchiveAvailableYears();
-
-    const archivesByYear: Record<string, string[]> = {};
-    await Promise.all(
-        years.map(async (year) => {
-            archivesByYear[year] = await fetchVRChatArchiveByYear({
-                year: Number(year),
-            });
-        })
-    );
 
     return (
         <div className={plusone.className}>
@@ -48,25 +51,19 @@ export default async function Home() {
             </ul>
 
             <div className="fixed left-[0] md:left-[40%] bottom-0 origin-bottom-left rotate-10 h-[calc(100lvh/0.98480+200px)] w-[82lvw] md:w-[54lvw] bg-background-sub/60 py-[200px] overflow-y-scroll px-4">
-                {years.map((year) => [
-                    <>
+                {years.map((year) => (
+                    <div key={year}>
                         <h4
                             id={year}
-                            key={`year-${year}`}
                             className="text-2xl md:text-5xl tracking-widest font-light pb-2"
                         >
                             {year}
                         </h4>
-                        <div className="columns-2 md:columns-3 space-y-4">
-                            {...(archivesByYear[year] ?? []).map((value) => (
-                                <AnimatedMagnifiableImage
-                                    src={value}
-                                    key={value}
-                                />
-                            ))}
-                        </div>
-                    </>,
-                ])}
+                        <Suspense fallback={null}>
+                            <YearArchive year={year} />
+                        </Suspense>
+                    </div>
+                ))}
             </div>
         </div>
     );
