@@ -7,18 +7,20 @@ import {
     ViewTransition,
 } from "react";
 import Image from "next/image";
-import { ItemInterface } from "@/store/booth";
+import { useSetAtom } from "jotai";
+import { boothNavAtom, ItemInterface } from "@/store/booth";
 import Link from "next/link";
 import BoothItemList from "@/components/client/BoothItemList";
 import { boothImageUrl, formatPriceRange } from "@/util";
 
 export default function BoothItemCard({
     item,
-    otherItems,
+    others,
 }: {
     item: ItemInterface;
-    otherItems: ItemInterface[];
+    others: ItemInterface[];
 }) {
+    const setNav = useSetAtom(boothNavAtom);
     const linkRef = useRef<HTMLAnchorElement>(null);
     const [thumbnailndex, setThumbnailIndex] = useState(0);
     useEffect(() => {
@@ -38,6 +40,7 @@ export default function BoothItemCard({
                 <Link
                     ref={linkRef}
                     href={"/booth"}
+                    onClick={() => setNav({ from: item.id, to: null })}
                     className="group inline-block h-[40px] aspect-square relative p-5 rounded-full hover:bg-background-sub-tint transition-all"
                 >
                     <Image
@@ -51,7 +54,10 @@ export default function BoothItemCard({
 
             <div className="size-full px-4 py-2 flex flex-col gap-2 overflow-y-hidden">
                 {/* カード */}
-                <ViewTransition name={"item-card-" + item.id}>
+                <ViewTransition
+                    name={"item-card-" + item.id}
+                    share="booth-card"
+                >
                     <figure className="grid sm:grid-cols-[300px_1fr] lg:grid-cols-[auto_1fr] grid-rows-[auto_1fr] justify-between">
                         {/* 画像 */}
                         <div className="bg-background-sub-tint grid grid-rows-[auto_46px] gap-4 px-10 pt-6 pb-3">
@@ -183,9 +189,8 @@ export default function BoothItemCard({
                 </ViewTransition>
 
                 {/* 下のエリア */}
-                <BoothItemList
-                    data={otherItems.filter((other) => other.id !== item.id)}
-                />
+                {/* Suspenseで包むとViewTransitionが共有要素としてペアリングしないので包まない */}
+                <BoothItemList data={others} filterByCategory={false} />
             </div>
         </div>
     );

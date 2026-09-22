@@ -20,11 +20,19 @@ export default async function BoothItemPage({
     params: Promise<{ id: string }>;
 }) {
     const { id } = await params;
-    const [item, otherItems] = await Promise.all([
+    const [item, items] = await Promise.all([
         fetchBoothItemById(id),
         fetchBoothItems(),
     ]);
     if (!item) notFound();
 
-    return <BoothItemCard item={item} otherItems={otherItems} />;
+    return (
+        <BoothItemCard
+            item={item}
+            others={items.filter(
+                (other) =>
+                    other.id !== item.id && other.category === item.category
+            )}
+        />
+    );
 }

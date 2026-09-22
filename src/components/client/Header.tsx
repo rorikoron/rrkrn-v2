@@ -29,7 +29,7 @@ export default function Header() {
         <>
             <header
                 className={clsx(
-                    `h-lvh px-2 py-12 z-12 bg-background-sub text-foreground tracking-widest flex flex-col fixed w-[330px] lg:!w-auto lg:relative transition-all ease-in`,
+                    `h-dvh px-2 py-12 z-12 bg-background-sub text-foreground tracking-widest flex flex-col fixed w-[330px] lg:!w-auto lg:relative transition-all ease-in`,
                     isOpen ? "left-0" : "-left-[330px] lg:left-0"
                 )}
             >
