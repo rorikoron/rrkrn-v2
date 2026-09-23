@@ -54,9 +54,9 @@ export default async function Home() {
 
     return (
         <div className="h-full">
-            <main className="h-full grid gap-4 md:gap-0 grid-rows-[auto_1fr] md:grid-rows-none md:grid-cols-[min(40%,360px)_1fr]">
+            <main className="h-full grid gap-4 md:gap-0 grid-rows-[auto_1fr] md:grid-rows-none md:grid-cols-[min(30%,360px)_1fr]">
                 {/* left side */}
-                <div className="h-full grid grid-cols-[24%_1fr] md:grid-cols-none md:grid-rows-[auto_minmax(0,1fr)] gap-2 md:gap-10 overflow-y-hidden">
+                <div className="h-full grid grid-cols-[24%_1fr] md:grid-cols-none md:grid-rows-[auto_minmax(0,1fr)] gap-2 md:gap-6 overflow-y-hidden">
                     {/* 自画像 */}
                     <ViewTransition name="SelfieWindow">
                         <BashWindow className="aspect-square relative mt-20 origin-bottom-left scale-[1.4] md:mt-0 md:scale-100 z-10">
@@ -76,13 +76,10 @@ export default async function Home() {
                             title={<h5>&gt; トリセツ?</h5>}
                         >
                             <div className="overflow-y-auto pr-4">
-                                <p>&gt;</p>
-                                <p>&gt; 08/01 生まれ</p>
-                                <p>&gt;</p>
+                                <p>&gt; 2005-08-01 生まれ</p>
                                 <p>&gt; 好きなたべもの：全て</p>
                                 <p>&gt; 好きなのみもの：調整豆乳、솔의눈</p>
                                 <p>&gt; 好きなこと：何か作ること！</p>
-                                <p>&gt;</p>
                                 <p>&gt; かしこくなりたいです。</p>
                             </div>
                         </BashWindow>
@@ -100,7 +97,6 @@ export default async function Home() {
                             }
                         >
                             <div className="overflow-y-auto pr-4 pb-12">
-                                <p>&gt;</p>
                                 <p>&gt; ろりころんです。</p>
                                 <p>
                                     &gt;
@@ -117,7 +113,7 @@ export default async function Home() {
                                     &gt; 本サイトの前身は
                                     <Link
                                         href="https://krn-portfolio.vercel.app"
-                                        className="text-accent font-bold inline-flex px-1.5 mx-2 rounded-xl hover:bg-background-sub-tint transition-all"
+                                        className="text-accent font-bold inline-flex px-1.5 mx-2 rounded-xl hover:bg-primary transition-all"
                                     >
                                         <span>ここ</span>
                                         <span className="h-lh aspect-square relative command-accent inline-block">
@@ -139,7 +135,7 @@ export default async function Home() {
                                     &gt;
                                     日中はネイティブなので翻訳のお仕事もあったらください。
                                 </p>
-                                <p>&gt;</p>
+                                <p>&gt; </p>
                                 <ul className="gap-4">
                                     {/* カテゴリ */}
                                     {linkGroups.map((group) => (
@@ -152,8 +148,8 @@ export default async function Home() {
                                                         <Link
                                                             href={site.link}
                                                             className={clsx(
-                                                                "grid grid-cols-[1lh_1fr] bg-white px-2 py-1.5 text-background rounded transition-all",
-                                                                "hover:bg-inactive"
+                                                                "grid grid-cols-[1lh_1fr] bg-white px-2 py-1.5 text-foreground dark:text-background rounded transition-all",
+                                                                "hover:bg-primary-soft"
                                                             )}
                                                         >
                                                             <div className="aspect-square h-full relative">

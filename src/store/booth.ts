@@ -1,6 +1,6 @@
 
 import { atom } from 'jotai';
-type BoothItemType = "all" | "cloth" | "accessory" | "tool" | "shader" | "goods";
+type BoothItemType = "all" | "cloth" | "accessory" | "software" | "shader" | "goods";
 interface ItemInterface {
     category: BoothItemType;
     name: string;

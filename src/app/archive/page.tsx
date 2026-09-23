@@ -2,6 +2,7 @@ import { M_PLUS_1 } from "next/font/google";
 import Link from "next/link";
 import AnimatedMagnifiableImage from "@/components/ui/AnimatedMagnifiableImage";
 import Image from "next/image";
+import { Fragment } from "react";
 import { fetchVRChatArchiveAvailableYears } from "@/data/fetchVRChatArchiveAvailableYears";
 import fetchVRChatArchiveByYear from "@/data/fetchVRChatArchiveByYear";
 const plusone = M_PLUS_1({ subsets: ["latin"] });
@@ -47,26 +48,25 @@ export default async function Home() {
                 ))}
             </ul>
 
-            <div className="fixed left-[0] md:left-[40%] bottom-0 origin-bottom-left rotate-10 h-[calc(100lvh/0.98480+200px)] w-[82lvw] md:w-[54lvw] bg-background-sub/60 py-[200px] overflow-y-scroll px-4">
-                {years.map((year) => [
-                    <>
+            <div className="fixed left-[0] md:left-[40%] bottom-0 origin-bottom-left rotate-10 h-[calc(100lvh/0.98480+200px)] w-[82lvw] md:w-[54lvw] bg-surface/60 py-[200px] overflow-y-scroll px-4">
+                {years.map((year) => (
+                    <Fragment key={year}>
                         <h4
                             id={year}
-                            key={`year-${year}`}
                             className="text-2xl md:text-5xl tracking-widest font-light pb-2"
                         >
                             {year}
                         </h4>
                         <div className="columns-2 md:columns-3 space-y-4">
-                            {...(archivesByYear[year] ?? []).map((value) => (
+                            {(archivesByYear[year] ?? []).map((value) => (
                                 <AnimatedMagnifiableImage
                                     src={value}
                                     key={value}
                                 />
                             ))}
                         </div>
-                    </>,
-                ])}
+                    </Fragment>
+                ))}
             </div>
         </div>
     );

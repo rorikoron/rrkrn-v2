@@ -3,26 +3,19 @@ import { itemCategoryAtom, ItemInterface } from "@/store/booth";
 import { useAtom } from "jotai";
 import BoothItem from "../ui/BoothItem";
 
-export default function BoothItemList({
-    data,
-    filterByCategory = true,
-}: {
-    data: ItemInterface[];
-    /** 一覧ページで選択中のカテゴリで絞り込むか（詳細ページの関連アイテムでは false） */
-    filterByCategory?: boolean;
-}) {
+/** 一覧ページのアイテム一覧。選択中のカテゴリで絞り込む */
+export default function BoothItemList({ data }: { data: ItemInterface[] }) {
     const [selectedCategory] = useAtom(itemCategoryAtom);
+
+    const items = (data ?? []).filter(({ category }) =>
+        selectedCategory === "all" ? true : category === selectedCategory
+    );
+
     return (
-        <div className="grid grid-cols-2 md:grid-cols-4 xl:grid-cols-5 overflow-y-auto">
-            {data
-                ?.filter(({ category }) =>
-                    !filterByCategory || selectedCategory === "all"
-                        ? true
-                        : category === selectedCategory
-                )
-                ?.map((item) => (
-                    <BoothItem {...item} key={"item-" + item.id} />
-                ))}
+        <div className="grid grid-cols-2 md:grid-cols-4 overflow-y-auto gap-3 md:gap-4">
+            {items.map((item) => (
+                <BoothItem {...item} key={"item-" + item.id} />
+            ))}
         </div>
     );
 }

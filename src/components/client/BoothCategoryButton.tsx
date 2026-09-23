@@ -14,11 +14,11 @@ export default function BoothCategoryButton({
         <button
             key={category}
             className={clsx(
-                "px-5 py-1 rounded-xl transition-all ",
+                "px-5 py-1 rounded-xl border-2 transition-all",
                 selectedCaterogry !== category &&
-                    "bg-foreground/20   cursor-pointer hover:bg-foreground/60",
+                    "border-foreground/25 cursor-pointer hover:border-active hover:bg-primary-soft/40",
                 selectedCaterogry === category &&
-                    "bg-background-sub text-foreground pointer-events-none"
+                    "border-active text-active pointer-events-none"
             )}
             onClick={() => {
                 // View Transitionのオーバーレイはスクロール領域のクリップを無視するので、

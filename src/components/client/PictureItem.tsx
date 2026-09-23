@@ -40,8 +40,8 @@ export default function PictureItem({ pngs }: PictureItemInterface) {
                 <div
                     className={clsx(
                         `text-foreground w-[230px] md:w-[260px] aspect-9/16 flex flex-col gap-6 rounded-xl ${zenkaku.className}`,
-                        "bg-gradient-to-b from-stone-200 to-background-sub",
-                        "bg-background/30 bg-blend-multiply"
+                        "bg-gradient-to-b from-background to-surface",
+                        "bg-background/80 bg-blend-multiply"
                     )}
                 >
                     <div className="h-fit flex flex-col justify-between py-4">
@@ -50,7 +50,7 @@ export default function PictureItem({ pngs }: PictureItemInterface) {
                             <button
                                 className={clsx(
                                     "transition-all -translate-x-[50%] h-[16px] aspect-square relative p-4 rounded-full",
-                                    "hover:bg-foreground/20"
+                                    "hover:bg-primary-strong/20"
                                 )}
                                 onClick={() => setIsMinify((prev) => !prev)}
                             >
@@ -83,7 +83,7 @@ export default function PictureItem({ pngs }: PictureItemInterface) {
                                     <figcaption className="text-md text-nowrap break-keep">
                                         撮られた写真({index + 1}/{pngs.length})
                                     </figcaption>
-                                    <figcaption className="text-inactive text-sm text-nowrap break-keep">
+                                    <figcaption className="text-muted text-sm text-nowrap break-keep">
                                         撮った人:{" "}
                                         {
                                             pngs[index]
@@ -103,7 +103,7 @@ export default function PictureItem({ pngs }: PictureItemInterface) {
                                     <button
                                         className={clsx(
                                             "transition-all h-full aspect-square relative -mr-2 p-2 rounded-full flex justify-center",
-                                            "hover:bg-foreground/20"
+                                            "hover:bg-primary-strong/20"
                                         )}
                                     >
                                         <Image
@@ -126,13 +126,13 @@ export default function PictureItem({ pngs }: PictureItemInterface) {
                                         )
                                     }
                                     className={clsx(
-                                        "w-full h-[4px] bg-inactive rounded gauge mb-2",
+                                        "w-full h-[4px] bg-muted rounded gauge mb-2",
                                         !isRunning && "pause-animation"
                                     )}
                                     style={
                                         {
                                             "--active-color":
-                                                "var(--background)",
+                                                "var(--primary)",
                                             "--interval": `${updateInterval}ms`,
                                         } as React.CSSProperties
                                     }
@@ -151,7 +151,7 @@ export default function PictureItem({ pngs }: PictureItemInterface) {
                             <button
                                 className={clsx(
                                     "transition-all h-full aspect-square relative p-4 rounded-full",
-                                    "hover:bg-foreground/20"
+                                    "hover:bg-primary-strong/20"
                                 )}
                                 onClick={() =>
                                     setIndex(
@@ -190,7 +190,7 @@ export default function PictureItem({ pngs }: PictureItemInterface) {
                             <button
                                 className={clsx(
                                     "transition-all h-full aspect-square relative p-4 -scale-x-100 rounded-full",
-                                    "hover:bg-foreground/20"
+                                    "hover:bg-primary-strong/20"
                                 )}
                                 onClick={() =>
                                     setIndex((prev) => (prev + 1) % pngs.length)
@@ -211,7 +211,7 @@ export default function PictureItem({ pngs }: PictureItemInterface) {
             <div
                 className={clsx(
                     "fixed translate-x-[50%] w-[calc(230px*0.7)] md:w-[calc(260px*0.7)] aspect-square z-1 transition-all",
-                    "right-[calc(36px+230px*0.5)] bottom-[calc(10px+230px*16/9*0.15-30px)]",
+                    "right-[calc(8px+230px*0.5)] bottom-[calc(10px+230px*16/9*0.15-30px)]",
                     "md:right-[calc(36px+260px*0.5)] md:bottom-[calc(10px+260px*16/9*0.15-30px)]"
                 )}
             >

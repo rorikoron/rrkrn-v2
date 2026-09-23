@@ -10,7 +10,7 @@ export default async function Home() {
 
     return (
         <div className="h-full">
-            <main className="h-full grid grid-rows-[4fr_6fr] relative">
+            <main className="h-full grid grid-rows-[3fr_6fr] relative">
                 <div className="flex flex-col justify-center overflow-hidden">
                     <h1 className="text-[60px] sm:text-[80px] md:text-[128px] leading-none text-foreground">
                         Rorikoron

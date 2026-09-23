@@ -29,12 +29,12 @@ export default function Header() {
         <>
             <header
                 className={clsx(
-                    `h-dvh px-2 py-12 z-12 bg-background-sub text-foreground tracking-widest flex flex-col fixed w-[330px] lg:!w-auto lg:relative transition-all ease-in`,
+                    `h-dvh px-2 py-12 z-12 bg-surface border-r-2 border-primary/60 text-foreground tracking-widest flex flex-col fixed w-[330px] lg:!w-auto lg:relative transition-all ease-in`,
                     isOpen ? "left-0" : "-left-[330px] lg:left-0"
                 )}
             >
                 <BashWindow
-                    className={"ml-4 lg:ml-6 lg:mr-6 xl:mr-10 2xl:mr-20 mb-20"}
+                    className={"ml-4 lg:ml-6 lg:mr-6 mb-20"}
                     command="pwd"
                     title={<HeaderTitle />}
                     isUserActive
@@ -45,7 +45,7 @@ export default function Header() {
                 {/* 開閉ボタン */}
                 <div
                     className={clsx(
-                        "absolute cursor-pointer bottom-4 -right-1 translate-x-full px-2 py-3 bg-background-sub border-foreground z-12 rounded-xl transition-all",
+                        "absolute cursor-pointer bottom-4 -right-1 translate-x-full px-2 py-3 bg-surface border-foreground z-12 rounded-xl transition-all",
                         !isOpen && "rotate-180",
                         "lg:hidden"
                     )}

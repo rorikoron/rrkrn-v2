@@ -22,10 +22,10 @@ export default function CatSoundPlayer({ command }: CatSoundPlayerInterface) {
     }, []);
     return (
         <span
-            className="absolute top-6 -left-6 bg-background-sub px-2 text-md border-foreground border-2 z-10 select-none"
+            className="absolute top-6 -left-6 bg-surface px-2 text-md border-foreground border-2 z-10 select-none"
             onClick={playSound}
         >
-            $ {command}
+            <span className="pr">$</span>{command}
         </span>
     );
 }

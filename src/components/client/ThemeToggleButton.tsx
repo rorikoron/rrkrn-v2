@@ -36,10 +36,10 @@ export default function ThemeToggleButton() {
     return (
         <button
             onClick={handleToggle}
-            className={`px-4 py-3 rounded-full block transition-all ${
+            className={`px-3 py-3 rounded-full block transition-all cursor-pointer ${
                 isToggled
                     ? "bg-accent hover:brightness-60"
-                    : "outline-2 hover:bg-foreground/60"
+                    : "outline-2 hover:bg-primary-strong/60"
             }`}
         >
             <Image

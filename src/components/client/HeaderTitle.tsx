@@ -30,7 +30,7 @@ export default function HeaderListitem() {
         };
     }, [pathname]);
     return (
-        <span className="tracking-wide typewriter -ml-2">
+        <span className="tracking-wide typewriter -ml-2 whitespace-nowrap">
             &gt;/{localPrevPathname.substring(1)}
         </span>
     );
