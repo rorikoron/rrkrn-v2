@@ -51,13 +51,13 @@ export default function RootLayout({
                 content="width=device-width, initial-scale=1.0"
             />
             <body
-                className={`!h-lvh !w-lvw antialiased relative lg:grid lg:grid-cols-[max(10%,380px)_1fr] overflow-hidden`}
+                className={`!h-dvh !w-dvw antialiased relative lg:grid lg:grid-cols-[max(10%,380px)_1fr] overflow-hidden`}
             >
                 <ViewTransitionCleanup />
                 <Header />
                 <div
                     className={clsx(
-                        `${mplusone.className} py-6 md:py-12 px-6 md:px-8 text-foreground h-lvh`,
+                        `${mplusone.className} py-6 md:py-12 px-6 md:px-8 text-foreground h-dvh`,
                         "bg-gradient-to-br from-background to-background-gradient"
                     )}
                 >

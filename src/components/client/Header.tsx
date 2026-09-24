@@ -68,7 +68,7 @@ export default function Header() {
             {/* マスク */}
             <div
                 className={clsx(
-                    "z-11 h-lvh w-lvw bg-white fixed left-0 top-0 transition-all",
+                    "z-11 h-dvh w-dvw bg-white fixed left-0 top-0 transition-all",
                     isOpen && "opacity-20",
                     !isOpen && "opacity-0 pointer-events-none"
                 )}
