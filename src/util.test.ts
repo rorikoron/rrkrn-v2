@@ -1,4 +1,4 @@
-import { fetchPics, boothImageUrl, formatPriceRange } from "@/util";
+import { fetchPics, boothImageUrl, formatPriceRange, distributeToColumns } from "@/util";
 
 describe("fetchPics", () => {
     it("returns manifest entries matching the default image extensions", async () => {
@@ -51,5 +51,36 @@ describe("formatPriceRange", () => {
 
     it("formats large numbers with thousands separators", () => {
         expect(formatPriceRange(1000000, 1000000)).toBe("1,000,000円");
+    });
+});
+
+describe("distributeToColumns", () => {
+    const landscape = (id: string) => ({ id, width: 16, height: 9 });
+    const portrait = (id: string) => ({ id, width: 9, height: 16 });
+    type Item = { id: string; width?: number; height?: number };
+    const ids = (columns: Item[][]) => columns.map((c) => c.map((i) => i.id));
+
+    it("fills the first row left to right", () => {
+        const items = ["a", "b", "c"].map(landscape);
+        expect(ids(distributeToColumns(items, 3))).toEqual([["a"], ["b"], ["c"]]);
+    });
+
+    it("puts the next item under the shortest column", () => {
+        const items = [portrait("tall"), landscape("short"), landscape("next")];
+        expect(ids(distributeToColumns(items, 2))).toEqual([["tall"], ["short", "next"]]);
+    });
+
+    it("treats items without dimensions as square", () => {
+        const items: Item[] = [{ id: "unknown" }, landscape("wide"), landscape("next")];
+        expect(ids(distributeToColumns(items, 2))).toEqual([["unknown"], ["wide", "next"]]);
+    });
+
+    it("starts columns at the given initial heights", () => {
+        const items = ["a", "b"].map(landscape);
+        expect(ids(distributeToColumns(items, 3, [1, 0, 0.5]))).toEqual([[], ["a"], ["b"]]);
+    });
+
+    it("returns empty columns for no items", () => {
+        expect(distributeToColumns([], 2)).toEqual([[], []]);
     });
 });

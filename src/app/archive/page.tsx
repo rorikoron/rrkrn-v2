@@ -1,73 +1,35 @@
-import { M_PLUS_1 } from "next/font/google";
-import Link from "next/link";
-import AnimatedMagnifiableImage from "@/components/ui/AnimatedMagnifiableImage";
-import Image from "next/image";
-import { Fragment } from "react";
+import ArchiveGallery, { type YearArchive } from "@/components/client/ArchiveGallery";
 import { fetchVRChatArchiveAvailableYears } from "@/data/fetchVRChatArchiveAvailableYears";
 import fetchVRChatArchiveByYear from "@/data/fetchVRChatArchiveByYear";
-const plusone = M_PLUS_1({ subsets: ["latin"] });
+
+// 一日毎にISR
 export const revalidate = 86400;
 
-export default async function Home() {
-    const years: string[] = await fetchVRChatArchiveAvailableYears();
-
-    const archivesByYear: Record<string, string[]> = {};
-    await Promise.all(
-        years.map(async (year) => {
-            archivesByYear[year] = await fetchVRChatArchiveByYear({
-                year: Number(year),
-            });
-        })
-    );
+export default async function Archive() {
+    // 新しい年から。年の中は撮った順 (R2 のキーが日付順なので list の順のまま)
+    const years = (await fetchVRChatArchiveAvailableYears()).sort((a, b) => Number(b) - Number(a));
+    const archives: YearArchive[] = (
+        await Promise.all(
+            years.map(async (year) => ({
+                year,
+                photos: await fetchVRChatArchiveByYear({ year: Number(year) }),
+            }))
+        )
+    ).filter(({ photos }) => photos.length > 0);
 
     return (
-        <div className={plusone.className}>
-            <ul className="hidden md:flex flex-col gap-4">
-                {years.map((year) => (
-                    <li
-                        key={year}
-                        className="group list-inside text-xl w-fit py-1.5 pl-3 pr-12"
-                    >
-                        <Link
-                            href={"/archive/#" + year}
-                            className="inline-flex items-center gap-3 text-md "
-                        >
-                            <div className="w-5 h-5 relative">
-                                <Image
-                                    className="rotate-180 command-accent"
-                                    src="/svg/arrow-left.svg"
-                                    alt="移動"
-                                    fill
-                                />
-                            </div>
-                            <span className=" group-hover:translate-x-[50%] transition-all">
-                                {year}
-                            </span>
-                        </Link>
-                    </li>
-                ))}
-            </ul>
-
-            <div className="fixed left-[0] md:left-[40%] bottom-0 origin-bottom-left rotate-10 h-[calc(100lvh/0.98480+200px)] w-[82lvw] md:w-[54lvw] bg-surface/60 py-[200px] overflow-y-scroll px-4">
-                {years.map((year) => (
-                    <Fragment key={year}>
-                        <h4
-                            id={year}
-                            className="text-2xl md:text-5xl tracking-widest font-light pb-2"
-                        >
-                            {year}
-                        </h4>
-                        <div className="columns-2 md:columns-3 space-y-4">
-                            {(archivesByYear[year] ?? []).map((value) => (
-                                <AnimatedMagnifiableImage
-                                    src={value}
-                                    key={value}
-                                />
-                            ))}
-                        </div>
-                    </Fragment>
-                ))}
+        // レイアウトの余白を打ち消して、背景の四角を画面の端から敷く
+        <div className="relative -mx-6 -my-6 md:-mx-8 md:-my-12 h-[calc(100%+3rem)] md:h-[calc(100%+6rem)] overflow-hidden">
+            {/* 左上に重なるピンクの四角。下から: 横長の帯 → 左上の四角 → 下へ薄れていく縦の帯。
+                写真の裏に隠れないよう、タイトルと年見出しのあたりで消えるようにする。
+                左端はレイアウトのモールス信号が見えるように空けておく */}
+            <div aria-hidden className="absolute inset-0 pointer-events-none dark:opacity-50">
+                <div className="absolute left-[15%] top-[40px] md:top-[64px] w-[45%] h-[80px] md:h-[110px] bg-primary-soft/35" />
+                <div className="absolute left-8 md:left-10 top-0 w-[45%] md:w-[30%] h-[100px] md:h-[150px] bg-primary-soft/75" />
+                {/* 左上の四角と左端がそろわないよう、少し右にずらす */}
+                <div className="absolute left-14 md:left-20 top-[24px] md:top-[36px] h-[55%] w-[25%] md:w-[20%] bg-linear-to-b from-active/75 via-primary/45 to-transparent" />
             </div>
+            <ArchiveGallery archives={archives} />
         </div>
     );
 }

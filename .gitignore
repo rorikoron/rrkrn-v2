@@ -51,3 +51,5 @@ cloudflare-env.d.ts
 
 # claude code worktrees
 /.claude/worktrees
+# fix-archive-resolutions.mjs が作るリネーム前のバックアップ
+/.archive-backup

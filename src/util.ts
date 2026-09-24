@@ -18,8 +18,31 @@ function formatPriceRange(min: number, max: number): string {
     return `${min.toLocaleString()}円〜${max.toLocaleString()}円`;
 }
 
+// 縦横比の分からない画像はとりあえず正方形として扱う
+const FALLBACK_ASPECT = 1;
+
+// マソンリー用に、先頭から順に「その時点でいちばん短い列」へ積んでいく。
+// 同じ長さなら左の列を優先するので、並びは左→右・上→下でおおよそ保たれる。
+// 見出しなどで列の頭が埋まっている場合は、その高さを列幅比で initialHeights に渡す
+function distributeToColumns<T extends { width?: number; height?: number }>(
+    items: T[],
+    columnCount: number,
+    initialHeights: number[] = []
+): T[][] {
+    const columns: T[][] = Array.from({ length: columnCount }, () => []);
+    const heights: number[] = Array.from({ length: columnCount }, (_, i) => initialHeights[i] ?? 0);
+    for (const item of items) {
+        const shortest = heights.indexOf(Math.min(...heights));
+        columns[shortest].push(item);
+        heights[shortest] +=
+            item.width && item.height ? item.height / item.width : FALLBACK_ASPECT;
+    }
+    return columns;
+}
+
 export {
     fetchPics,
     boothImageUrl,
     formatPriceRange,
+    distributeToColumns,
 }
