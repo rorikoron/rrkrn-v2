@@ -75,80 +75,95 @@ export default function BoothItemCard({
             {/* 中身はページをスクロールさせず、上のカードが残りの高さを使い、関連アイテムは下に1行だけ置く */}
             <div className="flex-1 min-h-0 flex flex-col gap-3 md:gap-4 px-2 md:px-4 pb-2">
                 {/* カード */}
-                <figure className="@container flex-1 min-h-0 grid grid-rows-[auto_minmax(0,1fr)] md:grid-rows-1 md:grid-cols-[auto_minmax(0,1fr)]">
-                    {/* 画像。高さを先に決めて、幅は正方形から決まる。
-                        PCでは枠(figure)の幅にも合わせて縮め、右の文字欄が細くなりすぎないようにする */}
-                    <div className="bg-primary flex flex-col items-center md:justify-center gap-3 px-10 py-3 md:py-6">
-                        <ViewTransition name={"item-picture-" + item.id}>
-                            <div className="relative aspect-square h-[24svh] md:h-[min(40svh,360px,calc(45cqw-5rem))] max-w-full bg-accent">
-                                {item.pics[thumbnailndex] && (
-                                    <Image
-                                        src={boothImageUrl(
-                                            item.pics[thumbnailndex]
-                                        )}
-                                        alt={item.name + "のサムネイル"}
-                                        fill
-                                        objectFit="cover"
-                                    />
-                                )}
+                <figure className="@container flex-1 min-h-0 grid grid-rows-[auto_minmax(0,1fr)] md:grid-rows-1 md:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)]">
+                    {/* 画像ビューア。画像はパネルの横幅いっぱい (PCでは残りの高さも) に広げ、
+                        全体が見えるよう object-contain で置く。左右ボタンは画像の上に重ねる */}
+                    <div className="bg-primary dot-grid-white min-h-0 flex flex-col gap-2 md:gap-3 p-3 md:p-4">
+                        <div
+                            className={`${redHatMono.className} hidden md:flex justify-between gap-4 text-[11px] tracking-wider text-foreground/70`}
+                        >
+                            <span className="shrink-0">
+                                IMG {thumbnailndex + 1}/{item.pics.length}
+                            </span>
+                            <span className="truncate">
+                                {item.pics[thumbnailndex]?.split("/").at(-1)}
+                            </span>
+                        </div>
 
-                                {/* left/right button */}
-                                <div className="absolute p-2 top-[50%] left-0 -translate-y-[50%] -translate-x-full cursor-pointer">
-                                    <button
-                                        className="h-[32px] aspect-square relative cursor-pointer "
-                                        onClick={() => {
-                                            const l = item.pics.length;
-                                            setThumbnailIndex(
-                                                (p) => (p + l - 1) % l
-                                            );
-                                        }}
-                                    >
+                        <div className="relative w-full h-[30svh] md:h-auto md:flex-1 md:min-h-0">
+                            <ViewTransition name={"item-picture-" + item.id}>
+                                <div className="absolute inset-0">
+                                    {item.pics[thumbnailndex] && (
                                         <Image
-                                            src="/svg/arrow-left.svg"
-                                            alt="Left Button"
+                                            src={boothImageUrl(
+                                                item.pics[thumbnailndex]
+                                            )}
+                                            alt={item.name + "のサムネイル"}
                                             fill
-                                            className="command-foreground hover:scale-[1.1]"
+                                            className="object-contain"
                                         />
-                                    </button>
-                                </div>
-                                <div className="absolute p-2 top-[50%] right-0 -translate-y-[50%] translate-x-full -scale-x-100 cursor-pointer">
-                                    <button
-                                        className="h-[32px] aspect-square relative cursor-pointer"
-                                        onClick={() => {
-                                            const l = item.pics.length;
-                                            setThumbnailIndex(
-                                                (p) => (p + 1) % l
-                                            );
-                                        }}
-                                    >
-                                        <Image
-                                            src="/svg/arrow-left.svg"
-                                            alt="Right Button"
-                                            fill
-                                            className="command-foreground hover:scale-[1.1]"
-                                        />
-                                    </button>
-                                </div>
-                            </div>
-                        </ViewTransition>
-
-                        {/* サムネs */}
-                        <div className="h-9 md:h-[clamp(28px,6cqw,46px)] flex gap-2 justify-center">
-                            {item.pics.map((pic, i) => (
-                                <div
-                                    className={clsx(
-                                        "h-full aspect-square relative transition-all",
-                                        i !== thumbnailndex && "brightness-50"
                                     )}
+                                </div>
+                            </ViewTransition>
+
+                            {/* left/right button */}
+                            {item.pics.length > 1 &&
+                                ([-1, 1] as const).map((step) => (
+                                    <button
+                                        key={step}
+                                        aria-label={
+                                            step < 0 ? "前の画像" : "次の画像"
+                                        }
+                                        className={clsx(
+                                            "absolute top-1/2 -translate-y-1/2 size-9 md:size-10 grid place-items-center rounded-full cursor-pointer",
+                                            "bg-surface/80 hover:bg-surface border-2 border-transparent hover:border-active transition-colors",
+                                            step < 0 ? "left-2" : "right-2"
+                                        )}
+                                        onClick={() => {
+                                            const l = item.pics.length;
+                                            setThumbnailIndex(
+                                                (p) => (p + l + step) % l
+                                            );
+                                        }}
+                                    >
+                                        <span
+                                            className={clsx(
+                                                "relative size-5",
+                                                step > 0 && "-scale-x-100"
+                                            )}
+                                        >
+                                            <Image
+                                                src="/svg/arrow-left.svg"
+                                                alt=""
+                                                fill
+                                                className="command-foreground"
+                                            />
+                                        </span>
+                                    </button>
+                                ))}
+                        </div>
+
+                        {/* サムネs。押すとその画像に切り替わる */}
+                        <div className="shrink-0 h-12 md:h-16 flex gap-2 justify-center overflow-x-auto">
+                            {item.pics.map((pic, i) => (
+                                <button
                                     key={pic}
+                                    aria-label={`${i + 1}枚目の画像`}
+                                    onClick={() => setThumbnailIndex(i)}
+                                    className={clsx(
+                                        "h-full aspect-square relative shrink-0 border-2 transition-all cursor-pointer",
+                                        i === thumbnailndex
+                                            ? "border-active"
+                                            : "border-transparent brightness-75 hover:brightness-100"
+                                    )}
                                 >
                                     <Image
                                         src={boothImageUrl(pic)}
                                         alt={"サムネイル" + pic}
                                         fill
-                                        objectFit="cover"
+                                        className="object-cover"
                                     />
-                                </div>
+                                </button>
                             ))}
                         </div>
                     </div>

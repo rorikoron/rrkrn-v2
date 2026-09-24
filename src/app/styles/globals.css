@@ -19,7 +19,7 @@
   --primary-strong: #ffcacf;      /* 半透明のホバー・スクロールバー */
 
   /* アクティブ(ホバー中・最大化中)なウィンドウの枠。非アクティブの枠は primary/60 */
-  --active: #e0607e;
+  --active: #ff8181;
 
   /* 差し色 */
   --accent: #ffca44;
@@ -42,7 +42,7 @@
 
   --primary-strong: #86635f;
 
-  --active: #ff9fb4;
+  --active: #ffa49f;
 }
 
 @theme inline {
@@ -65,6 +65,39 @@
   --color-category-software: var(--category-software);
   --color-category-shader: var(--category-shader);
   --color-category-goods: var(--category-goods);
+}
+
+/* 方眼紙のようなドットの背景。色は文字色を薄めたもの */
+@utility dot-grid {
+  background-image: radial-gradient(
+    color-mix(in oklab, var(--foreground) 22%, transparent) 1px,
+    transparent 1.5px
+  );
+  background-size: 14px 14px;
+}
+
+/* ドットそのものをグラデーションで染めたもの。グラデーションの面をドット型のマスクで切り抜く */
+@utility dot-grid-gradient {
+  background-image: linear-gradient(25deg, var(--background), var(--primary));
+  mask-image: radial-gradient(#000 2px, transparent 1.2px);
+  mask-size: 14px 14px;
+}
+
+/* 白いドットをグラデーションで薄れさせたもの。要素自体を切り抜くと中身まで消えるので、
+   ::before に敷いて中身の下に描く */
+@utility dot-grid-white {
+  position: relative;
+  isolation: isolate;
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background-image: linear-gradient(325deg, #fff, transparent 65%);
+    mask-image: radial-gradient(#000 2.4px, transparent 2.9px);
+    mask-size: 16px 16px;
+  }
 }
 
 body {
@@ -209,6 +242,12 @@ html.dark{
 ::view-transition-new(.booth-card) {
   animation: none;
   opacity: 0;
+}
+
+/* 選んだカードの中身 (画像・名前・値段)。枠と同じタイミングで、普通に位置とサイズを変える */
+::view-transition-group(.booth-card-part) {
+  animation-duration: 0.45s;
+  animation-timing-function: cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
 /* 一覧/詳細の両方に居るその他のカードは、消えずにそのまま位置を変える */

@@ -21,13 +21,13 @@ export default async function Booth() {
     return (
         <div className="h-full grid grid-rows-[auto_1fr] overflow-y-hidden px-4">
             <div className="pb-4 md:pt-0 md:flex justify-between items-center ">
-                <h1 className="inline-block text-[42px] md:text-[64px] before:content-['#'] before:mr-[4px] pr-4 font-bold">
+                <h1 className="inline-block text-[42px] md:text-[64px] before:content-['#'] before:mr-[4px] pr-4 font-bold after:block after:w-14 after:h-1 after:mt-1 after:rounded-full after:bg-active">
                     KoronStore
                 </h1>
                 <h2
                     className={clsx(
-                        "inline-block text-sm tracking-wider mt-4 py-4 pr-[42px] border-t-3  border-primary/60",
-                        "md:border-t-0 md:border-l-3 md:pl-[30px] md:pr-0"
+                        "inline-block text-sm tracking-wider mt-2 py-2 border-primary/60",
+                        "md:mt-4 md:py-4 md:border-l-3 md:pl-[30px]"
                     )}
                 >
                     <div>自分が欲しくなったのを作ってます</div>

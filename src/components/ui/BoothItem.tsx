@@ -43,6 +43,9 @@ export default function BoothItem({
     // 一覧/詳細の両方に居るアイテムは同名でペアになり、位置だけ動く。
     // 遷移元/遷移先のアイテムはサイズも変わるので、専用のクラスで扱う
     const share = nav.from === id || nav.to === id ? "booth-card" : "booth-item";
+    // カードの中の画像・名前・値段。booth-card はウィンドウ枠の見た目 (枠線・スナップショット非表示) を持つので、
+    // 中身には付けず、動きのタイミングだけ揃えた別のクラスにする
+    const partShare = share === "booth-card" ? "booth-card-part" : "booth-item";
 
     return (
         <ViewTransition
@@ -70,7 +73,7 @@ export default function BoothItem({
                         compact && "w-14 md:w-16 shrink-0"
                     )}
                 >
-                    <ViewTransition name={"item-picture-" + id} share={share}>
+                    <ViewTransition name={"item-picture-" + id} share={partShare}>
                         <div className={clsx("aspect-square relative")}>
                             {thumbnail && (
                                 <Image
@@ -98,7 +101,7 @@ export default function BoothItem({
                 </div>
 
                 <div className="flex-1 flex flex-col min-w-0">
-                    <ViewTransition name={"item-name-" + id} share={share}>
+                    <ViewTransition name={"item-name-" + id} share={partShare}>
                         <div
                             className={clsx(
                                 "font-bold",
@@ -113,7 +116,7 @@ export default function BoothItem({
                             <span className="line-clamp-1">{name}</span>
                         </div>
                     </ViewTransition>
-                    <ViewTransition name={"item-price-" + id} share={share}>
+                    <ViewTransition name={"item-price-" + id} share={partShare}>
                         <span
                             className={clsx(
                                 "self-end rounded block text-right",
