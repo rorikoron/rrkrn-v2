@@ -2,7 +2,7 @@ import clsx from "clsx";
 import { Red_Hat_Mono } from "next/font/google";
 import Image from "next/image";
 import { ReactElement } from "react";
-import { unstable_ViewTransition as ViewTransition } from "react";
+import { ViewTransition } from "react";
 import CatSoundPlayer from "../client/CatSoundPlayer";
 const redHatMono = Red_Hat_Mono({ subsets: ["latin"] });
 

@@ -6,7 +6,7 @@ import { useAtom } from "jotai";
 import Image from "next/image";
 import Link from "next/link";
 import { useParams } from "next/navigation";
-import { unstable_ViewTransition as ViewTransition } from "react";
+import { ViewTransition } from "react";
 import { Red_Hat_Mono } from "next/font/google";
 const redHatMono = Red_Hat_Mono({ subsets: ["latin"] });
 
@@ -81,6 +81,7 @@ export default function BoothItem({
                                     alt={name + "のサムネイル"}
                                     fill
                                     objectFit="cover"
+                                    unoptimized
                                 />
                             )}
                         </div>

@@ -1,5 +1,5 @@
 "use client";
-import { startTransition, unstable_ViewTransition as ViewTransition, useEffect, useState } from "react";
+import { startTransition, ViewTransition, useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import Image from "next/image";
 import clsx from "clsx";
@@ -54,7 +54,8 @@ export default function AnimatedMagnifiableImage({
                             blurDataURL="/loading.png"
                             width={width ?? 0}
                             height={height ?? 0}
-                            sizes="100%"
+                            // レーン幅くらい (PC は 4〜6 レーン、スマホは 2 レーン)
+                            sizes="(min-width: 768px) 25vw, 50vw"
                             style={{
                                 width: "100%",
                                 height: "auto",

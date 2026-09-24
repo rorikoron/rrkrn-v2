@@ -4,7 +4,7 @@ import BashWindow from "@/components/ui/BashWindow";
 import type { ArchivePhoto } from "@/data/fetchVRChatArchiveByYear";
 import { distributeToColumns } from "@/util";
 import clsx from "clsx";
-import { RefObject, startTransition, useEffect, useLayoutEffect, useRef, useState } from "react";
+import { RefObject, startTransition, useEffect, useLayoutEffect, useRef, useState, useSyncExternalStore } from "react";
 
 export interface YearArchive {
     year: string;
@@ -23,7 +23,7 @@ const PICKER_OVERHANG = 0.5;
 
 // 画面幅ではなく実際の表示幅で決める (lg 以上はサイドバーの分だけ狭いので)。
 // n レーンに必要な幅は n * MIN_LANE_WIDTH + (n - 1) * gap なので、それが収まる最大の n を取る。
-// gap は画面幅で変わる (gap-x-4 / md:gap-x-6) ので実際のスタイルから読む
+// gap は画面幅で変わる (gap-x-2 / md:gap-x-4) ので実際のスタイルから読む
 function useLaneCount(ref: RefObject<HTMLElement | null>) {
     const [count, setCount] = useState<number | null>(null);
     useLayoutEffect(() => {
@@ -41,6 +41,12 @@ function useLaneCount(ref: RefObject<HTMLElement | null>) {
     }, [ref]);
     return count;
 }
+
+function subscribeHash(onChange: () => void) {
+    window.addEventListener("hashchange", onChange);
+    return () => window.removeEventListener("hashchange", onChange);
+}
+const readHash = () => decodeURIComponent(location.hash.slice(1));
 
 function PhotoLane({ photos }: { photos: ArchivePhoto[] }) {
     return photos.map((photo) => (
@@ -99,23 +105,19 @@ function YearPicker({
 
 export default function ArchiveGallery({ archives }: { archives: YearArchive[] }) {
     const years = archives.map(({ year }) => year);
-    const [selected, setSelected] = useState(years[0]);
+    // #2025 のようなリンクで来たらその年を開く。選び直したらそちらを優先する
+    const hashYear = useSyncExternalStore(subscribeHash, readHash, () => "");
+    const [picked, setPicked] = useState<string | null>(null);
+    const selected = picked ?? (years.includes(hashYear) ? hashYear : years[0]);
     const scrollRef = useRef<HTMLDivElement>(null);
     const gridRef = useRef<HTMLDivElement>(null);
     const laneCount = useLaneCount(gridRef);
-
-    // #2025 のようなリンクで来たらその年を開く
-    useEffect(() => {
-        const fromHash = decodeURIComponent(location.hash.slice(1));
-        if (years.includes(fromHash)) setSelected(fromHash);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
 
     const select = (year: string) => {
         // View Transition のオーバーレイはスクロール領域のクリップを無視するので、先に先頭へ戻す
         scrollRef.current?.scrollTo({ top: 0 });
         history.replaceState(null, "", "#" + year);
-        startTransition(() => setSelected(year));
+        startTransition(() => setPicked(year));
     };
 
     const photos = archives.find(({ year }) => year === selected)?.photos ?? [];
