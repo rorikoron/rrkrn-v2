@@ -3,7 +3,6 @@ import fetchBoothItems from '@/data/fetchBoothItems';
 import { handle } from "hono/vercel";
 import { fetchVRChatArchiveAvailableYears } from '@/data/fetchVRChatArchiveAvailableYears';
 import fetchVRChatArchiveByYear from '@/data/fetchVRChatArchiveByYear';
-import { getBoothBucket } from '@/lib/r2-client';
 
 const IMMUTABLE_CACHE = { "Cache-Control": "public, max-age=31536000, immutable" };
 const DAILY_CACHE = { "Cache-Control": "public, max-age=86400" };
@@ -23,22 +22,6 @@ const api = new Hono().basePath("/api").onError((err, c) => {
 }).get("/items", async (c) => {
     const items = await fetchBoothItems();
     return c.json(items, 200, DAILY_CACHE);
-}).get("/images/:key{.+}", async (c) => {
-    const key = decodeURIComponent(c.req.param("key"));
-
-    try {
-      const bucket = await getBoothBucket();
-      const object = await bucket.get(key);
-      if (!object || !object.body) return c.notFound();
-
-      return c.body(object.body, 200, {
-        "Content-Type": object.httpMetadata?.contentType ?? "application/octet-stream",
-        "Cache-Control": "public, max-age=31536000, immutable",
-      });
-    } catch (err) {
-      console.error(`Failed to load R2 object "${key}":`, err);
-      return c.notFound();
-    }
 }).route("/archive", archive_router);
 
 export const GET = handle(api);

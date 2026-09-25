@@ -45,11 +45,6 @@
       "remote": true
     },
     {
-      "binding": "BOOTH_BUCKET",
-      "bucket_name": "rrkrn-booth-bucket",
-      "remote": true
-    },
-    {
       "binding": "ARCHIVE_BUCKET",
       "bucket_name": "rrkrn-archive-bucket",
       "remote": true
