@@ -73,6 +73,8 @@ export default function PictureItem({ pngs }: PictureItemInterface) {
                             <div className="aspect-square relative rounded-sm overflow-hidden ">
                                 <Image
                                     src={pngs[index]}
+                                    // public/ の画像は圧縮済みの webp。/_next/image を通すと Worker の CPU を食うので素通しにする
+                                    unoptimized
                                     alt="Test"
                                     fill={true}
                                     objectFit="cover"
@@ -223,6 +225,7 @@ export default function PictureItem({ pngs }: PictureItemInterface) {
                         hasShownMini && "minikoron-hide"
                     )}
                     src="/minikoron/shocked.png"
+                    unoptimized
                     alt="みにころん"
                     fill
                 />
@@ -233,6 +236,7 @@ export default function PictureItem({ pngs }: PictureItemInterface) {
                         hasShownMini && "minikoron-hide"
                     )}
                     src="/minikoron/embalassed.png"
+                    unoptimized
                     alt="みにころん"
                     fill
                 />

@@ -66,6 +66,8 @@ export default async function Home() {
                         <BashWindow className="aspect-square relative mt-20 origin-bottom-left scale-[1.4] md:mt-0 md:scale-100 z-10">
                             <Image
                                 src={pics[index]}
+                                // public/ の画像は圧縮済みの webp。/_next/image を通すと Worker の CPU を食うので素通しにする
+                                unoptimized
                                 alt="自画像"
                                 objectFit="cover"
                                 fill
