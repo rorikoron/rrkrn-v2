@@ -3,13 +3,14 @@ import pictureManifest from "@/generated/pictureManifest.json";
 // Cloudflare Workers has no filesystem, so this reads a manifest generated at
 // build time (scripts/generate-picture-manifest.mjs) instead of scanning
 // public/ with fs.readdir at request time.
-async function fetchPics(dir: string, regexp: RegExp = /\.(jpg|png)$/i): Promise<string[]> {
+async function fetchPics(dir: string, regexp: RegExp = /\.(jpe?g|png|webp)$/i): Promise<string[]> {
     const files: string[] = (pictureManifest as Record<string, string[]>)[dir] ?? [];
     return files.filter((name) => regexp.test(name)).map((name) => `/${dir}/${name}`);
 }
 
+// Worker を通すと Workers Free の CPU 上限 (10ms) に引っかかるので、R2 の公開ドメインから直接配信する
 function boothImageUrl(r2Key: string): string {
-    return "/api/images/" + r2Key.split("/").map(encodeURIComponent).join("/");
+    return "https://booth.rorikoron.net/" + r2Key.split("/").map(encodeURIComponent).join("/");
 }
 
 function formatPriceRange(min: number, max: number): string {

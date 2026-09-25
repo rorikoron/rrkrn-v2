@@ -56,6 +56,9 @@ export default function BoothItem({
         >
             <Link
                 href={"/booth/" + id}
+                // 一覧のカードを全部先読みすると Worker へのリクエストが同時に飛び、
+                // Workers Free の CPU 上限 (10ms) で落ちるので切っておく
+                prefetch={false}
                 onClick={() => setNav({ from: params.id ?? null, to: id })}
                 className={clsx(
                     "group w-full flex text-foreground z-5 rounded-md transition-colors cursor-pointer",

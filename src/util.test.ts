@@ -4,6 +4,7 @@ describe("fetchPics", () => {
     it("returns manifest entries matching the default image extensions", async () => {
         const result = await fetchPics("player");
         expect(Array.isArray(result)).toBe(true);
+        expect(result.length).toBeGreaterThan(0);
         for (const url of result) {
             expect(url.startsWith("/player/")).toBe(true);
         }
@@ -21,18 +22,18 @@ describe("fetchPics", () => {
 });
 
 describe("boothImageUrl", () => {
-    it("builds an /api/images path from an R2 key", () => {
-        expect(boothImageUrl("items/foo.png")).toBe("/api/images/items/foo.png");
+    it("builds a public R2 URL from an R2 key", () => {
+        expect(boothImageUrl("items/foo.png")).toBe("https://booth.rorikoron.net/items/foo.png");
     });
 
     it("percent-encodes each path segment independently", () => {
         expect(boothImageUrl("items/日本語 名前.png")).toBe(
-            `/api/images/items/${encodeURIComponent("日本語 名前.png")}`
+            `https://booth.rorikoron.net/items/${encodeURIComponent("日本語 名前.png")}`
         );
     });
 
     it("does not encode the slash separators themselves", () => {
-        expect(boothImageUrl("a/b/c.png")).toBe("/api/images/a/b/c.png");
+        expect(boothImageUrl("a/b/c.png")).toBe("https://booth.rorikoron.net/a/b/c.png");
     });
 });
 
