@@ -34,12 +34,19 @@ export const metadata: Metadata = {
     },
 
     twitter: {
-        card: "summary_large_image",
+        card: "player",
         title: SITE_NAME,
         description: SITE_DESCRIPTION,
         images: ["/OGP.png"],
         site: "@rorikoron",
         creator: "@rorikoron",
+        // ツイート内の iframe にサイトそのものを埋め込む。stream は X 側では任意だが Next の型が必須にしている
+        players: {
+            playerUrl: SITE_URL,
+            streamUrl: "",
+            width: 480,
+            height: 640,
+        },
     },
 };
 
