@@ -40,17 +40,13 @@ export const metadata: Metadata = {
         images: ["/OGP.png"],
         site: "@rorikoron",
         creator: "@rorikoron",
-        // ツイート内の iframe にサイトそのものを埋め込む。stream は X 側では任意だが Next の型が必須にしている
-        players: {
-            playerUrl: SITE_URL,
-            streamUrl: "",
-            width: 480,
-            height: 640,
-        },
+        // card を player にするには players が要るが、Next は必ず twitter:player:stream も出す。
+        // 動画の URL が無いのに空の stream タグを出したくないので、プレイヤーのタグは下の other で出す
+        players: [],
     },
+    // ツイート内の iframe にサイトそのものを埋め込む。幅と高さは縦長 (スマホ向けレイアウト) の比率
     other: {
-        "twitter:player":
-        SITE_URL,
+        "twitter:player": SITE_URL,
         "twitter:player:width": "480",
         "twitter:player:height": "640",
     },
