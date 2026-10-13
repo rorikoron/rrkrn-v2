@@ -13,16 +13,17 @@
   --foreground: #392727;          /* 本文 */
   --muted: #554846;               /* 補助テキスト・非アクティブ */
 
-  /* ブランドのピンク (薄い → 濃い) */
-  --primary-soft: #ffc2c2;        /* ヘッダーリンクのホバー */
-  --primary: #ffaeae;             /* ボタン・ホバー・区切り線 */
-  --primary-strong: #ffcacf;      /* 半透明のホバー・スクロールバー */
+  /* ブランドのピンク。wash → soft → primary → strong の順に強くなる。
+     どれも塗り・線に使い、上に載せる文字は foreground にする。ピンクの文字は primary-ink */
+  --primary-wash: #ffcacf;        /* 半透明で重ねるホバー・スクロールバーの溝 */
+  --primary-soft: #ffc2c2;        /* リンク・カードのホバー */
+  --primary: #ffaeae;             /* ボタン・区切り線 */
+  --primary-strong: #ff8181;      /* アクティブ(ホバー中・最大化中)なウィンドウの枠。非アクティブの枠は primary/60 */
+  --primary-ink: #b0364a;         /* ピンクの文字・選択中の枠。背景・面の上で 4.5:1 以上 */
 
-  /* アクティブ(ホバー中・最大化中)なウィンドウの枠。非アクティブの枠は primary/60 */
-  --active: #ff8181;
-
-  /* 差し色 */
+  /* 差し色。accent は塗りに、文字には accent-ink を使う */
   --accent: #ffca44;
+  --accent-ink: #855700;
 
   /* boothのカテゴリ色 (商品名の下線など) */
   --category-cloth: #e9b83c;
@@ -32,6 +33,8 @@
   --category-goods: #c792d8;
 }
 
+/* ダークテーマ。:root のトークンを全部上書きする。
+   ピンクの塗りは foreground (明るい文字) が載っても読めるよう、深いローズにする */
 :root.dark {
   --background: #4a2e32;
   --background-gradient: #78332e;
@@ -40,12 +43,23 @@
   --foreground: #ededed;
   --muted: #ecccc7;
 
-  --primary-strong: #86635f;
+  --primary-wash: #86635f;
+  --primary-soft: #7a4249;
+  --primary: #9c4f58;
+  --primary-strong: #ffa49f;
+  --primary-ink: #ffb3ae;
 
-  --active: #ffa49f;
+  --accent: #ffca44;
+  --accent-ink: #ffca44;
+
+  color-scheme: dark;
 }
 
 @theme inline {
+  --font-sans: var(--font-mplus-1), ui-sans-serif, system-ui, sans-serif;
+  /* 英数字は Red Hat Mono、日本語は M PLUS 1 Code で受ける */
+  --font-mono: var(--font-red-hat-mono), var(--font-mplus-1-code), ui-monospace, monospace;
+
   --color-background: var(--background);
   --color-background-gradient: var(--background-gradient);
   --color-surface: var(--surface);
@@ -53,12 +67,14 @@
   --color-foreground: var(--foreground);
   --color-muted: var(--muted);
 
+  --color-primary-wash: var(--primary-wash);
   --color-primary-soft: var(--primary-soft);
   --color-primary: var(--primary);
   --color-primary-strong: var(--primary-strong);
-  --color-active: var(--active);
+  --color-primary-ink: var(--primary-ink);
 
   --color-accent: var(--accent);
+  --color-accent-ink: var(--accent-ink);
 
   --color-category-cloth: var(--category-cloth);
   --color-category-accessory: var(--category-accessory);
@@ -103,25 +119,16 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans);
   height: 100dvh;
 }
 
 *::-webkit-scrollbar{
   width: 12px;
-  background-color: var(--primary-strong);
+  background-color: var(--primary-wash);
 }
 *::-webkit-scrollbar-thumb{
   background-color: var(--foreground);
-}
-
-.bg-background::selection{
-    color: var(--background);
-    background-color: var(--foreground);
-}
-.bg-primary-strong::selection{
-    color: var(--accent);
-    background-color: var(--background);
 }
 
 .typewriter::after{
@@ -152,28 +159,6 @@ body {
   }
 }
 
-html.dark{
-  .command-surface > img, .command-surface{
-    filter: brightness(0) saturate(100%) invert(6%) sepia(11%) saturate(2094%) hue-rotate(322deg) brightness(89%) contrast(81%);
-  }
-  .command-foreground > img, .command-foreground{
-    filter: brightness(0) saturate(100%) invert(100%) sepia(0%) saturate(5486%) hue-rotate(316deg) brightness(129%) contrast(86%);
-  }
-  .command-dif > img, .command-dif{
-    filter: brightness(0) saturate(100%) invert(0%) sepia(1%) saturate(7490%) hue-rotate(170deg) brightness(99%) contrast(100%);}
-}
-
-.command-surface > img, .command-surface{
-  filter: brightness(0) saturate(100%) invert(96%) sepia(10%) saturate(1497%) hue-rotate(297deg) brightness(106%) contrast(106%);
-}
-.command-foreground > img, .command-foreground{
-  filter: brightness(0) saturate(100%) invert(0%) sepia(1%) saturate(7490%) hue-rotate(170deg) brightness(99%) contrast(100%);}
-.command-accent > img, .command-accent{
-  filter: brightness(0) saturate(100%) invert(73%) sepia(84%) saturate(405%) hue-rotate(342deg) brightness(103%) contrast(101%);;
-}
-.command-dif > img, .command-dif{
-    filter: brightness(0) saturate(100%) invert(100%) sepia(0%) saturate(5486%) hue-rotate(316deg) brightness(129%) contrast(86%) ; 
-}
 @keyframes gauge_increment{
   0%{
     width: 0;
@@ -233,7 +218,7 @@ html.dark{
   animation-duration: 0.45s;
   animation-timing-function: cubic-bezier(0.2, 0.8, 0.2, 1);
   box-sizing: border-box;
-  border: 2px solid var(--active);
+  border: 2px solid var(--primary-strong);
   border-radius: 0.375rem;
   background: var(--background);
 }

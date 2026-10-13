@@ -1,42 +1,51 @@
-import type { Metadata } from "next";
-import { M_PLUS_1 } from "next/font/google";
+import type { Metadata, Viewport } from "next";
 import "@/app/styles/globals.css";
-import Header from "../components/client/Header";
-import ViewTransitionCleanup from "../components/client/ViewTransitionCleanup";
+import Header from "@/components/client/Header";
+import ViewTransitionCleanup from "@/components/client/ViewTransitionCleanup";
+import { fontVariables } from "@/app/fonts";
+import { themeInitScript } from "@/lib/theme";
 import clsx from "clsx";
 
-const mplusone = M_PLUS_1({ subsets: ["latin"] });
+const SITE_NAME = "ろりころんほーむぺーじ";
+const SITE_DESCRIPTION = "ろりころんのサイトです！";
+const SITE_URL = "https://rorikoron.net/";
 
 export const metadata: Metadata = {
     metadataBase: new URL(
         process.env.NEXT_PUBLIC_BASE_URL || "https://rorikoron.net"
     ),
-    title: "ろりころんほーむぺーじ",
+    title: SITE_NAME,
     description: "ろりころんのサイト第二版です！",
     openGraph: {
         type: "website",
-        title: "krn",
-        description: "ろりころんのサイトです！",
-        siteName: "ろりころんほーむぺーじ",
-        url: "https://rorikoron.net/",
+        title: SITE_NAME,
+        description: SITE_DESCRIPTION,
+        siteName: SITE_NAME,
+        url: SITE_URL,
         locale: "ja_JP",
         images: [
             {
                 url: "/OGP.png",
                 width: 1200,
                 height: 630,
-                alt: "png for OGP",
+                alt: SITE_NAME,
             },
         ],
     },
 
     twitter: {
         card: "summary_large_image",
-        title: "ろりころんほーむぺーじ",
-        description: "ろりころんのサイトです！",
+        title: SITE_NAME,
+        description: SITE_DESCRIPTION,
         images: ["/OGP.png"],
-        site: "website",
+        site: "@rorikoron",
+        creator: "@rorikoron",
     },
+};
+
+export const viewport: Viewport = {
+    width: "device-width",
+    initialScale: 1,
 };
 
 export default function RootLayout({
@@ -45,24 +54,27 @@ export default function RootLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <html lang="en">
-            <meta
-                name="viewport"
-                content="width=device-width, initial-scale=1.0"
-            />
+        // .dark は下の script がハイドレーション前に付けるので、サーバーの HTML と食い違ってよい
+        <html lang="ja" className={fontVariables} suppressHydrationWarning>
+            <head>
+                <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
+            </head>
             <body
-                className={`!h-dvh !w-dvw antialiased relative lg:grid lg:grid-cols-[max(10%,380px)_1fr] overflow-hidden`}
+                className={`h-dvh! w-dvw! antialiased relative lg:grid lg:grid-cols-[max(10%,380px)_1fr] overflow-hidden`}
             >
                 <ViewTransitionCleanup />
                 <Header />
                 <div
                     className={clsx(
-                        `${mplusone.className} py-6 md:py-12 px-6 md:px-8 text-foreground h-dvh`,
-                        "bg-gradient-to-br from-background to-background-gradient"
+                        "py-6 md:py-12 px-6 md:px-8 text-foreground h-dvh",
+                        "bg-linear-to-br from-background to-background-gradient"
                     )}
                 >
-                    {/* morse */}
-                    <div className="absolute flex flex-col w-[4px] gap-3 -translate-x-2/4 -ml-4 opacity-40 [&>*:nth-child(3n)]:mb-6">
+                    {/* morse: RRKRN */}
+                    <div
+                        aria-hidden
+                        className="absolute flex flex-col w-[4px] gap-3 -translate-x-2/4 -ml-4 opacity-40 [&>*:nth-child(3n)]:mb-6"
+                    >
                         <span className="dot" />
                         <span className="bar" />
                         <span className="dot" />
@@ -82,9 +94,9 @@ export default function RootLayout({
                         <span className="bar" />
                         <span className="dot" />
                     </div>
-                    <span className="absolute bottom-6 pl-2 text-xl tracking-[4px] text-primary/40">
+                    <small className="absolute bottom-6 pl-2 text-xl tracking-[4px] text-primary-ink">
                         &copy;rorikoron.net
-                    </span>
+                    </small>
                     {children}
                 </div>
             </body>

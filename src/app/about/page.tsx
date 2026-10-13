@@ -1,9 +1,10 @@
-import AsciiWindowContainer from "@/components/ui/AsciiWindowContainer";
+import AsciiWindowContainer from "@/components/client/AsciiWindowContainer";
 import BashWindow from "@/components/ui/BashWindow";
-import { fetchPics } from "@/util";
+import fetchPics from "@/data/fetchPics";
 import clsx from "clsx";
 import Image from "next/image";
 import Link from "next/link";
+import Icon from "@/components/ui/Icon";
 import { ViewTransition } from "react";
 
 const linkGroups = [
@@ -48,7 +49,7 @@ const linkGroups = [
     },
 ];
 
-export default async function Home() {
+export default async function About() {
     const pics = await fetchPics("selfie");
     // This route has no `revalidate`/`use cache`, so it re-renders (and re-rolls)
     // on every request; picking the index client-side would cause a hydration
@@ -59,6 +60,8 @@ export default async function Home() {
     return (
         <div className="h-full">
             <main className="h-full grid gap-4 md:gap-0 grid-rows-[auto_1fr] md:grid-rows-none md:grid-cols-[min(30%,360px)_1fr]">
+                <h1 className="sr-only">ろりころんについて</h1>
+
                 {/* left side */}
                 <div className="h-full grid grid-cols-[24%_1fr] md:grid-cols-none md:grid-rows-[auto_minmax(0,1fr)] gap-2 md:gap-6 overflow-y-hidden">
                     {/* 自画像 */}
@@ -68,8 +71,8 @@ export default async function Home() {
                                 src={pics[index]}
                                 // public/ の画像は圧縮済みの webp。/_next/image を通すと Worker の CPU を食うので素通しにする
                                 unoptimized
-                                alt="自画像"
-                                objectFit="cover"
+                                alt="ろりころんの自画像 (VRChat のアバター)"
+                                className="object-cover"
                                 fill
                             />
                         </BashWindow>
@@ -79,7 +82,7 @@ export default async function Home() {
                         <BashWindow
                             className="ml-6"
                             command="man"
-                            title={<h5>&gt; トリセツ?</h5>}
+                            title={<h2>&gt; トリセツ?</h2>}
                         >
                             <div className="overflow-y-auto pr-4">
                                 <p>&gt; 2005-08-01 生まれ</p>
@@ -99,7 +102,7 @@ export default async function Home() {
                             className="h-full"
                             command="whoami"
                             title={
-                                <span className="pl-4">&gt; こんにちは！</span>
+                                <h2 className="pl-4">&gt; こんにちは！</h2>
                             }
                         >
                             <div className="overflow-y-auto pr-4 pb-12">
@@ -119,16 +122,16 @@ export default async function Home() {
                                     &gt; 本サイトの前身は
                                     <Link
                                         href="https://krn-portfolio.vercel.app"
-                                        className="text-accent font-bold inline-flex px-1.5 mx-2 rounded-xl hover:bg-primary transition-all"
+                                        className="text-accent-ink font-bold inline-flex px-1.5 mx-2 rounded-xl hover:bg-primary hover:text-foreground transition-all"
                                     >
                                         <span>ここ</span>
-                                        <span className="h-lh aspect-square relative command-accent inline-block">
-                                            <Image
-                                                src="svg/link.svg"
-                                                fill
-                                                alt="共有アイコン"
-                                            />
+                                        <span className="sr-only">
+                                            (前身のサイト krn-portfolio)
                                         </span>
+                                        <Icon
+                                            name="link"
+                                            className="h-lh aspect-square"
+                                        />
                                     </Link>
                                     です。見なくてもいいかも。
                                 </p>
@@ -142,12 +145,12 @@ export default async function Home() {
                                     日中はネイティブなので翻訳のお仕事もあったらください。
                                 </p>
                                 <p>&gt; </p>
-                                <ul className="gap-4">
+                                <div>
                                     {/* カテゴリ */}
                                     {linkGroups.map((group) => (
                                         <div key={group.title}>
                                             <p>&gt; {group.title}:</p>
-                                            <div className="flex gap-4 my-1">
+                                            <ul className="flex gap-4 my-1">
                                                 {/* 各リンク */}
                                                 {group.sites.map((site) => (
                                                     <li key={site.link}>
@@ -155,17 +158,15 @@ export default async function Home() {
                                                             href={site.link}
                                                             className={clsx(
                                                                 "grid grid-cols-[1lh_1fr] bg-white px-2 py-1.5 text-foreground dark:text-background rounded transition-all",
-                                                                "hover:bg-primary-soft"
+                                                                "hover:bg-primary-soft dark:hover:text-foreground"
                                                             )}
                                                         >
                                                             <div className="aspect-square h-full relative">
                                                                 <Image
-                                                                    alt={
-                                                                        site.logo +
-                                                                        "のロゴ"
-                                                                    }
+                                                                    // 隣に名前があるので読み上げない
+                                                                    alt=""
                                                                     src={
-                                                                        "svg/" +
+                                                                        "/svg/" +
                                                                         site.logo.toLowerCase() +
                                                                         ".svg"
                                                                     }
@@ -179,10 +180,10 @@ export default async function Home() {
                                                         </Link>
                                                     </li>
                                                 ))}
-                                            </div>
+                                            </ul>
                                         </div>
                                     ))}
-                                </ul>
+                                </div>
                             </div>
                         </BashWindow>
                     </ViewTransition>

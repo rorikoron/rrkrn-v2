@@ -1,10 +1,8 @@
 import clsx from "clsx";
-import { Red_Hat_Mono } from "next/font/google";
-import Image from "next/image";
 import { ReactElement } from "react";
 import { ViewTransition } from "react";
 import CatSoundPlayer from "../client/CatSoundPlayer";
-const redHatMono = Red_Hat_Mono({ subsets: ["latin"] });
+import Icon from "./Icon";
 
 interface BashWindowInterface {
     children?: React.ReactNode;
@@ -29,31 +27,25 @@ export default function BashWindow({
 }: BashWindowInterface) {
     return (
         <div
-            className={`border-foreground border-2 p-6 flex flex-col relative ${className} ${redHatMono.className} text-foreground bg-surface max-h-fit`}
+            className={clsx(
+                "border-foreground border-2 p-6 flex flex-col relative font-mono text-foreground bg-surface max-h-fit",
+                className
+            )}
         >
             {hasClose && (
                 <button
+                    type="button"
+                    aria-label="閉じる"
                     className="flex justify-end h-lh mb-2"
                     onClick={closeHandler}
                 >
-                    <div className="aspect-square relative command-foreground h-full hover:bg-primary/40 transition-all p-5 rounded">
-                        <Image
-                            className="p-2"
-                            src="svg/close.svg"
-                            alt="閉じるボタン"
-                            fill
-                            objectFit="cover"
-                        />
-                    </div>
+                    <span className="aspect-square relative h-full hover:bg-primary/40 transition-all p-5 rounded">
+                        <Icon name="close" className="absolute inset-0 p-2" />
+                    </span>
                 </button>
             )}
             {isUserActive && (
-                <span
-                    className={clsx(
-                        "absolute -top-3 -left-6 bg-surface px-2 text-sm border-foreground border-2 z-10",
-                        !isUserActive && "hidden"
-                    )}
-                >
+                <span className="absolute -top-3 -left-6 bg-surface px-2 text-sm border-foreground border-2 z-10">
                     user@rrkrn
                 </span>
             )}
@@ -62,7 +54,7 @@ export default function BashWindow({
                     {isCustomCommand ? (
                         <CatSoundPlayer command={command} />
                     ) : (
-                        <span className="absolute top-6 -left-6 bg-surface px-2 text-md border-foreground border-2 z-10">
+                        <span className="absolute top-6 -left-6 bg-surface px-2 border-foreground border-2 z-10">
                             <span className="pr-1">$</span>{command}
                         </span>
                     )}

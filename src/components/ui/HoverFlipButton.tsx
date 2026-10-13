@@ -1,13 +1,18 @@
-import Image from "next/image";
 import clsx from "clsx";
+import Icon, { IconName } from "./Icon";
 
 interface HoverFlipButtonInterface {
     className?: string;
     frontLabel: string;
     rearLabel: string;
-    frontIcon: string;
-    rearIcon: string;
+    frontIcon: IconName;
+    rearIcon: IconName;
 }
+
+/**
+ * ホバーで表裏が入れ替わるボタンの見た目。リンクやボタンの中に置くので、中身は span だけで組む。
+ * 読み上げるのは表のラベルだけ (裏はホバー時の遊び)
+ */
 export default function HoverFlipButton({
     className,
     frontLabel,
@@ -16,14 +21,15 @@ export default function HoverFlipButton({
     rearIcon,
 }: HoverFlipButtonInterface) {
     return (
-        <div className="group inline-block">
-            <div
+        <span className="group inline-block">
+            <span
                 className={clsx(
-                    `${className} bg-primary w-[180px] lg:w-[200px] px-6 lg:px-8 py-4 flex justify-between cursor-pointer overflow-hidden transition-all`,
-                    `group-hover:bg-foreground group-hover:border-surface`
+                    `bg-primary w-[180px] lg:w-[200px] px-6 lg:px-8 py-4 flex justify-between cursor-pointer overflow-hidden transition-all`,
+                    `group-hover:bg-foreground group-hover:border-surface`,
+                    className
                 )}
             >
-                <div>
+                <span>
                     <span
                         className={clsx(
                             "absolute text-nowrap transition-all text-foreground",
@@ -33,6 +39,7 @@ export default function HoverFlipButton({
                         {frontLabel}
                     </span>
                     <span
+                        aria-hidden
                         className={clsx(
                             "absolute text-nowrap transition-all text-surface opacity-0",
                             "group-hover:opacity-100"
@@ -40,30 +47,25 @@ export default function HoverFlipButton({
                     >
                         {rearLabel}
                     </span>
-                </div>
+                </span>
 
-                <div className={clsx("h-lh aspect-square relative")}>
-                    <Image
-                        src={"svg/" + frontIcon + ".svg"}
-                        alt="詳細"
+                <span className="h-lh aspect-square relative">
+                    <Icon
+                        name={frontIcon}
                         className={clsx(
-                            "transition-all command-foreground",
+                            "absolute inset-0 transition-all text-foreground",
                             "group-hover:ml-3 group-hover:opacity-0"
                         )}
-                        fill
                     />
-
-                    <Image
-                        src={"svg/" + rearIcon + ".svg"}
-                        alt="展開"
+                    <Icon
+                        name={rearIcon}
                         className={clsx(
-                            "transition-all opacity-0 command-surface",
+                            "absolute inset-0 transition-all opacity-0 text-surface",
                             "group-hover:ml-3 group-hover:opacity-100"
                         )}
-                        fill
                     />
-                </div>
-            </div>
-        </div>
+                </span>
+            </span>
+        </span>
     );
 }

@@ -7,8 +7,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { ViewTransition } from "react";
-import { Red_Hat_Mono } from "next/font/google";
-const redHatMono = Red_Hat_Mono({ subsets: ["latin"] });
 
 // 商品名の下線の色。Tailwindが拾えるようにクラス名は丸ごと書く
 const categoryLineClass: Record<BoothItemType, string> = {
@@ -62,7 +60,7 @@ export default function BoothItem({
                 onClick={() => setNav({ from: params.id ?? null, to: id })}
                 className={clsx(
                     "group w-full flex text-foreground z-5 rounded-md transition-colors cursor-pointer",
-                    "border-2 border-primary/60 hover:border-active hover:bg-primary-soft/40",
+                    "border-2 border-primary/60 hover:border-primary-strong hover:bg-primary-soft/40",
                     compact
                         ? "items-center gap-2 md:gap-3 p-1.5"
                         : "flex-col p-2 md:p-3",
@@ -81,9 +79,10 @@ export default function BoothItem({
                             {thumbnail && (
                                 <Image
                                     src={boothImageUrl(thumbnail)}
-                                    alt={name + "のサムネイル"}
+                                    // 名前はすぐ後ろにあるので、リンクの読み上げが重複しないよう空にする
+                                    alt=""
                                     fill
-                                    objectFit="cover"
+                                    className="object-cover"
                                     unoptimized
                                 />
                             )}
@@ -94,7 +93,7 @@ export default function BoothItem({
                         <div
                             aria-hidden
                             className={clsx(
-                                `${redHatMono.className} absolute inset-x-0 bottom-0 px-2 py-1 text-xs truncate bg-foreground text-surface`,
+                                `font-mono absolute inset-x-0 bottom-0 px-2 py-1 text-xs truncate bg-foreground text-surface`,
                                 "before:content-['$cd_']",
                                 "translate-y-full group-hover:translate-y-0 transition-transform duration-200"
                             )}

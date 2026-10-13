@@ -1,5 +1,5 @@
 "use client";
-import { BoothItemType, itemCategoryAtom } from "@/store/booth";
+import { BoothItemType, boothListHref, itemCategoryAtom } from "@/store/booth";
 import clsx from "clsx";
 import { useAtom } from "jotai";
 import { startTransition } from "react";
@@ -7,18 +7,20 @@ import { startTransition } from "react";
 export default function BoothCategoryButton({
     category,
 }: {
-    category: BoothItemType | "all";
+    category: BoothItemType;
 }) {
-    const [selectedCaterogry, setSelectedCategory] = useAtom(itemCategoryAtom);
+    const [selectedCategory, setSelectedCategory] = useAtom(itemCategoryAtom);
+    const isSelected = selectedCategory === category;
     return (
         <button
-            key={category}
+            type="button"
+            aria-pressed={isSelected}
             className={clsx(
                 "px-5 py-1 rounded-xl border-2 transition-all",
-                selectedCaterogry !== category &&
-                    "border-foreground/25 cursor-pointer hover:border-active hover:bg-primary-soft/40",
-                selectedCaterogry === category &&
-                    "border-active text-active pointer-events-none"
+                !isSelected &&
+                    "border-foreground/60 cursor-pointer hover:border-primary-strong hover:bg-primary-soft/40",
+                isSelected &&
+                    "border-primary-ink text-primary-ink pointer-events-none"
             )}
             onClick={() => {
                 // View Transitionのオーバーレイはスクロール領域のクリップを無視するので、
@@ -27,6 +29,9 @@ export default function BoothCategoryButton({
                 document
                     .querySelectorAll("[data-booth-scroll]")
                     .forEach((el) => el.scrollTo({ top: 0 }));
+                // 共有・再読み込みしても同じ絞り込みになるよう URL に残す。
+                // 履歴は増やさない (戻るで絞り込みを一つずつ戻るのは煩わしいので)
+                history.replaceState(history.state, "", boothListHref(category));
                 startTransition(() => setSelectedCategory(category));
             }}
         >

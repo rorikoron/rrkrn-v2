@@ -1,12 +1,5 @@
-import pictureManifest from "@/generated/pictureManifest.json";
-
-// Cloudflare Workers has no filesystem, so this reads a manifest generated at
-// build time (scripts/generate-picture-manifest.mjs) instead of scanning
-// public/ with fs.readdir at request time.
-async function fetchPics(dir: string, regexp: RegExp = /\.(jpe?g|png|webp)$/i): Promise<string[]> {
-    const files: string[] = (pictureManifest as Record<string, string[]>)[dir] ?? [];
-    return files.filter((name) => regexp.test(name)).map((name) => `/${dir}/${name}`);
-}
+// クライアントからも使う純粋な関数だけを置く。
+// ビルド時のマニフェストを読む fetchPics は src/data/fetchPics.ts (クライアントのバンドルに JSON を入れないため)
 
 // Worker を通すと Workers Free の CPU 上限 (10ms) に引っかかるので、R2 の公開ドメインから直接配信する
 function boothImageUrl(r2Key: string): string {
@@ -18,6 +11,14 @@ function formatPriceRange(min: number, max: number): string {
     if (min === max) return `${min.toLocaleString()}円`;
     return `${min.toLocaleString()}円〜${max.toLocaleString()}円`;
 }
+
+// next/image の placeholder="blur" 用。読み込み中はピンクの面をぼかしたものを出す。
+// 数百バイトで済むように、画像ファイルではなく SVG をそのまま data URL にしている
+const PLACEHOLDER_BLUR_DATA_URL =
+    "data:image/svg+xml;charset=utf-8," +
+    encodeURIComponent(
+        '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 8 8"><linearGradient id="g" x2="1" y2="1"><stop stop-color="#ffc2c2"/><stop offset="1" stop-color="#e8b4b8"/></linearGradient><rect width="8" height="8" fill="url(#g)"/></svg>'
+    );
 
 // 縦横比の分からない画像はとりあえず正方形として扱う
 const FALLBACK_ASPECT = 1;
@@ -42,8 +43,8 @@ function distributeToColumns<T extends { width?: number; height?: number }>(
 }
 
 export {
-    fetchPics,
     boothImageUrl,
     formatPriceRange,
     distributeToColumns,
+    PLACEHOLDER_BLUR_DATA_URL,
 }

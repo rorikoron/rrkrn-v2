@@ -3,6 +3,7 @@ import { startTransition, ViewTransition, useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import Image from "next/image";
 import clsx from "clsx";
+import { PLACEHOLDER_BLUR_DATA_URL } from "@/util";
 
 interface AnimatedMagnifiableImageInterface {
     src: string;
@@ -18,6 +19,7 @@ export default function AnimatedMagnifiableImage({
     const filename = src.split("/").at(-1) ?? "Fetched image";
     const date = filename.split("_")[1]?.replaceAll("-", "/");
     const transitionName = "picture-animated-" + filename;
+    const label = date ? `${date} に撮った VRChat の写真` : "VRChat の写真";
     const [isOpen, setIsOpen] = useState(false);
 
     // 同じ name の ViewTransition を「サムネイルから消して拡大表示に出す」ことで、
@@ -39,7 +41,7 @@ export default function AnimatedMagnifiableImage({
             <button
                 type="button"
                 onClick={open}
-                aria-label={`${date ?? filename} の写真を拡大`}
+                aria-label={`${label}を拡大`}
                 className="group h-fit relative overflow-hidden rounded-md cursor-zoom-in"
                 // 拡大中もレーンの中の場所は空けたままにする
                 style={width && height ? { aspectRatio: `${width} / ${height}` } : undefined}
@@ -48,10 +50,11 @@ export default function AnimatedMagnifiableImage({
                     <ViewTransition name={transitionName}>
                         <Image
                             src={src}
-                            alt={filename}
+                            // 内容はボタンの aria-label で伝えるので、画像自体は読み上げない
+                            alt=""
                             placeholder="blur"
                             className="group-hover:brightness-60 transition-all w-full h-auto rounded-md"
-                            blurDataURL="/loading.png"
+                            blurDataURL={PLACEHOLDER_BLUR_DATA_URL}
                             width={width ?? 0}
                             height={height ?? 0}
                             // レーン幅くらい (PC は 4〜6 レーン、スマホは 2 レーン)
@@ -64,8 +67,9 @@ export default function AnimatedMagnifiableImage({
                     </ViewTransition>
                 )}
                 <div
+                    aria-hidden
                     className={clsx(
-                        "absolute bottom-0 right-0 py-0.5 px-2 text-accent invisible opacity-0 transition-all",
+                        "absolute bottom-0 right-0 py-0.5 px-2 rounded-tl-md bg-black/60 text-accent invisible opacity-0 transition-all",
                         "group-hover:visible group-hover:opacity-100"
                     )}
                 >
@@ -79,7 +83,7 @@ export default function AnimatedMagnifiableImage({
                     <div
                         role="dialog"
                         aria-modal
-                        aria-label={`${date ?? filename} の写真`}
+                        aria-label={label}
                         onClick={close}
                         className="fixed inset-0 z-50 grid place-items-center p-4 md:p-10 bg-background/80 backdrop-blur-sm cursor-zoom-out"
                     >
@@ -87,7 +91,7 @@ export default function AnimatedMagnifiableImage({
                             <ViewTransition name={transitionName}>
                                 <Image
                                     src={src}
-                                    alt={filename}
+                                    alt={label}
                                     width={width ?? 1920}
                                     height={height ?? 1080}
                                     sizes="90vw"

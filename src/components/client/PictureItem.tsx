@@ -2,20 +2,31 @@
 import clsx from "clsx";
 import Image from "next/image";
 import { useState } from "react";
-import { Zen_Kaku_Gothic_Antique } from "next/font/google";
 import "@/app/styles/component/player.scss";
 import "@/app/styles/component/minikoron.scss";
 import Link from "next/link";
+import Icon from "@/components/ui/Icon";
+import { PLACEHOLDER_BLUR_DATA_URL } from "@/util";
 
 // variable used to update. unit: msec
 const updateInterval = 2000;
-const zenkaku = Zen_Kaku_Gothic_Antique({
-    subsets: ["latin"],
-    weight: "500",
-});
+
+// 共有ボタンから開く X の投稿画面。via はサイトのアカウント
+const SHARE_URL =
+    "https://x.com/intent/tweet?" +
+    new URLSearchParams({
+        url: "https://rorikoron.net/",
+        text: "ろりころんのホームページです！！！",
+        via: "rorikoron",
+    });
 
 interface PictureItemInterface {
     pngs: string[];
+}
+
+/** "/player/雨空ゆる.webp" → "雨空ゆる" */
+function photographerOf(src: string) {
+    return decodeURIComponent(src.split("/").at(-1) ?? "").replace(/\.\w+$/, "");
 }
 
 export default function PictureItem({ pngs }: PictureItemInterface) {
@@ -30,9 +41,12 @@ export default function PictureItem({ pngs }: PictureItemInterface) {
         if (next) setHasShownMini(true);
     };
 
+    const photographer = photographerOf(pngs[index]);
+
     return (
         <>
-            <div
+            <section
+                aria-label="フレンド写真集"
                 className={clsx(
                     "fixed bottom-[10px] right-[8px] md:right-[36px] transition-all z-11",
                     isMinify && "translate-y-[85%]"
@@ -41,30 +55,31 @@ export default function PictureItem({ pngs }: PictureItemInterface) {
                 {/* spotify ui zone */}
                 <div
                     className={clsx(
-                        `text-foreground w-[230px] md:w-[260px] aspect-9/16 flex flex-col gap-6 rounded-xl ${zenkaku.className}`,
-                        "bg-gradient-to-b from-background to-surface",
+                        `text-foreground font-medium w-[230px] md:w-[260px] aspect-9/16 flex flex-col gap-6 rounded-xl`,
+                        "bg-linear-to-b from-background to-surface",
                         "bg-background/80 bg-blend-multiply"
                     )}
                 >
                     <div className="h-fit flex flex-col justify-between py-4">
                         <div className="px-6 my-2 flex justify-between items-center">
-                            {/* 戻るボタン */}
+                            {/* 最小化ボタン */}
                             <button
+                                type="button"
+                                aria-label={isMinify ? "プレイヤーを広げる" : "プレイヤーをたたむ"}
+                                aria-expanded={!isMinify}
                                 className={clsx(
                                     "transition-all -translate-x-[50%] h-[16px] aspect-square relative p-4 rounded-full",
-                                    "hover:bg-primary-strong/20"
+                                    "hover:bg-primary-wash/20"
                                 )}
                                 onClick={toggleMinify}
                             >
-                                <Image
-                                    src="svg/arrow-left.svg"
+                                <Icon
+                                    name="arrow-left"
                                     className={clsx(
-                                        "command-foreground p-2 transition-all",
+                                        "absolute inset-0 p-2 transition-all",
                                         isMinify && "rotate-90",
                                         !isMinify && "rotate-270"
                                     )}
-                                    alt="back"
-                                    fill
                                 />
                             </button>
                             <span>フレンド写真集</span>
@@ -75,55 +90,41 @@ export default function PictureItem({ pngs }: PictureItemInterface) {
                                     src={pngs[index]}
                                     // public/ の画像は圧縮済みの webp。/_next/image を通すと Worker の CPU を食うので素通しにする
                                     unoptimized
-                                    alt="Test"
-                                    fill={true}
-                                    objectFit="cover"
+                                    alt={`${photographer}さんが撮ってくれた、ろりころんの写真`}
+                                    fill
+                                    className="object-cover"
                                     placeholder="blur"
-                                    blurDataURL="/file.png"
+                                    blurDataURL={PLACEHOLDER_BLUR_DATA_URL}
                                 />
                             </div>
                             <div className="flex justify-between">
-                                <div>
-                                    <figcaption className="text-md text-nowrap break-keep">
+                                <figcaption>
+                                    <p className="text-nowrap break-keep">
                                         撮られた写真({index + 1}/{pngs.length})
-                                    </figcaption>
-                                    <figcaption className="text-muted text-sm text-nowrap break-keep">
-                                        撮った人:{" "}
-                                        {
-                                            pngs[index]
-                                                .split("/")[2]
-                                                .split(".")[0]
-                                        }
-                                    </figcaption>
-                                </div>
+                                    </p>
+                                    <p className="text-muted text-sm text-nowrap break-keep">
+                                        撮った人: {photographer}
+                                    </p>
+                                </figcaption>
 
                                 <Link
                                     rel="noopener noreferrer"
                                     target="_blank"
-                                    href={
-                                        "http://twitter.com/share?url=https://rorikoron.net/&text=ろりころんのホームページです！！！&via=rorikoron"
-                                    }
+                                    href={SHARE_URL}
+                                    aria-label="X でこのサイトを共有"
+                                    className={clsx(
+                                        "transition-all h-full aspect-square relative -mr-2 p-2 rounded-full flex justify-center",
+                                        "hover:bg-primary-wash/20"
+                                    )}
                                 >
-                                    <button
-                                        className={clsx(
-                                            "transition-all h-full aspect-square relative -mr-2 p-2 rounded-full flex justify-center",
-                                            "hover:bg-primary-strong/20"
-                                        )}
-                                    >
-                                        <Image
-                                            src="svg/share.svg"
-                                            alt="共有"
-                                            width="20"
-                                            height="20"
-                                            className=" command-foreground"
-                                        />
-                                    </button>
+                                    <Icon name="share" className="size-5" />
                                 </Link>
                             </div>
 
                             <div>
                                 <div
                                     key={index}
+                                    aria-hidden
                                     onAnimationEnd={() =>
                                         setIndex(
                                             (prev) => (prev + 1) % pngs.length
@@ -141,7 +142,10 @@ export default function PictureItem({ pngs }: PictureItemInterface) {
                                         } as React.CSSProperties
                                     }
                                 />
-                                <div className="flex justify-between text-xs text-foreground/80">
+                                <div
+                                    aria-hidden
+                                    className="flex justify-between text-xs text-foreground/80"
+                                >
                                     <span>0:00</span>
                                     <span>{"0:0" + updateInterval / 1000}</span>
                                 </div>
@@ -151,11 +155,12 @@ export default function PictureItem({ pngs }: PictureItemInterface) {
                         {/* buttons */}
                         <div className="flex justify-around h-fit">
                             {/* previous button */}
-
                             <button
+                                type="button"
+                                aria-label="前の写真"
                                 className={clsx(
                                     "transition-all h-full aspect-square relative p-4 rounded-full",
-                                    "hover:bg-primary-strong/20"
+                                    "hover:bg-primary-wash/20"
                                 )}
                                 onClick={() =>
                                     setIndex(
@@ -165,54 +170,49 @@ export default function PictureItem({ pngs }: PictureItemInterface) {
                                     )
                                 }
                             >
-                                <Image
-                                    src={"svg/skip-left.svg"}
-                                    alt="前の写真"
-                                    fill={true}
-                                    className="p-2 command-foreground"
+                                <Icon
+                                    name="skip-left"
+                                    className="absolute inset-0 p-2"
                                 />
                             </button>
 
                             {/* play/stop button */}
                             <button
-                                className="relative aspect-square rounded-full p-6 bg-foreground"
+                                type="button"
+                                aria-label={isRunning ? "スライドショーを止める" : "スライドショーを再生"}
+                                className="relative aspect-square rounded-full p-6 bg-foreground text-surface"
                                 onClick={() => setIsRunning((prev) => !prev)}
                             >
-                                <Image
-                                    src={
-                                        isRunning
-                                            ? "svg/pause.svg"
-                                            : "svg/play.svg"
-                                    }
-                                    alt="play"
-                                    fill={true}
-                                    className="p-2.5 command-dif"
+                                <Icon
+                                    name={isRunning ? "pause" : "play"}
+                                    className="absolute inset-0 p-2.5"
                                 />
                             </button>
 
                             {/* next button */}
                             <button
+                                type="button"
+                                aria-label="次の写真"
                                 className={clsx(
                                     "transition-all h-full aspect-square relative p-4 -scale-x-100 rounded-full",
-                                    "hover:bg-primary-strong/20"
+                                    "hover:bg-primary-wash/20"
                                 )}
                                 onClick={() =>
                                     setIndex((prev) => (prev + 1) % pngs.length)
                                 }
                             >
-                                <Image
-                                    src={"svg/skip-left.svg"}
-                                    alt="次の写真"
-                                    fill={true}
-                                    className="p-2 command-foreground"
+                                <Icon
+                                    name="skip-left"
+                                    className="absolute inset-0 p-2"
                                 />
                             </button>
                         </div>
                     </div>
                 </div>
-            </div>
+            </section>
 
             <div
+                aria-hidden
                 className={clsx(
                     "fixed translate-x-[50%] w-[calc(230px*0.7)] md:w-[calc(260px*0.7)] aspect-square z-1 transition-all",
                     "right-[calc(8px+230px*0.5)] bottom-[calc(10px+230px*16/9*0.15-30px)]",
@@ -226,7 +226,7 @@ export default function PictureItem({ pngs }: PictureItemInterface) {
                     )}
                     src="/minikoron/shocked.png"
                     unoptimized
-                    alt="みにころん"
+                    alt=""
                     fill
                 />
 
@@ -235,9 +235,9 @@ export default function PictureItem({ pngs }: PictureItemInterface) {
                         "minikoron-second",
                         hasShownMini && "minikoron-hide"
                     )}
-                    src="/minikoron/embalassed.png"
+                    src="/minikoron/embarrassed.png"
                     unoptimized
-                    alt="みにころん"
+                    alt=""
                     fill
                 />
             </div>

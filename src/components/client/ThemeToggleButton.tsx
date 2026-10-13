@@ -1,17 +1,28 @@
 "use client";
 
-import Image from "next/image";
-import { useEffect, useSyncExternalStore } from "react";
+import Icon from "@/components/ui/Icon";
+import { prefersDark, THEME_CHANGE_EVENT, THEME_STORAGE_KEY } from "@/lib/theme";
+import { useSyncExternalStore } from "react";
 
-const STORAGE_KEY = "rorikoron-toggle";
-
+// .dark の付け外しはここと layout の <head> のスクリプトだけが行う。
+// 表示は <html> のクラスから読むので、描画前に付いたクラスとずれない
 function subscribe(callback: () => void) {
-    window.addEventListener("storage", callback);
-    return () => window.removeEventListener("storage", callback);
+    // 他のタブで切り替えたら、このタブにも反映する
+    const onStorage = (e: StorageEvent) => {
+        if (e.key !== THEME_STORAGE_KEY) return;
+        document.documentElement.classList.toggle("dark", prefersDark());
+        callback();
+    };
+    window.addEventListener("storage", onStorage);
+    window.addEventListener(THEME_CHANGE_EVENT, callback);
+    return () => {
+        window.removeEventListener("storage", onStorage);
+        window.removeEventListener(THEME_CHANGE_EVENT, callback);
+    };
 }
 
 function getSnapshot() {
-    return localStorage.getItem(STORAGE_KEY) === "true";
+    return document.documentElement.classList.contains("dark");
 }
 
 function getServerSnapshot() {
@@ -19,35 +30,25 @@ function getServerSnapshot() {
 }
 
 export default function ThemeToggleButton() {
-    // ローカルストレージ(外部の可変ストア)を安全に読むため useSyncExternalStore を使用
-    const isToggled = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
+    const isDark = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
 
-    useEffect(() => {
-        document.documentElement.classList.toggle("dark", isToggled);
-    }, [isToggled]);
-
-    // トグル処理
     const handleToggle = () => {
-        localStorage.setItem(STORAGE_KEY, String(!isToggled));
-        // "storage" イベントは変更元のタブでは発火しないため手動で通知する
-        window.dispatchEvent(new Event("storage"));
+        const next = !isDark;
+        document.documentElement.classList.toggle("dark", next);
+        localStorage.setItem(THEME_STORAGE_KEY, String(next));
+        window.dispatchEvent(new Event(THEME_CHANGE_EVENT));
     };
 
     return (
         <button
+            type="button"
             onClick={handleToggle}
-            className={`px-3 py-3 rounded-full block transition-all cursor-pointer ${
-                isToggled
-                    ? "bg-accent hover:brightness-60"
-                    : "outline-2 hover:bg-primary-strong/60"
-            }`}
+            aria-label="ダークモード"
+            aria-pressed={isDark}
+            // 見た目は dark: で切り替える。state で分けると、ハイドレーションまでの間ライトの見た目になる
+            className="px-3 py-3 rounded-full block transition-all cursor-pointer outline-2 hover:bg-primary-wash/60 dark:outline-0 dark:bg-accent dark:text-background dark:hover:brightness-60"
         >
-            <Image
-                src={"/svg/moon.svg"}
-                height={20}
-                width={20}
-                alt="Darkmode button"
-            />
+            <Icon name="moon" className="size-5" />
         </button>
     );
 }

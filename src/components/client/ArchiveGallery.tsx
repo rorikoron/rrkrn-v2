@@ -1,5 +1,5 @@
 "use client";
-import AnimatedMagnifiableImage from "@/components/ui/AnimatedMagnifiableImage";
+import AnimatedMagnifiableImage from "@/components/client/AnimatedMagnifiableImage";
 import BashWindow from "@/components/ui/BashWindow";
 import type { ArchivePhoto } from "@/data/fetchVRChatArchiveByYear";
 import { distributeToColumns } from "@/util";
@@ -79,18 +79,20 @@ function YearPicker({
     }, [selected]);
 
     return (
-        <BashWindow command="grep" className="!px-2 !py-4 md:!p-6 ml-6">
-            <ul className="h-28 md:h-40 mt-10 md:mt-8 px-6 md:px-8 overflow-y-auto snap-y [scrollbar-width:none] [&::-webkit-scrollbar]:hidden flex flex-col items-center gap-2 md:gap-4">
+        <BashWindow command="grep" className="px-2! py-4! md:p-6! ml-6">
+            <ul aria-label="年で絞り込む" className="h-28 md:h-40 mt-10 md:mt-8 px-6 md:px-8 overflow-y-auto snap-y [scrollbar-width:none] [&::-webkit-scrollbar]:hidden flex flex-col items-center gap-2 md:gap-4">
                 {years.map((year) => (
                     <li key={year} ref={year === selected ? activeRef : undefined} className="snap-center">
                         {/* ホバーで「>」が出て少し右へずれる。選択中の年は「>」が出たまま */}
                         <button
+                            type="button"
+                            aria-pressed={year === selected}
                             className={clsx(
                                 "relative text-2xl md:text-3xl tracking-wider transition-all duration-200",
                                 "before:content-['>'] before:absolute before:-left-5 md:before:-left-6 before:transition-all before:duration-200",
                                 year === selected
-                                    ? "text-active translate-x-2 pointer-events-none"
-                                    : "cursor-pointer before:opacity-0 before:-translate-x-2 hover:translate-x-2 hover:text-active/70 hover:before:opacity-100 hover:before:translate-x-0"
+                                    ? "text-primary-ink translate-x-2 pointer-events-none"
+                                    : "cursor-pointer before:opacity-0 before:-translate-x-2 hover:translate-x-2 hover:text-primary-ink hover:before:opacity-100 hover:before:translate-x-0"
                             )}
                             onClick={() => onSelect(year)}
                         >

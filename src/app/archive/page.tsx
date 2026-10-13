@@ -27,7 +27,7 @@ export default async function Archive() {
                 <div className="absolute left-[15%] top-[40px] md:top-[64px] w-[45%] h-[80px] md:h-[110px] bg-primary-soft/35" />
                 <div className="absolute left-8 md:left-10 top-0 w-[45%] md:w-[30%] h-[100px] md:h-[150px] bg-primary-soft/75" />
                 {/* 左上の四角と左端がそろわないよう、少し右にずらす */}
-                <div className="absolute left-14 md:left-20 top-[24px] md:top-[36px] h-[55%] w-[25%] md:w-[20%] bg-linear-to-b from-active/75 via-primary/45 to-transparent" />
+                <div className="absolute left-14 md:left-20 top-[24px] md:top-[36px] h-[55%] w-[25%] md:w-[20%] bg-linear-to-b from-primary-strong/75 via-primary/45 to-transparent" />
             </div>
             <ArchiveGallery archives={archives} />
         </div>
