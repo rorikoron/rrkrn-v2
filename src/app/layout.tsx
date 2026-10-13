@@ -48,6 +48,12 @@ export const metadata: Metadata = {
             height: 640,
         },
     },
+    other: {
+        "twitter:player":
+        SITE_URL,
+        "twitter:player:width": "480",
+        "twitter:player:height": "640",
+    },
 };
 
 export const viewport: Viewport = {
