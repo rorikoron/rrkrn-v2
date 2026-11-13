@@ -11,6 +11,7 @@ const explanations: Record<ExistLink, string> = {
     about: "自分語りゾーンです。",
     archive: "フレンドとの写真。\nまたはフレンドの写真。",
     booth: "Boothの商品一覧です。\nよかったら見てってね。",
+    contact: "お問い合わせはここから。\nすぐ返します",
 };
 const UNKNOWN_EXPLANATION = "このメッセージが　みれるのは　おかしいよ🍄\nみえたら　おしえてね";
 
@@ -39,7 +40,7 @@ export default function HeaderList({ links }: { links: LinksInterface[] }) {
         <div className="flex flex-col">
             <BashWindow command="cd" className="ml-8 mr-6 ">
                 <nav aria-label="サイト内">
-                    <ul className="flex flex-col text-xl text-muted py-4 overflow-hidden">
+                    <ul className="flex flex-col text-xl text-muted py-4 gap-1 overflow-hidden">
                         {links.map(({ name, href }) => {
                             const isCurrent = current?.name === name;
                             return (

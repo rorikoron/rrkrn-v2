@@ -16,6 +16,7 @@ const links: LinksInterface[] = [
     { name: "about", href: "/about" },
     { name: "archive", href: "/archive" },
     { name: "booth", href: "/booth" },
+    { name: "contact", href: "/contact" },
 ];
 
 export default function Header() {
