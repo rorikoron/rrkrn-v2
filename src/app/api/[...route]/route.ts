@@ -1,6 +1,5 @@
 import { Hono } from 'hono'
 import fetchBoothItems from '@/data/fetchBoothItems';
-import { handle } from "hono/vercel";
 import { fetchVRChatArchiveAvailableYears } from '@/data/fetchVRChatArchiveAvailableYears';
 import fetchVRChatArchiveByYear from '@/data/fetchVRChatArchiveByYear';
 
@@ -31,5 +30,8 @@ const api = new Hono().basePath("/api").onError((err, c) => {
     return c.json(items, 200, MONTHLY_CACHE);
 }).route("/archive", archive_router);
 
-export const GET = handle(api);
+// hono/vercel の handle(api) で受け取った request をそのまま渡さないのは、force-static では
+// それが Next の Proxy で、Workers だと Proxy 越しに request.method を読んだ時点で
+// "Illegal invocation" で落ちるから。force-dynamic で Proxy を外さないのは、ISR のキャッシュを残したいから。
+export const GET = (req: Request) => api.fetch(new Request(req.url));
 export type AppType = typeof api;
